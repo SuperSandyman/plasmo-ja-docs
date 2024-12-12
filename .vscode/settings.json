@@ -22,7 +22,7 @@
   "pasteImage.path": "${projectRoot}/public/screenshots",
   "pasteImage.prefix": "@",
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#407" // Change this color!
+    "titleBar.activeBackground": "#001630" // Change this color!
   },
   "grammarly.selectors": [
     {

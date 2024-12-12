@@ -1,0 +1,14 @@
+The following text is about a browser extension framework called Plasmo. Please keep the portions that are already in Japanese unchanged. The document will be provided in MDX format. Please translate this text from English to Japanese.
+
+When translating, please follow these guidelines:
+
+1. Preserve all Markdown syntax and formatting, including headings, lists, code blocks, and links.
+2. Maintain the original structure and organization of the document.
+3. Translate the content accurately, ensuring that the meaning and tone of the original text are preserved.
+4. For technical terms:
+   a. If there is a widely accepted translation in Japanese, use it.
+   b. If no standard translation exists, retain the original English term and provide a translation in parentheses the first time it appears.
+   c. For acronyms, provide the full translated term with the original acronym in parentheses the first time it is used.
+5. Do not translate content within code blocks or code snippets.
+6. Ensure that any placeholders or variables in the original text remain unchanged.
+7. Adapt any culture-specific examples or references to be appropriate for the Japanese audience, if necessary.
