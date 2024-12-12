@@ -24,6 +24,17 @@ jobs:
 
       - name: Run translation script
         run: deno run -A https://raw.githubusercontent.com/SuperSandyman/translate-docs-script/refs/heads/main/main.ts
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          TARGET_FILE_EXTENSION: .mdx
+          HASH_FILE_PATH: ${{ secrets.HASH_FILE_PATH }}
+          PROMPT_URL: https://raw.githubusercontent.com/SuperSandyman/plasmo-ja-docs/refs/heads/main/prompt.txt
+          VERTEX_AI_PROJECT_ID: ${{ secrets.VERTEX_AI_PROJECT_ID }}
+          VERTEX_AI_LOCATION: us-central1
+          VERTEX_AI_MODEL: google/gemini-1.5-flash-002
+          GITHUB_OWNER: PlasmoHQ
+          GITHUB_REPO: docs
+          TARGET_DIRECTORY_PATH: src/pages
 
       - name: Configure Git
         run: |
