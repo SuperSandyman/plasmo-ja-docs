@@ -30,15 +30,15 @@ jobs:
         run: deno run -A https://raw.githubusercontent.com/SuperSandyman/translate-docs-script/refs/heads/main/main.ts
         env:
           GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          TARGET_FILE_EXTENSION: mdx
-          HASH_FILE_PATH: ./hash.json
-          PROMPT_URL: https://raw.githubusercontent.com/SuperSandyman/plasmo-ja-docs/refs/heads/main/prompt.txt
+          TARGET_FILE_EXTENSION: ${{ vars.TARGET_FILE_EXTENSION }}
+          HASH_FILE_PATH: ${{ vars.HASH_FILE_PATH }}
+          PROMPT_URL: ${{ vars.PROMPT_URL }}
           VERTEX_AI_PROJECT_ID: ${{ secrets.VERTEX_AI_PROJECT_ID }}
-          VERTEX_AI_LOCATION: us-central1
-          VERTEX_AI_MODEL: google/gemini-1.5-flash-002
-          GH_OWNER: PlasmoHQ
-          GH_REPO: docs
-          TARGET_DIRECTORY_PATH: src/pages
+          VERTEX_AI_LOCATION: ${{ vars.VERTEX_AI_LOCATION }}
+          VERTEX_AI_MODEL: ${{ vars.VERTEX_AI_MODEL }}
+          GH_OWNER: ${{ vars.GH_OWNER }}
+          GH_REPO: ${{ vars.GH_REPO }}
+          TARGET_DIRECTORY_PATH: ${{ vars.TARGET_DIRECTORY_PATH }}
 
       - name: Configure Git
         run: |
