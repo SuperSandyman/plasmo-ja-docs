@@ -3,6 +3,7 @@ name: auto-translate-docs
 on:
   schedule:
     - cron: "0 0 1,15 * *"
+  workflow_dispatch:
 
 jobs:
   auto_translate:
