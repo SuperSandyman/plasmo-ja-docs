@@ -27,7 +27,6 @@ jobs:
           deno-version: v2.x
 
       - name: Run translation script
-        run: deno run -A https://raw.githubusercontent.com/SuperSandyman/translate-docs-script/refs/heads/main/main.ts
         env:
           GH_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET_FILE_EXTENSION: ${{ vars.TARGET_FILE_EXTENSION }}
@@ -39,6 +38,7 @@ jobs:
           GH_OWNER: ${{ vars.GH_OWNER }}
           GH_REPO: ${{ vars.GH_REPO }}
           TARGET_DIRECTORY_PATH: ${{ vars.TARGET_DIRECTORY_PATH }}
+        run: deno run -A https://raw.githubusercontent.com/SuperSandyman/translate-docs-script/refs/heads/main/main.ts
 
       - name: Configure Git
         run: |
