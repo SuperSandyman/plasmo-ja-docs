@@ -28,7 +28,7 @@ jobs:
 
       - name: Run translation script
         env:
-          GH_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           TARGET_FILE_EXTENSION: ${{ vars.TARGET_FILE_EXTENSION }}
           HASH_FILE_PATH: ${{ vars.HASH_FILE_PATH }}
           PROMPT_URL: ${{ vars.PROMPT_URL }}
