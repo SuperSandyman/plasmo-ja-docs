@@ -1,57 +1,57 @@
 ---
-description: Scale your extension production with your team and Itero.
+description: チームとIteroで拡張機能の開発をスケールアップしましょう。
 ---
 
-# GitHub Extension Builder
+# GitHub拡張機能ビルダー (GitHub Extension Builder)
 
-Build your extension on every push to GitHub, and automatically deploy it to all your beta testers.
+GitHubへのプッシュごとに拡張機能をビルドし、ベータテスター全員に自動的にデプロイします。
 
-## Getting Started
+## はじめに
 
-### Upload a new extension on your [Itero](https://itero.plasmo.com) account
+### [Itero](https://itero.plasmo.com)アカウントに新しい拡張機能をアップロードする
 
-If you already have an extension on Itero, you can skip this step. For more information on how to upload an extension, check out the [TestBed page](./test-bed).
+既にIteroに拡張機能がある場合は、この手順をスキップできます。拡張機能のアップロード方法の詳細については、[TestBedページ](./test-bed)をご覧ください。
 
-### Link your GitHub organization to Itero
+### GitHub組織をIteroにリンクする
 
-Once you have your extension on Itero, you need to link your GitHub organization to Itero. This is done by installing the GitHub App on your organization, selecting the repositories that you'd like Builder to have access to, and then linking your organization and repository name on your extension's settings page.
+Iteroに拡張機能をアップロードしたら、GitHub組織をIteroにリンクする必要があります。これは、組織にGitHubアプリをインストールし、ビルダーにアクセスさせるリポジトリを選択してから、拡張機能の設定ページで組織名とリポジトリ名をリンクすることで行います。
 
-#### Install the GitHub App
+#### GitHubアプリをインストールする
 
-To install the GitHub App on your organization, go to your team settings page and click "Install GitHub App". Then, follow the instructions to install the app on your organization, and select the repositories that you'd like Builder to have access to.
+組織にGitHubアプリをインストールするには、チーム設定ページに移動して「GitHubアプリをインストール」をクリックします。次に、指示に従って組織にアプリをインストールし、ビルダーにアクセスさせるリポジトリを選択します。
 
 ![](@screenshots/settings-and-install-github-app.png)
 
-#### Giving Access to the Organization
+#### 組織へのアクセス権限を与える
 
-Select the organization that you'd like Builder to have access to. This will either be your personal GitHub account, or the organization that you're a part of.
+ビルダーにアクセスさせる組織を選択します。これは、個人のGitHubアカウント、または所属する組織のいずれかになります。
 
 ![](@screenshots/gh-perm-1.png)
 
-#### Giving Access to the Repositories
+#### リポジトリへのアクセス権限を与える
 
-Select the repositories that you'd like Builder to have access to. You can select all repositories, or select specific repositories. Remember, this doesn't link your extension to the repository, it just gives Builder access. You'll still need to link your extension to the repository on your extension's settings page.
+ビルダーにアクセスさせるリポジトリを選択します。すべてのリポジトリを選択することも、特定のリポジトリを選択することもできます。これは、拡張機能をリポジトリにリンクするものではなく、ビルダーへのアクセス権限を与えるだけであることに注意してください。拡張機能の設定ページで、拡張機能をリポジトリにリンクする必要があります。
 
 ![](@screenshots/gh-perm-2.png)
 
-#### Linking your Extension to GitHub
+#### 拡張機能をGitHubにリンクする
 
-After you've installed the GitHub App and given it access to your repositories, you need to link your organization and repository name on your extension's settings page. This is done by adding your organization and repository name to the settings page and clicking "Link".
+GitHubアプリをインストールしてリポジトリへのアクセス権限を与えたら、拡張機能の設定ページで組織名とリポジトリ名をリンクする必要があります。これは、設定ページに組織名とリポジトリ名を追加して「リンク」をクリックすることで行います。
 
 ![](@screenshots/extension-settings-gh.png)
 
-## Build History and Logs
+## ビルド履歴とログ
 
-Once you've linked your extension to GitHub, you can view the build history and logs for your extension.
+拡張機能をGitHubにリンクしたら、拡張機能のビルド履歴とログを表示できます。
 
-#### Click the Builds tab on your extension's dashboard page
+#### 拡張機能のダッシュボードページで「ビルド」タブをクリックする
 
 ![](@screenshots/extension-dashboard-builds.png)
 
-#### From here, you can view the build history and logs for your extension
+#### ここから、拡張機能のビルド履歴とログを表示できます
 
 ![](@screenshots/build-history.png)
 
-#### You can also view the status of each commit's build on GitHub
+#### 各コミットのビルドの状態をGitHubで確認することもできます
 
 ![](@screenshots/github-commits.png)

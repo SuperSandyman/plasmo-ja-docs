@@ -1,56 +1,56 @@
 ---
-description: How to build a production version of your browser extension.
+description: ブラウザ拡張機能の製品版をビルドする方法
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Create a Production Build
+# 製品版ビルドの作成
 
-To create a production bundle for distribution, run:
+配布用の製品版バンドルを作成するには、以下のコマンドを実行します。
 
 ```sh
 pnpm build
-# OR
+# または
 npm run build
 ```
 
-## Generating a zip bundle
+## zip バンドルの生成
 
-To create a production zip bundle ready to be uploaded to the web stores, use the `package` command:
+Webストアにアップロードする準備ができた製品版zipバンドルを作成するには、`package`コマンドを使用します。
 
 ```sh
 pnpm package
-# OR
+# または
 npm run package
 ```
 
-If you would like to combine the building and packaging process, use the `--zip` flag with the `build` command instead:
+ビルドとパッケージ化のプロセスを組み合わせる場合は、代わりに`build`コマンドに`--zip`フラグを使用します。
 
 ```sh
 pnpm build --zip
-# OR
+# または
 npm run build -- --zip
 ```
 
-## With a specific target
+## 特定のターゲットを指定して
 
-The `build` command accepts a `--target` flag in the form of `<browser-name>-<manifest-version>`. Use it to specify a browser and manifest version combination to build for:
+`build`コマンドは、`<browser-name>-<manifest-version>`形式の`--target`フラグを受け入れます。これを用いて、ビルド対象のブラウザとマニフェストバージョンの組み合わせを指定します。
 
 ```sh
 plasmo build --target=firefox-mv2
 ```
 
-The final bundle will be available in the `build/firefox-mv2-prod` directory. You may use any pairs of target browser and manifest version.
+最終的なバンドルは`build/firefox-mv2-prod`ディレクトリで使用できます。ターゲットブラウザとマニフェストバージョンの組み合わせは任意です。
 
-For a list of officially supported targets, [visit this link](./faq#what-are-the-officially-supported-browser-targets). These targets are recognized by the bundler, which will automatically handle some vendor-specific behavior for you.
+公式にサポートされているターゲットのリストについては、[このリンク](./faq#what-are-the-officially-supported-browser-targets)をご覧ください。これらのターゲットはバンドラによって認識され、いくつかのベンダー固有の動作が自動的に処理されます。
 
-The `--target` flag also enables you to:
+`--target`フラグを使用すると、次のこともできます。
 
-- Use a target-specific environment file: `.env.<browser-name>`
-- Use a target-specific entry files: e.g `popup.<browser-name>.tsx`
-- Set the process.env.PLASMO_BROWSER to `<browser-name>`
+- ターゲット固有の環境ファイルを使用する：`.env.<browser-name>`
+- ターゲット固有のエントリファイルを使用する：例 `popup.<browser-name>.tsx`
+- `process.env.PLASMO_BROWSER`を`<browser-name>`に設定する
 
-The third feature works with deadcode elimination. Thus the following code:
+3つ目の機能はデッドコード除去と共に動作します。そのため、次のコード：
 
 ```ts
 if (process.env.PLASMO_BROWSER === "safari") {
@@ -60,25 +60,27 @@ if (process.env.PLASMO_BROWSER === "safari") {
 }
 ```
 
-Will be trimmed down to `console.log("A")` if the target is `safari-mv3`.
+は、ターゲットが`safari-mv3`の場合、`console.log("A")`に縮小されます。
 
-## With a custom tag
 
-Plasmo uses the `prod` tag for your production build. You can use the `--tag` flag to change this behavior:
+## カスタムタグを使用
+
+Plasmoは製品版ビルドに`prod`タグを使用します。`--tag`フラグを使用してこの動作を変更できます。
 
 ```sh
 plasmo build --tag=staging
 ```
 
-The command above will:
+上記のコマンドは、次のことを行います。
 
-- Create the bundle in the `build/chrome-mv3-staging` directory
-- Set the `process.env.PLASMO_TAG` environment variables to `staging`
-- Parse and prioritize [`.env.staging` or `.env.staging.local`](/framework/env#bundle-specific-env) if any exist
+- `build/chrome-mv3-staging`ディレクトリにバンドルを作成する
+- `process.env.PLASMO_TAG`環境変数を`staging`に設定する
+- 存在する場合は、[`.env.staging`または`.env.staging.local`](/framework/env#bundle-specific-env)を解析して優先する
 
-## With source maps
 
-By default, Plasmo does not generate source maps for your production bundle. However, you can use the `--source-maps` flag to change this behavior:
+## ソースマップを使用
+
+デフォルトでは、Plasmoは製品版バンドルのソースマップを生成しません。ただし、`--source-maps`フラグを使用してこの動作を変更できます。
 
 ```sh
 plasmo build --source-maps
@@ -86,26 +88,26 @@ plasmo build --source-maps
 
 ## Bundle Buddy
 
-If you'd like to analyze your bundle, you can use the `--bundle-buddy` flag, combined with `--source-maps` to generate a [Bundle Buddy](https://bundle-buddy.com/) report:
+バンドルを分析したい場合は、`--source-maps`と組み合わせて`--bundle-buddy`フラグを使用し、[Bundle Buddy](https://bundle-buddy.com/)レポートを生成できます。
 
 ```sh
 plasmo build --source-maps --bundle-buddy
 ```
 
-## Optimization
+## 最適化
 
-To create a bundle with minification disabled:
+ミニファイを無効にしたバンドルを作成するには：
 
 ```
 plasmo build --no-minify
 ```
 
-To create an import-optimized build where the bundle deduplicate and hoist your dependency to the top of the bundle:
+バンドルが依存関係の重複を除去し、依存関係をバンドルの先頭にホイスティングするインポート最適化されたビルドを作成するには：
 
 ```
 plasmo build --hoist
 ```
 
-Note that hoisting can potentially break your dependency, especially those that import dynamic dependency via a plugin system. However, hoisting can significantly improve the bundling speed and reduce the size of your bundle.
+ホイスティングは、特にプラグインシステムを介して動的な依存関係をインポートする依存関係を壊す可能性があることに注意してください。ただし、ホイスティングはバンドル速度を大幅に向上させ、バンドルのサイズを縮小できます。
 
-You may combine these flags as needed.
+必要に応じてこれらのフラグを組み合わせることができます。

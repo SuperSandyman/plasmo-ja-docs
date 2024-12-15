@@ -1,40 +1,40 @@
 ---
-description: How imports work with the Plasmo Framework.
+description: Plasmoフレームワークでのインポートの仕組みについて説明します。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Import Resolution
+# インポート解決
 
-Plasmo framework ships with its own code/asset bundler tailored specifically for extension development. It supports raw/transformed bundle inlining, asset mirroring, environment injection, and more.
+Plasmoフレームワークは、拡張機能開発向けに特化した独自のコード/アセットバンドラを提供します。生のバンドル/変換済みバンドルのインライン化、アセットのミラーリング、環境変数の注入などをサポートしています。
 
-## Supported File Types
+## サポートされているファイルの種類
 
-The following files can be imported into Source Code modules and will be transformed accordingly:
+ソースコードモジュールにインポートできるファイルと、その変換方法は以下のとおりです。
 
-| File Extension                                 | Examples                                        |
-| :--------------------------------------------- | :---------------------------------------------- |
-| `.{css,pcss,sass,scss,less}`                   | `import "./style.css"`                          |
-|                                                | `import styleCss from "data-text:./style.css"`  |
-|                                                |                                                 |
-| `.svg`                                         | `import iconSrc from "data-text:./icon.svg"`    |
-|                                                | `import Icon from "react:./icon.svg"`           |
-|                                                |                                                 |
-| `.{png,jpg,jpeg,webp,gif,tiff,avif,heic,heif}` | `import imageUrl from "data-url:./image.png"`   |
-|                                                | `import image64 from "data-base64:./image.png"` |
-|                                                |                                                 |
-| `.{json,json5}`                                | `import stuff from "./stuff.json"`              |
-|                                                | `import stuff from "data-env:./stuff.json"`     |
-|                                                |                                                 |
-| `.{graphql,gql}`                               | `import query from "~query.gql"`                |
+| ファイル拡張子                                 | 例                                             |
+| :--------------------------------------------- | :----------------------------------------------- |
+| `.{css,pcss,sass,scss,less}`                   | `import "./style.css"`                           |
+|                                                | `import styleCss from "data-text:./style.css"`   |
+|                                                |                                                  |
+| `.svg`                                         | `import iconSrc from "data-text:./icon.svg"`     |
+|                                                | `import Icon from "react:./icon.svg"`            |
+|                                                |                                                  |
+| `.{png,jpg,jpeg,webp,gif,tiff,avif,heic,heif}` | `import imageUrl from "data-url:./image.png"`    |
+|                                                | `import image64 from "data-base64:./image.png"`  |
+|                                                |                                                  |
+| `.{json,json5}`                                | `import stuff from "./stuff.json"`               |
+|                                                | `import stuff from "data-env:./stuff.json"`      |
+|                                                |                                                  |
+| `.{graphql,gql}`                               | `import query from "~query.gql"`                 |
 
-## Paths
+## パス
 
-Plasmo has built-in support for most common import paths such as relative import, `node_module` package import, and `ESM exports` import. It also provides project-relative paths via tilde and absolute imports. To customize your import path further, check out the [Alias Imports Section](/framework/customization/alias).
+Plasmoは、相対インポート、`node_module`パッケージインポート、`ESMエクスポート`インポートなど、一般的なインポートパスを大部分サポートしています。また、チルダ(~)と絶対インポートによるプロジェクト相対パスも提供します。インポートパスをさらにカスタマイズするには、[エイリアスインポートセクション](/framework/customization/alias)をご覧ください。
 
-### Tilde (`~/`)
+### チルダ (`~/`)
 
-The tilde import path is a convenient shortcut for the "source code module directory." Plasmo only considers files ending in the following extension to be "source code module":
+チルダインポートパスは、「ソースコードモジュールディレクトリ」への便利なショートカットです。Plasmoは、次の拡張子で終わるファイルのみを「ソースコードモジュール」と見なします。
 
 ```ts
 export const relevantExtensionList = [
@@ -46,37 +46,38 @@ export const relevantExtensionList = [
 ] as const
 ```
 
-When used outside a source code module or with an asset [scheme](#schemes) such as `data-base64`, `data-text`, or `url`, the tilde (`~`) **always** resolves to the project's root directory where the `package.json` resides. Thus:
+ソースコードモジュール以外で使用する場合、または`data-base64`、`data-text`、`url`などのアセット[スキーム](#schemes)と共に使用する場合、チルダ(`~`)は**常に**`package.json`が存在するプロジェクトのルートディレクトリに解決されます。したがって：
 
-- `~rulesets/test.json` used in the [manifest override inside `package.json`](/framework/customization/manifest) resolves to `/rulesets/test.json`
-- `data-base64:~assets/image.png` resolves to `/assets/image.png`
-- `url:~src/code.js` resolves to `/src/code.js.`
+- `package.json`内の[マニフェストオーバーライド](/framework/customization/manifest)で使用される`~rulesets/test.json`は`/rulesets/test.json`に解決されます。
+- `data-base64:~assets/image.png`は`/assets/image.png`に解決されます。
+- `url:~src/code.js`は`/src/code.js`に解決されます。
 
-Suppose the tilde is by itself without a scheme and is being used to import a source code module from another source code module. In that case, it has two behaviors depending on whether you are using the default setup or the [the `src` directory setup](/framework/customization/src):
+チルダがスキームなしで単独で使用され、別のソースコードモジュールからソースコードモジュールをインポートするために使用されている場合、デフォルト設定を使用しているか[ `src`ディレクトリ設定](/framework/customization/src)を使用しているかによって、2つの動作があります。
 
-- With the default setup, `~` points to the project root.
-- With the `src` directory setup, `~` points to the `src` directory. Thus `~core/code-module.tsx`, resolves to `/src/core/code-module.tsx`.
+- デフォルト設定では、`~`はプロジェクトルートを指します。
+- `src`ディレクトリ設定では、`~`は`src`ディレクトリを指します。したがって、`~core/code-module.tsx`は`/src/core/code-module.tsx`に解決されます。
 
-### Absolute (`/`)
+### 絶対パス (`/`)
 
-Unlike tilde, the absolute import path will always resolve to the project root (where the `package.json` resides) regardless of the `src` directory. Use the absolute import path if you prefer complete consistency.
+チルダとは異なり、絶対インポートパスは、`src`ディレクトリに関係なく、常に`package.json`が存在するプロジェクトルートに解決されます。完全な一貫性を優先する場合は、絶対インポートパスを使用してください。
 
-### Relative (`./`, `../`)
+### 相対パス (`./`, `../`)
 
-Use the `./` prefix to import files using paths relative to the current file. For example, to import a file from the same directory as the existing file, use `./file-name`. To import a file from a subdirectory, use `./subdirectory/file-name`. To import a file from a parent directory, use `../file-name`.
+現在のファイルに対する相対パスを使用してファイルをインポートするには、`./`プレフィックスを使用します。たとえば、既存のファイルと同じディレクトリからファイルをインポートするには、`./file-name`を使用します。サブディレクトリからファイルをインポートするには、`./subdirectory/file-name`を使用します。親ディレクトリからファイルをインポートするには、`../file-name`を使用します。
 
-## Schemes
 
-Plasmo introduces several _import schemes_ that developers can use to import asset files into the extension bundle. Schemes follow the `<scheme>:<file path>` pattern. For example, `data-base64:~/assets/image.png` is a valid import path.
+## スキーム
+
+Plasmoは、開発者がアセットファイルを拡張機能バンドルにインポートするために使用できるいくつかの_インポートスキーム_を導入しています。スキームは`<scheme>:<file path>`パターンに従います。たとえば、`data-base64:~/assets/image.png`は有効なインポートパスです。
 
 ### raw
 
-The `raw` scheme instructs Plasmo to:
+`raw`スキームは、Plasmoに以下の指示を与えます。
 
-1. Copy the file into the extension bundle at the root level
-2. Assign a content hash to distinguish it from other files with similar names
+1. ルートレベルでファイルを拡張機能バンドルにコピーする
+2. 似た名前の他のファイルと区別するために、コンテンツハッシュを割り当てる
 
-The imported variable is an absolute URL to the file at runtime:
+インポートされた変数は、ランタイム時のファイルへの絶対URLになります。
 
 ```ts
 import imageUrl from "raw:~/assets/image.png"
@@ -86,7 +87,7 @@ console.log(imageUrl) // chrome-extension://<extension-id>/image.<hashA>.png
 
 ### raw-env
 
-The `raw-env` scheme is like the `raw` scheme but with added [environment variables](./env). For example, if you have a file `~/assets/config.json` with the following content:
+`raw-env`スキームは`raw`スキームに似ていますが、[環境変数](./env)が追加されています。たとえば、次のようなコンテンツを持つファイル`~/assets/config.json`があるとします。
 
 ```json
 {
@@ -94,7 +95,7 @@ The `raw-env` scheme is like the `raw` scheme but with added [environment variab
 }
 ```
 
-And you declared an environment variable `PLASMO_PUBLIC_URL` with the value `https://www.plasmo.com`, then the resulting file will be:
+そして、`PLASMO_PUBLIC_URL`という環境変数を`https://www.plasmo.com`という値で宣言した場合、結果として生成されるファイルは次のようになります。
 
 ```json
 {
@@ -103,19 +104,19 @@ And you declared an environment variable `PLASMO_PUBLIC_URL` with the value `htt
 ```
 
 <Callout emoji="👀">
-  `raw-env` is primarily helpful for text-based assets.
+`raw-env`は、主にテキストベースのアセットに役立ちます。
 </Callout>
 
 ### url
 
-The `url` scheme instructs Plasmo to:
+`url`スキームは、Plasmoに以下の指示を与えます。
 
-1. Transform/bundle/optimize the file for browser consumption (html/js/css/images)
-2. Copy the result + dependencies into the extension bundle at the root level
-3. Assign a content hash to distinguish it from other files with similar names
-4. (Content Script only) Add the file to the `web_accessible_resources` entry
+1. ブラウザでの使用のためにファイルを変換/バンドル/最適化する（html/js/css/画像）
+2. 結果と依存関係をルートレベルで拡張機能バンドルにコピーする
+3. 似た名前の他のファイルと区別するために、コンテンツハッシュを割り当てる
+4. （コンテンツスクリプトのみ）`web_accessible_resources`エントリにファイルを追加する
 
-The imported variable is an absolute URL to the file at runtime:
+インポートされた変数は、ランタイム時のファイルへの絶対URLになります。
 
 ```ts
 import styleAUrl from "url:~/a/style.scss"
@@ -128,16 +129,16 @@ console.log(codeUrl) // chrome-extension://<extension-id>/file.<hashB>.js
 ```
 
 <Callout emoji="😮">
-  Using `url` with image assets will optimize them for size and browser loading.
+`url`を画像アセットで使用すると、サイズとブラウザの読み込みが最適化されます。
 </Callout>
 
 ### data-text
 
-The `data-text` scheme instructs Plasmo to:
+`data-text`スキームは、Plasmoに以下の指示を与えます。
 
-1. Read the file's content
-2. Transform/bundle/optimize the file for browser consumption (html/js/css/images)
-3. Inline the content as a single bundle in a string
+1. ファイルのコンテンツを読み取る
+2. ブラウザでの使用のためにファイルを変換/バンドル/最適化する（html/js/css/画像）
+3. コンテンツを単一のバンドルとして文字列にインライン化する
 
 ```ts
 import styleText from "data-text:~/assets/style.scss"
@@ -150,12 +151,12 @@ console.log(styleText)
 
 ### data-text-env
 
-The `data-text` scheme instructs Plasmo to:
+`data-text`スキームは、Plasmoに以下の指示を与えます。
 
-1. Read the file's content
-2. Inject public environment variables
-3. Transform/bundle/optimize the file for browser consumption (html/js/css/images)
-4. Inline the content as `string`
+1. ファイルのコンテンツを読み取る
+2. 公開環境変数を注入する
+3. ブラウザでの使用のためにファイルを変換/バンドル/最適化する（html/js/css/画像）
+4. コンテンツを`string`としてインライン化する
 
 `.env`
 
@@ -176,7 +177,7 @@ PLASMO_PUBLIC_URL=https://itero.plasmo.com
 ```ts
 import codeText from "data-text-env:~/assets/code.json"
 
-console.log(codeText) // To use it as JSON, use JSON.parse(codeText)
+console.log(codeText) // JSONとして使用するには、JSON.parse(codeText)を使用します。
 // "{
 //   "url": "https://itero.plasmo.com",
 // }"
@@ -184,11 +185,11 @@ console.log(codeText) // To use it as JSON, use JSON.parse(codeText)
 
 ### data-base64
 
-The `data-base64` scheme instructs Plasmo to:
+`data-base64`スキームは、Plasmoに以下の指示を与えます。
 
-1. Read the file's content
-2. Transform/bundle/optimize the file for browser consumption (html/js/css/images)
-3. Convert the result to base64 string and inline it into the code
+1. ファイルのコンテンツを読み取る
+2. ブラウザでの使用のためにファイルを変換/バンドル/最適化する（html/js/css/画像）
+3. 結果をbase64文字列に変換し、コードにインライン化する
 
 ```ts
 import iconBase64 from "data-base64:~/assets/icon.png"
@@ -198,23 +199,23 @@ console.log(iconBase64) // data:image/png;base64,etc...
 
 ### data-env
 
-The `data-env` scheme instructs Plasmo to:
+`data-env`スキームは、Plasmoに以下の指示を与えます。
 
-1. Read the file's content
-2. Inject public environment variables
-3. Transform/bundle/optimize the file for browser consumption (html/js/css/images)
-4. Return appropriate runtime asset result
+1. ファイルのコンテンツを読み取る
+2. 公開環境変数を注入する
+3. ブラウザでの使用のためにファイルを変換/バンドル/最適化する（html/js/css/画像）
+4. 適切なランタイムアセットの結果を返す
 
 ```ts
 import data from "data-env:~/assets/data.json"
 
-// Data will be a JSON object, no need to JSON.parse!
+// DataはJSONオブジェクトになります。JSON.parseは不要です！
 console.log(data) // { url: "https://itero.plasmo.com" }
 ```
 
 ### react:\*.svg
 
-The `react` scheme transforms any svg assets into a React component (via SVGR and SVGO):
+`react`スキームは、SVGアセットをReactコンポーネントに変換します（SVGRとSVGOを使用）。
 
 ```ts
 import Logo from "react:~/assets/logo.svg"

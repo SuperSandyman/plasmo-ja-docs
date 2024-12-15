@@ -1,5 +1,5 @@
 ---
-description: Plasmo Framework enables building the modern browser extension a breeze. Get started in less than a minute getting your extension up and running!
+description: Plasmo Frameworkを使えば、最新のブラウザ拡張機能を簡単に作成できます。数分で拡張機能を稼働させることができます！
 ---
 
 import { Callout } from "nextra-theme-docs"
@@ -10,39 +10,38 @@ import { ShieldBanners } from "~components/shield-banners"
 
 <ShieldBanners />
 
-The [Plasmo](https://www.plasmo.com/) Framework is a battery-packed browser extension SDK made by hackers for hackers. Build your product and stop worrying about config files and the odd peculiarities of building browser extensions.
+[Plasmo](https://www.plasmo.com/) Frameworkは、ハッカーがハッカーのために作った、多機能なブラウザ拡張機能SDKです。設定ファイルやブラウザ拡張機能開発特有の奇妙な点について心配することなく、製品を開発しましょう。
 
 <Callout emoji="⭐">
-  {" "}
-  It's like [Next.js](https://nextjs.org/) for browser extensions!{" "}
+  [Next.js](https://nextjs.org/) for browser extensions! と同じです！
 </Callout>
 
 ![CLI Demo](https://www.plasmo.com/assets/plasmo-cli-demo.gif)
 
-## Highlighted Features
+## 主な機能
 
-- First-class [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/) Support
-- [Declarative Development](https://docs.plasmo.com/framework#where-is-the-manifestjson-file)
-- [Content Scripts UI](https://docs.plasmo.com/csui)
-- [Tab Pages](https://docs.plasmo.com/framework/tab-pages)
-- Live-reloading + React HMR
-- [`.env*` files](https://docs.plasmo.com/framework/env)
-- [Storage API](https://docs.plasmo.com/framework/storage)
-- [Messaging API](https://docs.plasmo.com/framework/messaging)
-- [Remote code bundling](https://docs.plasmo.com/framework/remote-code) (e.g., for Google Analytics)
-- Targeting [multiple browser and manifest pairs](https://docs.plasmo.com/framework/workflows/build#with-specific-target)
-- [Automated deployment via BPP](https://docs.plasmo.com/framework/workflows/submit)
-- Optional support for [Svelte](https://github.com/PlasmoHQ/with-svelte) and [Vue](https://github.com/PlasmoHQ/with-vue)
+- ファーストクラスの[React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)サポート
+- [宣言的開発](https://docs.plasmo.com/framework#where-is-the-manifestjson-file)
+- [コンテンツスクリプトUI](https://docs.plasmo.com/csui) (Content Scripts UI)
+- [タブページ](https://docs.plasmo.com/framework/tab-pages) (Tab Pages)
+- ライブリロード + React HMR
+- [`.env*`ファイル](https://docs.plasmo.com/framework/env)
+- [ストレージAPI](https://docs.plasmo.com/framework/storage) (Storage API)
+- [メッセージングAPI](https://docs.plasmo.com/framework/messaging) (Messaging API)
+- [リモートコードバンドリング](https://docs.plasmo.com/framework/remote-code) (Remote code bundling) （例：Google Analytics用）
+- [複数のブラウザとマニフェストペアのターゲティング](https://docs.plasmo.com/framework/workflows/build#with-specific-target) (multiple browser and manifest pairs)
+- [BPPによる自動デプロイ](https://docs.plasmo.com/framework/workflows/submit) (Automated deployment via BPP)
+- [Svelte](https://github.com/PlasmoHQ/with-svelte)と[Vue](https://github.com/PlasmoHQ/with-vue)のオプションサポート
 
-And many, many more! 🚀
+その他多数！ 🚀
 
-## System Requirements
+## システム要件
 
-- Node.js 16.14.x or later
-- macOS, Windows, or Linux
-- (Strongly Recommended) [pnpm](https://pnpm.io/)
+- Node.js 16.14.x 以降
+- macOS、Windows、またはLinux
+- （強く推奨）[pnpm](https://pnpm.io/)
 
-## Getting Started
+## はじめに
 
 ```sh
 pnpm create plasmo
@@ -54,92 +53,93 @@ npm create plasmo
 
 ![Plasmo project files](@screenshots/file_structure.png)
 
-This command will set up the simplest Plasmo browser extension project for you. The structure is straightforward:
+このコマンドは、最もシンプルなPlasmoブラウザ拡張機能プロジェクトをセットアップします。構造はシンプルです。
 
-| File name         | Description                                                                                                                                        |
+| ファイル名         | 説明                                                                                                                                        |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `popup.tsx`       | This file exports a default React component, which gets rendered into your popup page. _This is all you need to work on your extension popup!_     |
-| `assets`          | Plasmo [automatically generates the smaller icons](/framework/icon) and applies them in the manifest for you from the "icon.png" file              |
-| `package.json`    | Your usual Node.js project descriptor, with [an optional "manifest" property to customize Plasmo to your needs](/framework/customization/manifest) |
-| `.prettierrc.cjs` | For code styling consistency                                                                                                                       |
-| `.gitignore`      | Your friendly neighborhood Git ignore file                                                                                                         |
-| `.github`         | GitHub Actions workflows for automated deployment                                                                                                  |
-| `README.md`       | Basic documentation                                                                                                                                |
-| `tsconfig.json`   | TypeScript configuration                                                                                                                           |
+| `popup.tsx`       | このファイルはデフォルトのReactコンポーネントをエクスポートし、ポップアップページにレンダリングされます。_拡張機能のポップアップを操作するにはこれだけです！_     |
+| `assets`          | Plasmoは[自動的に小さなアイコンを生成し](/framework/icon)、"icon.png"ファイルからマニフェストに適用します。              |
+| `package.json`    | 通常のNode.jsプロジェクト記述子で、[必要に応じて"manifest"プロパティを使用してPlasmoをカスタマイズできます](/framework/customization/manifest) |
+| `.prettierrc.cjs` | コードスタイルの一貫性のため                                                                                                                       |
+| `.gitignore`      | Git ignoreファイル                                                                                                         |
+| `.github`         | 自動デプロイのためのGitHub Actionsワークフロー                                                                                                  |
+| `README.md`       | 基本的なドキュメント                                                                                                                                |
+| `tsconfig.json`   | TypeScript設定                                                                                                                           |
 
 <Callout emoji="📢">
 
-**NOTE:** By default, all your code lives on the root of your project. To use an `src` directory as the place your source code lives, please follow this
-[guide](/framework/customization/src).
+**注意:** デフォルトでは、すべてのコードはプロジェクトのルートに配置されます。`src`ディレクトリをソースコードの配置場所として使用する場合は、この[ガイド](/framework/customization/src)に従ってください。
 
 </Callout>
 
-### Development Server
+### 開発サーバー
 
-For live-reloading and HMR, you can start the development server with:
+ライブリロードとHMRには、次のようにして開発サーバーを起動できます。
 
 ```sh
 pnpm dev
 ```
 
-The above command will watch for file changes and regenerate a bundle of your extension in `build/chrome-mv3-dev`, and automatically reload your extension in your browser.
+上記のコマンドは、ファイルの変更を監視し、`build/chrome-mv3-dev`に拡張機能のバンドルを再生成し、ブラウザで拡張機能を自動的に再ロードします。
 
-### Production Build
+### 本番ビルド
 
-For a production build, run:
+本番ビルドには、次のように実行します。
 
 ```sh
 pnpm build
 ```
 
-This will create a production version of the extension in `build/chrome-mv3-prod`
+これにより、`build/chrome-mv3-prod`に拡張機能の本番バージョンが作成されます。
 
-### Loading the Extension in Chrome
+### Chromeへの拡張機能の読み込み
 
-We plan to automate this in the future, but for the time being, these are the steps you need to take to load your extension in Chrome.
+将来的には自動化される予定ですが、現時点では、Chromeに拡張機能を読み込むために必要な手順は次のとおりです。
 
-Head over to `chrome://extensions` and enable Developer Mode.
+`chrome://extensions`にアクセスして、開発者モードを有効にします。
 
 ![](@screenshots/developer_mode.png)
 
-Click on "Load Unpacked" and navigate to your extension's `build/chrome-mv3-dev` (or `build/chrome-mv3-prod`) directory.
+「読み込み済みでない拡張機能を読み込む」をクリックし、拡張機能の`build/chrome-mv3-dev`（または`build/chrome-mv3-prod`）ディレクトリに移動します。
 
-To see your popup, click on the puzzle piece icon on the Chrome toolbar, and click on your extension.
+ポップアップを表示するには、Chromeツールバーのジグソーパズルアイコンをクリックし、拡張機能をクリックします。
 
 <Callout>
 
-**Pro tip:** pin your extension to the Chrome toolbar for easy access by clicking the pin button.
+**プロヒント:** ピンボタンをクリックして、Chromeツールバーに拡張機能をピン留めして、簡単にアクセスできるようにします。
 
 </Callout>
 
 ![](@screenshots/popup_example.png)
 
-## Where is the manifest.json file?
+## manifest.jsonファイルはどこにありますか？
 
-Plasmo abstracts away the manifest file. The framework generates the manifest under the hood based on your source files and configurations you export from your code, similar to how [Next.js](https://nextjs.org/) abstracts page routing and SSG with the file system and page components.
+Plasmoはマニフェストファイルを抽象化します。このフレームワークは、[Next.js](https://nextjs.org/)がファイルシステムとページコンポーネントを使用してページのルーティングとSSGを抽象化するのと同様に、ソースファイルとコードからエクスポートする設定に基づいて、内部的にマニフェストを生成します。
 
-We will further abstract with auto-permissions and a needs-based permission scheme, removing the need to specify permissions manually! _(Coming soon)_
+さらに、自動パーミッションとニーズベースのパーミッションスキームで抽象化を進め、手動でパーミッションを指定する必要をなくします！（近日公開）
 
-## Next Steps
+## 次のステップ
 
-Go to the [Extension Pages section](/framework/ext-pages) to learn more about the different UI elements in a Plasmo extension and get inspiration. A modular example accompanies each workflow, showcasing the framework's simplicity. View examples on [our GitHub repo](https://github.com/PlasmoHQ/examples).
+[拡張機能ページセクション](/framework/ext-pages)にアクセスして、Plasmo拡張機能のさまざまなUI要素の詳細を確認し、インスピレーションを得てください。各ワークフローには、フレームワークのシンプルさを示すモジュール式の例が付属しています。[GitHubリポジトリ](https://github.com/PlasmoHQ/examples)で例を参照してください。
 
-Check out the [Customization section](/framework/customization) for documentation on making Plasmo adapt to your needs.
+Plasmoをニーズに合わせて調整する方法については、[カスタマイズセクション](/framework/customization)を参照してください。
 
-To see how to integrate Plasmo with other tools (such as TailwindCSS or Firebase), check out the list of examples in the [Quickstarts section](/quickstarts).
+Plasmoを他のツール（TailwindCSSやFirebaseなど）と統合する方法については、[クイックスタートセクション](/quickstarts)の例の一覧を参照してください。
 
-## Community
+## コミュニティ
 
-Find the Plasmo community on [Discord](https://www.plasmo.com/s/d). If you're stuck and want some help or looking to chat more about Plasmo and browser extensions, this is the place to be!
+[Discord](https://www.plasmo.com/s/d)でPlasmoコミュニティを見つけましょう。行き詰まってヘルプが必要な場合や、Plasmoやブラウザ拡張機能についてもっとチャットしたい場合は、最適な場所です！
 
-If you find a bug in the Plasmo Framework, please report it using our [Bug Report Form](/bug).
+Plasmo Frameworkのバグを見つけた場合は、[バグレポートフォーム](/bug)を使用して報告してください。
 
-Our [Code of Conduct](https://github.com/PlasmoHQ/plasmo/blob/main/.github/CODE_OF_CONDUCT.md) applies to all Plasmo community channels.
+[行動規範](https://github.com/PlasmoHQ/plasmo/blob/main/.github/CODE_OF_CONDUCT.md)は、すべてのPlasmoコミュニティチャネルに適用されます。
 
-## Projects using Plasmo Framework
+## Plasmo Frameworkを使用しているプロジェクト
 
 - [Cradle](https://playcradle.com/)
 - [ArConnect](https://www.plasmo.com/blog/posts/migrating-chrome-extension-to-plasmo)
 - [MICE](https://github.com/PlasmoHQ/mice)
-- [Hundreds of Repos on GitHub](https://github.com/PlasmoHQ/plasmo/network/dependents)
-- Many hundreds more on the Chrome Web Store
+- [GitHub上の数百のリポジトリ](https://github.com/PlasmoHQ/plasmo/network/dependents)
+- Chromeウェブストアにもさらに数百あります
+
+

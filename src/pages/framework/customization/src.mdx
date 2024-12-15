@@ -1,40 +1,38 @@
 ---
-description: Instead of putting everything in the root, Plasmo offers you to put your source files in an src directory.
+description: ルートディレクトリにすべてを配置する代わりに、Plasmoではソースファイルを`src`ディレクトリに配置できます。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Using the `src` directory for source code
+# ソースコード用の`src`ディレクトリの使用
 
-Instead of having your source codes in the root directory, you can put them in a child `src` directory.
+ソースコードをルートディレクトリに配置する代わりに、子ディレクトリである`src`ディレクトリに配置できます。
 
 ## --with-src
 
-Creating a Plasmo project with an `src` directory setup is as simple as:
+`src`ディレクトリを設定したPlasmoプロジェクトの作成は、次のコマンドで簡単に行えます。
 
 ```bash
 pnpm create plasmo --with-src
 ```
 
-The command above utilizes Plasmo's [example template feature](/framework/workflows/new#with-an-example-template).
+上記のコマンドは、Plasmoの[例テンプレート機能](/framework/workflows/new#with-an-example-template)を利用しています。
 
 <Callout>
 
-Please ensure that the `assets` directory is in the `project` directory NOT the `src` directory.
+`assets`ディレクトリは、`src`ディレクトリではなく`project`ディレクトリに配置してください。
 
-Please ensure that **ALL source files** including Plasmo's entry files such as `popup.tsx`, `options.tsx`, `background.ts`, `contents/*` etc. are in the `src` directory. Otherwise, Plasmo **WILL NOT** know where to find the entry files, resulting in an empty extension!
+`popup.tsx`、`options.tsx`、`background.ts`、`contents/*`など、Plasmoのエントリファイルを含む**すべてのソースファイル**を`src`ディレクトリに配置してください。配置しないと、Plasmoはエントリファイルの場所を認識できず、拡張機能が空の状態になります！
 
-This customization only resolves `~` to `/src` for source code
-modules. Please see this note about [tilde import
-resolution](/framework/import#tilde-).
+このカスタマイズは、ソースコードモジュールについて`~`を`/src`に解決するのみです。[チルダインポート解決](/framework/import#tilde-)に関するこの注意事項を参照してください。
 
 </Callout>
 
-## Manual Setup
+## 手動設定
 
-First, copy all your source code files into the `src` directory. Then, for TypeScript to work correctly, you will need to point the resolved `paths` for the `~*` prefix in the `tsconfig.json` file to `"./src/*"`.
+まず、すべてのソースコードファイルを`src`ディレクトリにコピーします。次に、TypeScriptが正しく動作するように、`tsconfig.json`ファイルで`~*`プレフィックスの解決済み`paths`を`"./src/*"`に設定する必要があります。
 
-The new configuration looks like this:
+新しい設定は以下のようになります。
 
 ```json
 {
@@ -50,4 +48,6 @@ The new configuration looks like this:
 }
 ```
 
-See [with-src](https://github.com/PlasmoHQ/examples/tree/main/with-src) for a full example.
+完全な例については、[with-src](https://github.com/PlasmoHQ/examples/tree/main/with-src)を参照してください。
+
+

@@ -1,18 +1,18 @@
 ---
-description: How to inject your own components into an existing web page with Plasmo's Content Scripts UI features.
+description: PlasmoのContent Scripts UI機能を使って既存のウェブページに独自のコンポーネントを挿入する方法。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
 # Content Scripts UI
 
-Plasmo has first-class support for mounting React, Svelte3, or Vue3 components into the current webpage. This feature is called content scripts UI (CSUI).
+Plasmoは、React、Svelte3、またはVue3コンポーネントを現在のウェブページにマウントするためのファーストクラスのサポートを提供します。この機能は、コンテンツスクリプトUI（CSUI (Content Scripts UI)）と呼ばれます。
 
-An extension can have as many CSUI as needed, with each CSUI targeting a group of webpages or a specific webpage by [exporting the config object](/framework/content-scripts#config). To start injecting UI using React:
+拡張機能は必要に応じていくつでもCSUIを持つことができ、各CSUIは、[configオブジェクトをエクスポートする](/framework/content-scripts#config)ことで、ウェブページのグループまたは特定のウェブページをターゲットとします。Reactを使用してUIの挿入を開始するには：
 
-1. Create a `content.tsx`
-1. Export a default React component
-1. Profit 🎉
+1. `content.tsx`を作成する
+1. デフォルトのReactコンポーネントをエクスポートする
+1. 利益 🎉
 
 ```tsx filename="content.tsx"
 const CustomButton = () => {
@@ -23,18 +23,19 @@ export default CustomButton
 ```
 
 <Callout emoji="👀" title="Note">
-  **NOTE**: To have multiple content scripts, create a `contents/` directory and
-  have your CSUI entries there.
+  **NOTE**: 複数のコンテンツスクリプトを持つには、`contents/`ディレクトリを作成し、そこにCSUIエントリを配置します。
 </Callout>
 
-See [with-content-scripts-ui](https://github.com/PlasmoHQ/examples/tree/main/with-content-scripts-ui) for a full example.
+完全な例については、[with-content-scripts-ui](https://github.com/PlasmoHQ/examples/tree/main/with-content-scripts-ui)を参照してください。
 
 ### Config
 
-Content scripts UI are a subset of content scripts. Thus, you can [export a config object](/framework/content-scripts#config) just as you would a regular Plasmo content script.
+Content Scripts UIはコンテンツスクリプトのサブセットです。そのため、通常のPlasmoコンテンツスクリプトと同様に、[configオブジェクトをエクスポート](/framework/content-scripts#config)することができます。
 
-## How does Plasmo CSUI work?
+## Plasmo CSUIの動作原理
 
-**TL;DR**: Plasmo creates a [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) and mounts your exported component onto it. This isolation technique prevents the web page's style from affecting your component's styling and vice-versa.
+**TL;DR**: Plasmoは[Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM)を作成し、エクスポートされたコンポーネントをそこにマウントします。この分離テクニックにより、ウェブページのスタイルがコンポーネントのスタイルに影響を与えること、およびその逆を防止します。
 
-For more details, please see the [Life Cycle of Plasmo CSUI](./content-scripts-ui/life-cycle).
+詳細については、[Plasmo CSUIのライフサイクル](./content-scripts-ui/life-cycle)を参照してください。
+
+

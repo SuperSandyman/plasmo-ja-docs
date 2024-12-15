@@ -1,44 +1,44 @@
 ---
-description: A library that makes it easy to store data in your browser extension's storage.
+description: ブラウザ拡張機能のストレージにデータを簡単に保存できるライブラリです。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
 import { ShieldBanners } from "~components/shield-banners"
 
-# Storage API
+# ストレージAPI
 
 <ShieldBanners packageName="@plasmohq/storage" />
 
-`@plasmohq/storage` is a utility library from [plasmo](https://www.plasmo.com/) that abstracts the persistent storage API available to browser extensions. It falls back to localStorage when the extension storage API is unavailable, allowing for state sync between extension pages, content scripts, background service workers and web pages.
+`@plasmohq/storage` は、[plasmo](https://www.plasmo.com/) から提供されるユーティリティライブラリで、ブラウザ拡張機能で使用可能な永続ストレージAPIを抽象化します。拡張機能ストレージAPIが使用できない場合はlocalStorageにフォールバックするため、拡張機能ページ、コンテンツスクリプト、バックグラウンドサービスワーカー、Webページ間で状態を同期できます。
 
-> This library will enable the `storage` permission automatically if used as a **dependencies** in a [Plasmo framework](https://docs.plasmo.com) project
+> このライブラリは、[Plasmoフレームワーク](https://docs.plasmo.com)プロジェクトで**依存関係**として使用した場合、`storage`パーミッションを自動的に有効にします。
 
-## Installation
+## インストール
 
 ```bash
 pnpm install @plasmohq/storage
 ```
 
-The package exports the following modules, in both ESM and CJS format:
+このパッケージは、ESMとCJSの両方の形式で以下のモジュールをエクスポートします。
 
-| Modules                    | Description                                   |
-| :------------------------- | :-------------------------------------------- |
-| `@plasmohq/storage`        | The base [Storage API](#storage)              |
-| `@plasmohq/storage/secure` | The [SecureStorage API](#secure-storage)      |
-| `@plasmohq/storage/hook`   | The [React Hook Storage API](#react-hook-api) |
+| モジュール                    | 説明                                       |
+| :------------------------- | :--------------------------------------------- |
+| `@plasmohq/storage`        | 基本的な[ストレージAPI](#storage)              |
+| `@plasmohq/storage/secure` | [セキュアストレージAPI](#secure-storage)      |
+| `@plasmohq/storage/hook`   | [ReactフックストレージAPI](#react-hook-api) |
 
-## Usage Examples
+## 使用例
 
-- See [with-storage](https://github.com/PlasmoHQ/examples/tree/main/with-storage) for an example of how to use this library to sync state between options and popups.
-- See [with-redux](https://github.com/PlasmoHQ/examples/tree/main/with-redux) for an example of how to use this library as your Redux persistent layer (crucial for MV3).
-- See [MICE](https://github.com/PlasmoHQ/mice) for an experimental use case of this library integrated with WebRTC to pipe messages between browsers via an extension.
+- このライブラリを使用してオプションとポップアップ間で状態を同期する方法の例については、[with-storage](https://github.com/PlasmoHQ/examples/tree/main/with-storage) を参照してください。
+- このライブラリをReduxの永続レイヤーとして使用する方法の例については、[with-redux](https://github.com/PlasmoHQ/examples/tree/main/with-redux) を参照してください（MV3にとって重要です）。
+- このライブラリがWebRTCと統合され、拡張機能を介してブラウザ間でメッセージをパイプする実験的なユースケースについては、[MICE](https://github.com/PlasmoHQ/mice) を参照してください。
 
-## Storage
+## ストレージ
 
-The base Storage API is designed to be easy to use. It is usable in every extension runtime such as background service workers, content scripts and extension pages.
+基本的なストレージAPIは、使いやすさを重視して設計されています。バックグラウンドサービスワーカー、コンテンツスクリプト、拡張機能ページなど、すべての拡張機能ランタイムで使用できます。
 
-Get/set data without the need to JSON.stringify/parse. As long as the data you are storing is serializable (plain object or of primitive type), it can be stored:
+`JSON.stringify/parse` を使用する必要なく、データを取得/設定できます。保存するデータがシリアライズ可能（プレーンオブジェクトまたはプリミティブ型）であれば、保存できます。
 
 ```ts
 import { Storage } from "@plasmohq/storage"
@@ -52,11 +52,11 @@ await storage.set("capt", { color: "red" })
 const data2 = await storage.get("capt") // { color: "red" }
 ```
 
-### Customizing the storage area
+### ストレージ領域のカスタマイズ
 
-The storage area defaults to "sync", which means the data is synced across all instances of Chrome where the user is logged in.
+ストレージ領域はデフォルトで"sync"に設定されており、これはユーザーがログインしているChromeのすべてのインスタンスでデータが同期されることを意味します。
 
-You can see all of the other possible scopes Plasmo supports in the [Chrome Storage API documentation](https://developer.chrome.com/docs/extensions/reference/api/storage#storage_areas).
+Plasmoがサポートする他のスコープについては、[ChromeストレージAPIドキュメント](https://developer.chrome.com/docs/extensions/reference/api/storage#storage_areas)を参照してください。
 
 ```ts
 const storage = new Storage({
@@ -64,7 +64,7 @@ const storage = new Storage({
 })
 ```
 
-### Automatically copy data to localStorage
+### localStorageへのデータの自動コピー
 
 ```ts
 const storage = new Storage({
@@ -72,11 +72,11 @@ const storage = new Storage({
 })
 ```
 
-The code above will copy the data to Web localStorage when used with content scripts or extension pages.
+上記のコードは、コンテンツスクリプトまたは拡張機能ページで使用する場合、データをWeb localStorageにコピーします。
 
-### Watch (for state sync)
+### ウォッチ (状態同期用)
 
-To watch for changes when using the Storage API:
+Storage APIを使用する際に変更を監視するには：
 
 ```ts filename="background.ts"
 import { Storage } from "@plasmohq/storage"
@@ -99,24 +99,24 @@ await storage.set("serial-number", 96)
 await storage.set("make", "PlasmoHQ")
 ```
 
-This can be used as a layer to communicate messages across your extension. We demonstrate this in the [with-redux](https://github.com/PlasmoHQ/examples/tree/main/with-redux) example.
+これは、拡張機能間でメッセージをやり取りするためのレイヤーとして使用できます。[with-redux](https://github.com/PlasmoHQ/examples/tree/main/with-redux)の例で説明しています。
 
 <Callout emoji="📢">
 
-**NOTE:** The Storage API is not available in a Content Script when it is executed in the 'MAIN' world, as it loses its access to the Chrome Extensions APIs.
+**注意:** ストレージAPIは、'MAIN'ワールドで実行されるコンテンツスクリプトでは使用できません。Chrome Extensions APIへのアクセスを失うためです。
 
 </Callout>
 
-## Secure Storage
+## セキュアストレージ
 
-The SecureStorage API extends Storage with data encryption and decryption for at-rest cold storage of sensitive keys. It utilizes the [Web Crypto `SubtleCrypto` API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) which only works in secure contexts (HTTPS).
+SecureStorage APIは、静止状態の機密キーの暗号化と復号化によるStorageを拡張します。[Web Crypto `SubtleCrypto` API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) を使用しており、これはセキュアコンテキスト（HTTPS）でのみ機能します。
 
 ```ts
 import { SecureStorage } from "@plasmohq/storage/secure"
 
 const storage = new SecureStorage()
 
-await storage.setPassword("roosevelt") // The only diff
+await storage.setPassword("roosevelt") // 唯一の違い
 
 await storage.set("key", "value")
 const data = await storage.get("key") // "value"
@@ -125,15 +125,15 @@ await storage.set("capt", { color: "red" })
 const data2 = await storage.get("capt") // { color: "red" }
 ```
 
-## React Hook API
+## ReactフックAPI
 
-The hook API is designed to streamline the state-syncing workflow between the different pieces of an extension. There are many ways it can be used, but first and foremost you will want to import the hook into your React component:
+フックAPIは、拡張機能のさまざまな部分間の状態同期ワークフローを合理化するために設計されています。多くの使用方法がありますが、まず最初にフックをReactコンポーネントにインポートする必要があります。
 
 ```tsx
 import { useStorage } from "@plasmohq/storage/hook"
 ```
 
-### Watch and render a value
+### 値を監視してレンダリングする
 
 ```tsx
 const [hailingFrequency] = useStorage("hailing")
@@ -141,7 +141,7 @@ const [hailingFrequency] = useStorage("hailing")
 {hailingFrequency}
 ```
 
-### With a custom storage instance
+### カスタムストレージインスタンスを使用する
 
 ```tsx
 import { Storage } from "@plasmohq/storage"
@@ -154,13 +154,13 @@ const [hailingFrequency] = useStorage({
 })
 ```
 
-### Rendering initial value WITHOUT persisting
+### 永続化せずに初期値をレンダリングする
 
-"Persisting" means writing into the internal memory.
+"永続化"とは、内部メモリへの書き込みを意味します。
 
-By not persisting the value, only this specific instance of the hook will render the given initial value when there is no value in storage. Other instances can either show `undefined` OR specify their own initial value. To elaborate on this:
+値を永続化しないことで、ストレージに値がない場合、このフックのインスタンスのみが指定された初期値をレンダリングします。他のインスタンスは`undefined`を表示するか、独自の初期値を指定できます。詳細については以下を参照してください。
 
-Given a `popup.tsx` that sets a static initial value:
+`popup.tsx`で静的な初期値を設定する場合：
 
 ```tsx filename="popup.tsx"
 const [hailingFrequency, setHailingFrequency] = useStorage("hailing", "42")
@@ -170,7 +170,7 @@ const [hailingFrequency, setHailingFrequency] = useStorage("hailing", "42")
   }/> // "42"
 ```
 
-If we subscribe to this key in `content.tsx`, we will see it be `undefined` until `setHailingFrequency` is called with a defined value:
+`content.tsx`でこのキーを購読すると、`setHailingFrequency`が定義された値で呼び出されるまで`undefined`が表示されます。
 
 ```tsx filename="content.tsx"
 const [hailingFrequency] = useStorage("hailing")
@@ -178,7 +178,7 @@ const [hailingFrequency] = useStorage("hailing")
 return <p>{hailingFrequency}</p> // undefined
 ```
 
-If we subscribe to this key in `options.tsx`, but with a different static initial value, we will see that value instead:
+`options.tsx`でこのキーを購読しますが、異なる静的な初期値を使用すると、その値が表示されます。
 
 ```tsx filename="options.tsx"
 const [hailingFrequency] = useStorage("hailing", "147")
@@ -186,13 +186,13 @@ const [hailingFrequency] = useStorage("hailing", "147")
 return <p>{hailingFrequency}</p> // "147"
 ```
 
-With the above setup, suppose we call `setHailingFrequency("8472")` in any of the instances above, we will see that all instances will now show "8472" and will now track the value in storage instead of the initial value.
+上記のセットアップで、上記のいずれかのインスタンスで`setHailingFrequency("8472")`を呼び出すと、すべてのインスタンスに "8472" が表示され、初期値ではなくストレージの値を追跡するようになります。
 
-### Rendering AND persisting initial value
+### 初期値をレンダリングして永続化する
 
-By using a function instead of a static value, the initial value will be persisted in storage memory. The initialize function has one parameter which is the existing value in storage. If there is no value, it is `undefined`.
+静的な値ではなく関数を使用することで、初期値がストレージメモリに永続化されます。初期化関数は、ストレージ内の既存の値である1つのパラメータを持ちます。値がない場合は`undefined`です。
 
-Let's say we have a `popup.tsx` that initialize the state to "42" if there is nothing in storage:
+ストレージに何もない場合に状態を "42" に初期化する`popup.tsx`があるとします。
 
 ```tsx filename="popup.tsx"
 const [hailingFrequency, setHailingFrequency] = useStorage("hailing", (v) => v === undefined ? "42": v)
@@ -200,7 +200,7 @@ const [hailingFrequency, setHailingFrequency] = useStorage("hailing", (v) => v =
 {hailingFrequency} // "42"
 ```
 
-Then, if we make a new hook instance in our `content.tsx` or `options.tsx`, we will see the initial value that persisted, without calling `setHailingFrequency`:
+その後、`content.tsx`または`options.tsx`で新しいフックインスタンスを作成すると、`setHailingFrequency`を呼び出さなくても、永続化された初期値が表示されます。
 
 ```tsx filename="content.tsx"
 const [hailingFrequency] = useStorage("hailing")
@@ -208,9 +208,9 @@ const [hailingFrequency] = useStorage("hailing")
 return <p>{hailingFrequency}</p> // "42"
 ```
 
-### Advanced usage
+### 高度な使用方法
 
-When dealing with form input or real-time input, you might need the following:
+フォーム入力やリアルタイム入力を行う場合は、次のものが必要になる場合があります。
 
 ```tsx
 const [hailingFrequency, setHailingFrequency, {
@@ -222,22 +222,22 @@ const [hailingFrequency, setHailingFrequency, {
 return <>
   <input value={hailingFrequency} onChange={(e) => setRenderValue(e.target.value)}/>
   <button onClick={() => setStoreValue()}>
-    Save
+    保存
   </button>
   <button onClick={() => remove()}>
-    Remove
+    削除
   </button>
 </>
 
 ```
 
-### Usage with Firefox
+### Firefoxでの使用
 
-To use the storage API on Firefox during development you need to add an Add-on ID to your manifest, otherwise, you will get this error:
+開発中にFirefoxでストレージAPIを使用するには、マニフェストにアドオンIDを追加する必要があります。追加しないと、次のエラーが発生します。
 
-> Error: The storage API will not work with a temporary addon ID. Please add an explicit addon ID to your manifest. For more information see https://mzl.la/3lPk1aE.
+> エラー: ストレージAPIは一時的なアドオンIDでは機能しません。マニフェストに明示的なアドオンIDを追加してください。詳細については、https://mzl.la/3lPk1aE を参照してください。
 
-To add an Add-on ID to your manifest, add this to your `package.json`:
+マニフェストにアドオンIDを追加するには、`package.json`に以下を追加します。
 
 ```JSON
 "manifest": {
@@ -249,14 +249,15 @@ To add an Add-on ID to your manifest, add this to your `package.json`:
 }
 ```
 
-The format of Add-on IDs differ between manifest versions.
+アドオンIDの形式は、マニフェストのバージョンによって異なります。
 
 - Manifest V2: `your-id@example.com`
-- Manifest V3: `{ed7ba470-8e54-465e-825c-99712043e01c}` (any UUID)
+- Manifest V3: `{ed7ba470-8e54-465e-825c-99712043e01c}` （任意のUUID）
 
-Once your extension is published, the Add-on ID defined in the `package.json` file _should_ be displayed in your extension's Developer Page under _"Technical Details > UUID"_.
+拡張機能を公開すると、`package.json`ファイルで定義されているアドオンIDは、拡張機能の開発者ページの_"技術情報 > UUID"_に表示されるはずです。
 
-**Note:** The Add-on ID used during development (i.e. the one defined in the manifest) will likely be the one Mozilla assigns to your when publishing. If it's not and one is
-generated for you, you will have to update the `package.json` file with the new ID.
+**注:** 開発中に使用されるアドオンID（つまり、マニフェストで定義されているID）は、公開時にMozillaが割り当てるIDと同じである可能性があります。そうでない場合、およびIDが生成された場合は、新しいIDを使用して`package.json`ファイルを更新する必要があります。
 
-Add-on IDs are unique and the same one cannot be used for multiple extensions (both manifest versions).
+アドオンIDは一意であり、複数の拡張機能（マニフェストのバージョンに関わらず）で同じIDを使用することはできません。
+
+

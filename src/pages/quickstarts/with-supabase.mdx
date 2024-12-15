@@ -1,44 +1,44 @@
 ---
-description: A step-by-step guide on integrating Supabase with your browser extension.
+description: ブラウザ拡張機能にSupabaseを統合する方法を段階的に説明します。
 ---
 
-# Quickstart with Supabase
+# Supabase を使ったクイックスタート
 
-## Intro
+## はじめに
 
-Supabase is an open-source Firebase alternative.
+Supabase はオープンソースの Firebase 代替品です。
 
-This quickstart is a simple example showcasing how to use Supabase with Plasmo.
+このクイックスタートは、Plasmo で Supabase を使用する簡単な例を示しています。
 
-## Prerequisites
+## 事前準備
 
-- [Supabase](https://supabase.com) Account
-- Supabase project
+- [Supabase](https://supabase.com) アカウント
+- Supabase プロジェクト
 
-## Initialize a Plasmo project with Supabase
+## Supabase を使用して Plasmo プロジェクトを初期化
 
-```
+```bash
 pnpm create plasmo --with-supabase
 ```
 
-## Set up Environment Variables
+## 環境変数の設定
 
-For Supabase to work, we'll need to define a URL and a KEY.
+Supabase を動作させるには、URL と KEY を定義する必要があります。
 
-You can find these by finding them in your Supabase project dashboard:
+これらの情報は、Supabase プロジェクトのダッシュボードで見つけることができます。
 
 ![](@screenshots/supabase-config.png)
 
-Let's add them in an .env file:
+`.env` ファイルにそれらを追加しましょう。
 
 ```ini filename=".env"
 PLASMO_PUBLIC_SUPABASE_URL="CHANGE ME"
 PLASMO_PUBLIC_SUPABASE_KEY="CHANGE ME"
 ```
 
-## Supabase Store
+## Supabase ストア
 
-We need to initialize Supabase, so let's add a file called `core/supabase.ts`:
+Supabase を初期化する必要があるため、`core/supabase.ts` というファイルを追加しましょう。
 
 ```ts filename="core/supabase.ts"
 import { createClient } from "@supabase/supabase-js"
@@ -63,22 +63,22 @@ export const supabase = createClient(
 )
 ```
 
-## Adding Redirect URL
+## リダイレクト URL の追加
 
-When a user signs up, they'll need to confirm their email. To do this, we need to add a redirect URL to our Supabase project.
+ユーザーがサインアップすると、メールアドレスを確認する必要があります。これを行うには、Supabase プロジェクトにリダイレクト URL を追加する必要があります。
 
-First, we need to create a consistent ID for our extension for development. When you push to the different web stores, you'll get a different ID. To learn more about how all of this works, check out our blog post on [creating consistent extension IDs](https://www.plasmo.com/blog/posts/how-to-create-a-consistent-id-for-your-chrome-extension)
+まず、開発用の拡張機能の一貫した ID を作成する必要があります。異なるウェブストアにプッシュすると、異なる ID が取得されます。この仕組みの詳細については、[一貫性のある拡張機能IDの作成](https://www.plasmo.com/blog/posts/how-to-create-a-consistent-id-for-your-chrome-extension)に関するブログ投稿をご覧ください。
 
-Go to the [Itero KeyPair Tool](https://itero.plasmo.com/tools/generate-keypairs) to generate your consistent extension ID.
+[Itero KeyPair ツール](https://itero.plasmo.com/tools/generate-keypairs) にアクセスして、一貫性のある拡張機能 ID を生成します。
 
-We can store the ID and public key in our `.env` file:
+ID と公開鍵を `.env` ファイルに保存できます。
 
 ```ini filename=".env"
-CRX_ID="Replace with the value of CRX ID from Itero KeyPair tool"
-CRX_KEY="Replace with the value of Public Key from Itero KeyPair tool"
+CRX_ID="Itero KeyPair ツールから取得した CRX ID の値をここに置き換えてください"
+CRX_KEY="Itero KeyPair ツールから取得した公開鍵の値をここに置き換えてください"
 ```
 
-Then, references the public key in your package.json under the manifest.key value:
+次に、`package.json` の `manifest.key` 値で公開鍵を参照します。
 
 ```json
 "manifest": {
@@ -89,7 +89,7 @@ Then, references the public key in your package.json under the manifest.key valu
 }
 ```
 
-Now we need to make it so that the browser doesn't block access to our options page. To do this, we must add it to our web_accessible_resources in our manifest:
+次に、ブラウザがオプションページへのアクセスをブロックしないようにする必要があります。これを行うには、`manifest` の `web_accessible_resources` に追加する必要があります。
 
 ```json
 "web_accessible_resources": [
@@ -107,23 +107,23 @@ Now we need to make it so that the browser doesn't block access to our options p
 ]
 ```
 
-Head over to the Supabase console and click on the "Authentication" tab, and click URL Configuration.
+Supabase コンソールにアクセスし、「認証」タブをクリックして、URL 設定をクリックします。
 
 ![](@screenshots/supabase-redirect.png)
 
-Now add the following URL in your site URL as well as your redirect URL:
+次に、サイト URL とリダイレクト URL の両方に次の URL を追加します。
 
 ```text
 chrome-extension://<CRX_ID>/options.html
 ```
 
-Replace `CRX_ID` with the generated extension ID given to you by Itero KeyPairs tool, or the actual ID given to you by the production web store.
+`CRX_ID` を、Itero KeyPairs ツールで提供された生成された拡張機能 ID、または本番 Web ストアで提供された実際の ID に置き換えてください。
 
-## Integrating with a React component
+## React コンポーネントとの統合
 
-Now we can write code in our React components utilizing Supabase!
+これで、React コンポーネントで Supabase を使用したコードを記述できます！
 
-Here's an example of using Supabase in a React component for the extension's options page.
+拡張機能のオプションページで Supabase を使用する React コンポーネントの例を以下に示します。
 
 ```tsx filename="options.tsx"
 import type { Provider, User } from "@supabase/supabase-js"
@@ -229,23 +229,23 @@ function IndexOptions() {
                 supabase.auth.signOut()
                 setUser(null)
               }}>
-              Logout
+              ログアウト
             </button>
           </>
         )}
         {!user && (
           <>
-            <label>Email</label>
+            <label>メールアドレス</label>
             <input
               type="text"
-              placeholder="Your Username"
+              placeholder="ユーザー名"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <label>Password</label>
+            <label>パスワード</label>
             <input
               type="password"
-              placeholder="Your password"
+              placeholder="パスワード"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -254,20 +254,20 @@ function IndexOptions() {
               onClick={(e) => {
                 handleEmailLogin("SIGNUP", username, password)
               }}>
-              Sign up
+              サインアップ
             </button>
             <button
               onClick={(e) => {
                 handleEmailLogin("LOGIN", username, password)
               }}>
-              Login
+              ログイン
             </button>
 
             <button
               onClick={(e) => {
                 handleOAuthLogin("github")
               }}>
-              Sign in with GitHub
+              GitHub でサインイン
             </button>
           </>
         )}
@@ -279,6 +279,6 @@ function IndexOptions() {
 export default IndexOptions
 ```
 
-## Full Example
+## 完全な例
 
-To see a complete example, check out [with-supabase](https://github.com/PlasmoHQ/examples/tree/main/with-supabase) in our examples repo!
+完全な例を見るには、 examples リポジトリにある [with-supabase](https://github.com/PlasmoHQ/examples/tree/main/with-supabase) を確認してください!

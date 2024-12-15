@@ -1,14 +1,14 @@
 ---
-description: How to use the Browser Platform Publish GitHub action to deploy your extension to the different web stores automatically.
+description: ブラウザープラットフォーム公開GitHubアクションを使用して、拡張機能をさまざまなウェブストアに自動的にデプロイする方法について説明します。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Submit Your Extension
+# 拡張機能の提出
 
-The Plasmo Framework ships with a convenient GitHub action called [Browser Platform Publish](https://github.com/marketplace/actions/browser-platform-publisher/) or BPP. This action will automatically publish your extension to all supported browser extension stores. It runs on a manual trigger by default, but changing its config can make it run on every push.
+Plasmo Frameworkには、[Browser Platform Publish](https://github.com/marketplace/actions/browser-platform-publisher/)（BPP）と呼ばれる便利なGitHubアクションが付属しています。このアクションは、サポートされているすべてのブラウザ拡張機能ストアに拡張機能を自動的に公開します。デフォルトでは手動トリガーで実行されますが、設定を変更することで、プッシュごとに実行するように設定できます。
 
-To start publishing your Plasmo extension, set up a `keys.json` file with the following schema:
+Plasmo拡張機能の公開を開始するには、次のスキーマを使用して`keys.json`ファイルを設定します。
 
 ```json
 {
@@ -16,16 +16,15 @@ To start publishing your Plasmo extension, set up a `keys.json` file with the fo
 }
 ```
 
-This schema is helpful if your editor supports [`JSON schema`](https://json-schema.org/). Make sure to only declare valid submission credentials. Otherwise, the action will fail.
+このスキーマは、エディタが[`JSON schema`](https://json-schema.org/)をサポートしている場合に役立ちます。有効な提出資格情報のみを宣言してください。そうでない場合、アクションは失敗します。
 
 <Callout emoji="🙆‍♀️">
-  NOTE: git ignores this file thanks to our friendly neighborhood
-  `.gitignore`{" "}
+  注記: 親愛なる近所の`.gitignore`のおかげで、このファイルはgitによって無視されます
 </Callout>
 
-Check out our [token guide](https://github.com/PlasmoHQ/bms/blob/main/tokens.md) to learn more about the tokens required to submit.
+提出に必要なトークンについて詳しくは、[トークンガイド](https://github.com/PlasmoHQ/bms/blob/main/tokens.md)をご覧ください。
 
-The final key might look like this:
+最終的なキーは次のようになります。
 
 ```json
 {
@@ -45,6 +44,8 @@ The final key might look like this:
 }
 ```
 
-Copy this key, and add it as a [repository secret on GitHub](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) called `SUBMIT_KEYS`
+このキーをコピーし、`SUBMIT_KEYS`という名前で[GitHubのリポジトリシークレット](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)として追加します。
 
-Then, go on GitHub and trigger the action manually when you need to submit a new extension version!
+その後、GitHubで新しい拡張機能バージョンを提出する必要があるときに、手動でアクションをトリガーします！
+
+

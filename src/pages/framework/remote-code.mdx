@@ -1,27 +1,27 @@
 ---
-description: Learn how to import remote code into your browser extension even in MV3.
+description: ブラウザ拡張機能にリモートコードをインポートする方法をMV3でも学びます。
 ---
 
-# Importing Remote Code
+# リモートコードのインポート
 
-Plasmo automatically bundles all import statements that point to a remote resource using the `https` protocol in build time. This is essential to work with [the remote code restriction in Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/#remotely-hosted-code).
+Plasmoは、`https`プロトコルを指すすべてのインポート文をビルド時に自動的にバンドルします。これは、[Manifest V3のリモートコードに関する制限](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/#remotely-hosted-code)に対応するために不可欠です。
 
-Adding the [Google Analytics 4](https://developers.google.com/analytics/devguides/collection/ga4) tracking code into our popup is as simple as:
+[Google アナリティクス 4](https://developers.google.com/analytics/devguides/collection/ga4) のトラッキングコードをポップアップに追加するのは、次のように簡単です。
 
 ```tsx
 import "https://www.googletagmanager.com/gtag/js?id=XXXXXX"
 ```
 
-The code above is not clean due to the presence of the tracking ID. However, since Plasmo parses the import statement, we can use [environment variables](./env) inside the import. Define the tracking ID in a `.env.local` file:
+上記のコードは、トラッキングIDが存在するため、クリーンではありません。しかし、Plasmoはインポート文を解析するため、インポート内で[環境変数](./env)を使用できます。`.env.local`ファイルでトラッキングIDを定義します。
 
 ```
 PLASMO_PUBLIC_GTAG_ID=XXXXXX
 ```
 
-Then, use it in your import by prefixing a `$` before its name:
+次に、その名前の前に`$`を付けてインポートで使用します。
 
 ```tsx
 import "https://www.googletagmanager.com/gtag/js?id=$PLASMO_PUBLIC_GTAG_ID"
 ```
 
-See [with-google-analytics](https://github.com/PlasmoHQ/examples/tree/main/with-google-analytics)
+[with-google-analytics](https://github.com/PlasmoHQ/examples/tree/main/with-google-analytics) を参照してください。

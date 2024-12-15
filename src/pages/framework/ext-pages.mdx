@@ -1,55 +1,53 @@
 ---
-description: Learn how Plasmo works with the various browser extension pages.
+description: Plasmoが様々なブラウザ拡張機能ページとどのように連携するかを学びます。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Browser Extension Pages
+# ブラウザ拡張機能ページ
 
-Extension pages are built-in pages recognized by the browser. They include the extension's popup, options, sidepanel and newtab pages.
+拡張機能ページは、ブラウザによって認識される組み込みページです。これには、拡張機能のポップアップ、オプション、サイドパネル、および新しいタブページが含まれます。
 
 <Callout emoji="👀">
-  Heads up! Make sure to refresh your extension manually when creating a new
-  browser extension page as our runtime might not be listening and might not
-  update in certain cases.
+  ご注意！新しいブラウザ拡張機能ページを作成する際は、拡張機能を手動で更新してください。ランタイムがリスンしていない場合や、特定のケースで更新されない場合があります。
 </Callout>
 
-## Adding a Popup Page
+## ポップアップページの追加
 
-The popup page is a small dialog window that opens when a user clicks on the extension's icon in the browser toolbar. It is the most common type of extension page.
+ポップアップページは、ユーザーがブラウザのツールバーにある拡張機能のアイコンをクリックしたときに開く小さなダイアログウィンドウです。これは最も一般的なタイプの拡張機能ページです。
 
-Create a `popup.tsx` file or a `popup/index.tsx` file that exports a default React component. With that, your popup is ready to be used 🚀!
+`popup.tsx`ファイルまたは`popup/index.tsx`ファイルを、デフォルトのReactコンポーネントをエクスポートするように作成します。これにより、ポップアップが使用できるようになります🚀!
 
-See [with-popup](https://github.com/PlasmoHQ/examples/tree/main/with-popup)
+[with-popup](https://github.com/PlasmoHQ/examples/tree/main/with-popup) を参照
 
-## Adding the Options Page
+## オプションページの追加
 
-The options page is meant to be a dedicated place for the extension's settings and configuration.
+オプションページは、拡張機能の設定と構成専用の場所として意図されています。
 
-Create either an `options.tsx` or `options/index.tsx` file to render the options_ui 👌
+`options.tsx`または`options/index.tsx`ファイルを作成して、options_ui をレンダリングします 👌
 
-See [with-options](https://github.com/PlasmoHQ/examples/tree/main/with-options-ui)
+[with-options](https://github.com/PlasmoHQ/examples/tree/main/with-options-ui) を参照
 
-## Adding a New Tab Page
+## 新しいタブページの追加
 
-The New Tab page overrides the default tab and is generally how the browser greets the user.
+新しいタブページはデフォルトのタブをオーバーライドし、一般的にブラウザがユーザーを最初に迎える方法です。
 
-Create a `newtab.tsx` file or a `newtab/index.tsx` file, and Plasmo will take care of the rest to render your new tab page 🤘!
+`newtab.tsx`ファイルまたは`newtab/index.tsx`ファイルを作成すると、Plasmoが新しいタブページをレンダリングします🤘!
 
-See [with-newtab](https://github.com/PlasmoHQ/examples/tree/main/with-newtab)
+[with-newtab](https://github.com/PlasmoHQ/examples/tree/main/with-newtab) を参照
 
-## Adding a Side Panel
+## サイドパネルの追加
 
-The Side Panel allows extensions to display their own UI in the side panel, enabling persistent experiences that complement the user's browsing journey.
+サイドパネルを使用すると、拡張機能はサイドパネルに独自のUIを表示できるため、ユーザーのブラウジング体験を補完する永続的なエクスペリエンスを実現できます。
 
-Create a `sidepanel.tsx` file or a `sidepanel/index.tsx` file, and Plasmo will take care of the rest to render the UI in the Side Panel. 
+`sidepanel.tsx`ファイルまたは`sidepanel/index.tsx`ファイルを作成すると、PlasmoがサイドパネルにUIをレンダリングします。
 
-See [with-sidepanel](https://github.com/PlasmoHQ/examples/tree/main/with-sidepanel)
+[with-sidepanel](https://github.com/PlasmoHQ/examples/tree/main/with-sidepanel) を参照
 
-## Adding a Dev Tools Page
+## Dev Toolsページの追加
 
-The Dev Tools page is a dedicated page that opens when a user opens the Dev Tools for the extension.
+Dev Toolsページは、ユーザーが拡張機能のDev Toolsを開いたときに開く専用のページです。
 
-Create a `devtools.tsx` file or a `devtools/index.tsx` file, and Plasmo will take care of the rest!
+`devtools.tsx`ファイルまたは`devtools/index.tsx`ファイルを作成すると、Plasmoが処理します！
 
-See [with-devtools](https://github.com/PlasmoHQ/examples/tree/main/with-devtools)
+[with-devtools](https://github.com/PlasmoHQ/examples/tree/main/with-devtools) を参照

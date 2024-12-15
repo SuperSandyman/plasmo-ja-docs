@@ -1,11 +1,11 @@
-# Quickstart with Next.js
+# Next.js を使ったクイックスタート
 
-Plasmo seamlessly integrates with [Next.js](https://nextjs.org/). The key idea is that Plasmo is your extension's entry point, and Next.js is your web application's entry point, allowing you to reuse your component across your codebase with minor adjustments.
+Plasmo は [Next.js](https://nextjs.org/) とシームレスに統合されます。重要な考え方は、Plasmo が拡張機能のエントリポイントであり、Next.js がウェブアプリケーションのエントリポイントであるということです。これにより、わずかな調整でコードベース全体でコンポーネントを再利用できます。
 
-List of compatibilities:
+互換性リスト：
 
-- The TypeScript configuration exposed by Plasmo is compatible with Next.js, including the ability to use the `src` directory.
-- The [.env file](/framework/env) is the same, but uses a different namespace (`PLASMO_PUBLIC` vs `NEXT_PUBLIC`)
-- Plasmo uses [Parcel 2](https://parceljs.org/) which uses [swc](https://swc.rs/) underneath - the same bundler that Next.js uses. Thus, you can share plugin configs such as postcss and tailwindcss without modification.
+- Plasmo が公開する TypeScript 設定は、`src` ディレクトリの使用を含め、Next.js と互換性があります。
+- [.env ファイル](/framework/env) は同じですが、異なる名前空間を使用します（`PLASMO_PUBLIC` 対 `NEXT_PUBLIC`）。
+- Plasmo は [Parcel 2](https://parceljs.org/) を使用しており、その下層には [swc](https://swc.rs/) を使用しています。これは Next.js と同じバンドラーです。そのため、postcss や tailwindcss などのプラグイン設定を修正せずに共有できます。
 
-See [with-nextjs](https://github.com/PlasmoHQ/examples/tree/main/with-nextjs) for an example!
+例については、[with-nextjs](https://github.com/PlasmoHQ/examples/tree/main/with-nextjs) をご覧ください！

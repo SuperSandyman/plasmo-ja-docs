@@ -1,33 +1,33 @@
 ---
-description: Plasmo's CSUI orchestrates a lifecycle dedicated to mounting and unmounting your React, Vue, or Svelte components in a content script.
+description: PlasmoのCSUIは、コンテンツスクリプト内でReact、Vue、またはSvelteコンポーネントのマウントとアンマウントを行うライフサイクルをオーケストレートします。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Life Cycle of Plasmo CSUI
+# Plasmo CSUIのライフサイクル
 
-Plasmo's CSUI orchestrates a lifecycle dedicated to mounting and unmounting your React, Vue, or Svelte components in a content script. Although each UI library/framework has a slightly different mounting API, the top-level lifecycle is largely the same:
+PlasmoのCSUI (Content Script User Interface)は、コンテンツスクリプト内でReact、Vue、またはSvelteコンポーネントのマウントとアンマウントを行うライフサイクルをオーケストレートします。UIライブラリ/フレームワークごとにマウントAPIがわずかに異なりますが、最上位のライフサイクルはほぼ同じです。
 
-1. Get an [`Anchor`](#anchor)
-1. Create or locate a [`Root Container`](#root-container)
-1. [Render](#renderer) the component onto the `Root Container`
+1. [`Anchor`](#anchor)を取得する
+1. [`Root Container`](#root-container)を作成するか、見つける
+1. [`Renderer`](#renderer)を使用して`Root Container`にコンポーネントをレンダリングする
 
-## Terminologies
+## 用語
 
-| Term           | Description                                                           |
+| 用語           | 説明                                                           |
 | :------------- | :-------------------------------------------------------------------- |
-| Anchor         | Tell CSUI how and where to mount your component                       |
-| Anchor-getter  | Tell CSUI how to find your anchor(s)                                  |
-| Overlay        | Mount your component on a top-level (max z-index) overlay element     |
-| Inline         | Mount your component into the webpage's DOM, next to a target element |
-| Root Container | A ShadowDOM element created by CSUI to isolate your component         |
-| Renderer       | The top-level life-cycle runner (it does everything)                  |
+| Anchor         | CSUIにコンポーネントのマウント方法と場所を指示します。                       |
+| Anchor-getter  | CSUIにアンカーの探し方を指示します。                                  |
+| Overlay        | 最上位（最大のz-index）のオーバーレイ要素にコンポーネントをマウントします。     |
+| Inline         | ターゲット要素の隣に、ウェブページのDOMにコンポーネントをマウントします。 |
+| Root Container | CSUIによって作成された、コンポーネントを分離するためのShadowDOM要素です。         |
+| Renderer       | 最上位のライフサイクルランナー（すべてを実行します）                  |
 
 ## Anchor
 
 ![CSUI Life Cycle](@screenshots/2022-12-02-23-53-02.png)
 
-A Plasmo CSUI anchor is defined by the following type:
+Plasmo CSUIアンカーは、次の型で定義されます。
 
 ```ts
 export type PlasmoCSUIAnchor = {
@@ -36,7 +36,7 @@ export type PlasmoCSUIAnchor = {
 }
 ```
 
-By default, the CSUI lifecycle creates an overlay anchor using the `document.body` element:
+デフォルトでは、CSUIライフサイクルは`document.body`要素を使用してオーバーレイアンカーを作成します。
 
 ```ts
 {
@@ -45,9 +45,9 @@ By default, the CSUI lifecycle creates an overlay anchor using the `document.bod
 }
 ```
 
-If any anchor-getter function is defined and exported, the CSUI lifecycle will use the returned element and the relevant anchor type instead. Since the anchor-getter functions can be async, you also have the power to control _when_ Plasmo mounts your component. For example, you can wait for a specific element to appear on the page before mounting your component.
+アンカーゲッター関数が定義されてエクスポートされている場合、CSUIライフサイクルは代わりに返された要素と関連するアンカータイプを使用します。アンカーゲッター関数は非同期にすることができるため、Plasmoがコンポーネントをマウントするタイミングを制御することもできます。たとえば、特定の要素がページに表示されるのを待ってからコンポーネントをマウントできます。
 
-The anchor is passed down to the CSUI via the anchor props. You can access it as follow:
+アンカーは、アンカープロップを介してCSUIに渡されます。次のようにアクセスできます。
 
 ```tsx
 import type { PlasmoCSUIProps } from "plasmo"
@@ -61,11 +61,11 @@ export default AnchorTypePrinter
 
 ### Overlay
 
-Overlay anchors spawn `CSUI Overlay Containers` which are batch-mounted onto a single `Root Container` element per CSUI. The `Overlay Containers` are absolutely positioned relative to each anchor's element with maxed out z-index. Then, your exported `CSUI Component` is mounted onto each `Overlay Container`:
+オーバーレイアンカーは、CSUIごとに単一の`Root Container`要素に一括でマウントされる`CSUI Overlay Container`を生成します。`Overlay Container`は、各アンカーの要素に対して絶対的に配置され、z-indexが最大化されます。次に、エクスポートされた`CSUI Component`が各`Overlay Container`にマウントされます。
 
 ![Overlay Anchor Mounting](@screenshots/2022-12-02-22-45-32.png)
 
-To specify a single overlay anchor, export a `getOverlayAnchor` function:
+単一のオーバーレイアンカーを指定するには、`getOverlayAnchor`関数をエクスポートします。
 
 ```ts
 import type { PlasmoGetOverlayAnchor } from "plasmo"
@@ -74,7 +74,7 @@ export const getOverlayAnchor: PlasmoGetOverlayAnchor = async () =>
   document.querySelector("#pricing")
 ```
 
-To specify a list of overlay anchors, export a `getOverlayAnchorList` function:
+オーバーレイアンカーのリストを指定するには、`getOverlayAnchorList`関数をエクスポートします。
 
 ```ts
 import type { PlasmoGetOverlayAnchorList } from "plasmo"
@@ -84,15 +84,12 @@ export const getOverlayAnchorList: PlasmoGetOverlayAnchorList = async () =>
 ```
 
 <Callout emoji="⚠️">
-  `getOverlayAnchorList` does not cover dynamic case at the moment. For example,
-  if new anchors are added to the web page after the initial rendering, the CSUI
-  lifecycle will not be able to detect it. PR is welcome to improve this
-  feature!
+  `getOverlayAnchorList`は現時点では動的なケースに対応していません。たとえば、最初のレンダリング後に新しいアンカーがウェブページに追加された場合、CSUIライフサイクルはそれを検出できません。この機能の改善のためのPRは大歓迎です！
 </Callout>
 
-#### Update Position
+#### 位置の更新
 
-The default `Overlay Container` listens to the window scroll event to align itself with the anchor element. You can customize how the `Overlay Container` refreshes its absolute positioning by exporting a `watchOverlayAnchor` function. The example below refreshes the position every 8472ms:
+デフォルトの`Overlay Container`は、ウィンドウのスクロールイベントをリッスンして、アンカー要素と位置を合わせます。`watchOverlayAnchor`関数をエクスポートすることで、`Overlay Container`が絶対位置を更新する方法をカスタマイズできます。次の例では、8472ミリ秒ごとに位置を更新します。
 
 ```ts
 import type { PlasmoWatchOverlayAnchor } from "plasmo"
@@ -104,22 +101,22 @@ export const watchOverlayAnchor: PlasmoWatchOverlayAnchor = (
     updatePosition()
   }, 8472)
 
-  // Clear the interval when unmounted
+  // アンマウント時に間隔をクリアする
   return () => {
     clearInterval(interval)
   }
 }
 ```
 
-Check [with-content-scripts-ui/contents/plasmo-overlay-watch.tsx](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-overlay-watch.tsx) for an example.
+例については、[with-content-scripts-ui/contents/plasmo-overlay-watch.tsx](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-overlay-watch.tsx)を参照してください。
 
 ### Inline
 
-Inline anchor embeds your `CSUI Component` directly into the web page. Each anchor spawns a `Root Container` appended next to its target element. Within each `Root Container`, an `Inline Container` is created which is then used to mount the exported `CSUI Component`:
+インラインアンカーは、`CSUI Component`をウェブページに直接埋め込みます。各アンカーは、ターゲット要素の隣に付加された`Root Container`を生成します。各`Root Container`内で、エクスポートされた`CSUI Component`をマウントするために使用される`Inline Container`が作成されます。
 
 ![CSUI Inline Anchor](@screenshots/2022-12-02-23-32-21.png)
 
-To specify a single inline anchor, export a `getInlineAnchor` function:
+単一のインラインアンカーを指定するには、`getInlineAnchor`関数をエクスポートします。
 
 ```ts
 import type { PlasmoGetInlineAnchor } from "plasmo"
@@ -128,7 +125,7 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = async () =>
   document.querySelector("#pricing")
 ```
 
-To specify single inline anchor with insert position:
+挿入位置を指定した単一のインラインアンカーを指定するには:
 
 ```ts
 import type { PlasmoGetInlineAnchor } from "plasmo"
@@ -139,7 +136,7 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = async () => ({
 })
 ```
 
-To specify a list of inline anchors, export a `getInlineAnchorList` function:
+インラインアンカーのリストを指定するには、`getInlineAnchorList`関数をエクスポートします。
 
 ```ts
 import type { PlasmoGetInlineAnchorList } from "plasmo"
@@ -148,7 +145,7 @@ export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
   document.querySelectorAll("a")
 ```
 
-To specify a list of inline anchors with insert position:
+挿入位置を指定したインラインアンカーのリストを指定するには:
 
 ```ts
 import type { PlasmoGetInlineAnchorList } from "plasmo"
@@ -162,17 +159,17 @@ export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () => {
 }
 ```
 
-Check [with-content-scripts-ui/contents/plasmo-inline.tsx](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-inline.tsx) for an example.
+例については、[with-content-scripts-ui/contents/plasmo-inline.tsx](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-inline.tsx)を参照してください。
 
 ## Root Container
 
 ![Root container creation](@screenshots/2022-12-03-04-06-51.png)
 
-The `Root Container` is where your `CSUI Component` is mounted. The built-in `Root Container` is a ShadowDOM element with the `plasmo-csui` custom tag. This allows you to style the `Root Container` and their exported components without being impacted by the web page's styles.
+`Root Container`は、`CSUI Component`がマウントされる場所です。組み込みの`Root Container`は、`plasmo-csui`カスタムタグを持つShadowDOM要素です。これにより、ウェブページのスタイルの影響を受けることなく、`Root Container`とそのエクスポートされたコンポーネントをスタイル設定できます。
 
-### Custom DOM Mounting
+### カスタムDOMマウント
 
-The `Root Container` creates a `shadowHost` which gets injected into the web page's DOM tree. By default, Plasmo injects the `shadowHost` after the element for an inline anchor, and before the `document.body` for an overlay anchor. To customize this behavior, export a `mountShadowHost` function:
+`Root Container`は、ウェブページのDOMツリーに挿入される`shadowHost`を作成します。デフォルトでは、Plasmoはインラインアンカーの要素の後に`shadowHost`を挿入し、オーバーレイアンカーの場合は`document.body`の前に挿入します。この動作をカスタマイズするには、`mountShadowHost`関数をエクスポートします。
 
 ```tsx
 import type { PlasmoMountShadowHost } from "plasmo"
@@ -183,13 +180,13 @@ export const mountShadowHost: PlasmoMountShadowHost = ({
   mountState
 }) => {
   anchor.element.appendChild(shadowHost)
-  mountState.observer.disconnect() // OPTIONAL DEMO: stop the observer as needed
+  mountState.observer.disconnect() // OPTIONAL DEMO: 必要に応じてオブザーバーを停止する
 }
 ```
 
-### Closed Shadow Root
+### クローズドシャドウルート
 
-By default, the shadow root is "open," allowing anyone (developer and extension user) to inspect the hierarchy of the ShadowDOM. To override this behavior, export a `createShadowRoot` function:
+デフォルトでは、シャドウルートは「オープン」になっており、誰でも（開発者と拡張機能のユーザー）がShadowDOMの階層を検査できます。この動作をオーバーライドするには、`createShadowRoot`関数をエクスポートします。
 
 ```ts
 import type { PlasmoCreateShadowRoot } from "plasmo"
@@ -198,15 +195,15 @@ export const createShadowRoot: PlasmoCreateShadowRoot = (shadowHost) =>
   shadowHost.attachShadow({ mode: "closed" })
 ```
 
-### Custom Styles
+### カスタムスタイル
 
-The built-in ShadowDOM provides a convenient mechanism for extension developers to safely style their components by exporting a `getStyle` function that returns an [HTML style element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style).
+組み込みのShadowDOMは、[HTML style要素](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style)を返す`getStyle`関数をエクスポートすることで、拡張機能開発者がコンポーネントを安全にスタイル設定するための便利なメカニズムを提供します。
 
-For further guidance on styling CSUI, please read [Styling Plasmo CSUI](./styling).
+CSUIのスタイル設定に関する詳細なガイダンスについては、[Plasmo CSUIのスタイル設定](./styling)をお読みください。
 
-### Custom Root Container
+### カスタムルートコンテナ
 
-Sometimes, you'll want to completely replace Plasmo's Shadow DOM container implementation to fit your needs. For example, you might want to piggyback on an element within the web page itself instead of creating a new DOM element. To do so, export a `getRootContainer` function:
+ニーズに合わせてPlasmoのShadow DOMコンテナの実装を完全に置き換えたい場合があります。たとえば、新しいDOM要素を作成する代わりに、ウェブページ内の要素自体を利用したい場合があります。そのためには、`getRootContainer`関数をエクスポートします。
 
 ```ts
 import type { PlasmoGetRootContainer } from "plasmo"
@@ -214,31 +211,29 @@ import type { PlasmoGetRootContainer } from "plasmo"
 export const getRootContainer = () => document.getElementById("itero")
 ```
 
-Some reasons you'd want to do this:
+これを行う理由のいくつかを次に示します。
 
-- The extension needs to [absorb the styling of the host webpage](https://github.com/PlasmoHQ/plasmo/issues/10#issuecomment-1149499252)
-- The extension needs to mount the component directly into the webpage instead of using a shadow DOM
-- The extension needs to use an [iframe](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe), instead
+- 拡張機能は[ホストウェブページのスタイルを吸収する](https://github.com/PlasmoHQ/plasmo/issues/10#issuecomment-1149499252)必要があります。
+- 拡張機能は、Shadow DOMを使用する代わりに、ウェブページにコンポーネントを直接マウントする必要があります。
+- 拡張機能は、代わりに[iframe](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe)を使用する必要があります。
 
 <Callout emoji="⚠️">
-  If you export a `getRootContainer` function, any function that extends the
-  built-in ShadowDOM such as `getStyle` or `getShadowHostId` will be ignored.
-  Call those functions within your custom `getRootContainer` logic as needed!
+  `getRootContainer`関数をエクスポートする場合、`getStyle`や`getShadowHostId`など、組み込みのShadowDOMを拡張する関数はすべて無視されます。必要に応じて、カスタム`getRootContainer`ロジック内でこれらの関数を呼び出してください！
 </Callout>
 
-Check [with-content-scripts-ui](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-root-container.tsx) for an example.
+例については、[with-content-scripts-ui](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-root-container.tsx)を参照してください。
 
 ## Renderer
 
 ![Renderer mounting Component](@screenshots/2022-12-03-13-15-13.png)
 
-The `Renderer` is in charge of observing the website's DOM to detect the presence of each `Root Container` and tracking the linking between each anchor's element and its `Root Container`. Once a stable `Root Container` is determined, the `Renderer` mounts the exported `CSUI Component` into the `Root Container` using either an `Inline Container` or an `Overlay Container`, depending on the type of the `Anchor`.
+`Renderer`は、各`Root Container`の存在を検出し、各アンカーの要素とその`Root Container`間のリンクを追跡するために、ウェブサイトのDOMを観察する役割を担っています。安定した`Root Container`が決定されると、`Renderer`は`Anchor`のタイプに応じて`Inline Container`または`Overlay Container`を使用して、エクスポートされた`CSUI Component`を`Root Container`にマウントします。
 
-### Detecting and Optimizing Root Container Removal
+### Root Containerの削除の検出と最適化
 
-When a webpage changes its DOM structure, the `Root Container` might be removed. For example, given an email client filled with inbox items, and a CSUI injected inline next to each item. When an item is deleted, the root container will be removed as well.
+ウェブページがDOM構造を変更すると、`Root Container`が削除される場合があります。たとえば、受信トレイアイテムでいっぱいのメールクライアントと、各アイテムの横にインラインで挿入されたCSUIがあるとします。アイテムが削除されると、ルートコンテナも削除されます。
 
-To detect `Root Container` removal, the `CSUI Renderer` compares each mounted container's root against the `window.document` object. This check can be optimized to O(1) by exporting a `getShadowHostId` function:
+`Root Container`の削除を検出するために、`CSUI Renderer`は、マウントされた各コンテナのルートと`window.document`オブジェクトを比較します。このチェックは、`getShadowHostId`関数をエクスポートすることでO(1)に最適化できます。
 
 ```ts
 import type { PlasmoGetShadowHostId } from "plasmo"
@@ -246,7 +241,7 @@ import type { PlasmoGetShadowHostId } from "plasmo"
 export const getShadowHostId: PlasmoGetShadowHostId = () => `adonais`
 ```
 
-The function also allows developers to customize the id for each anchor found:
+この関数は、検出された各アンカーのIDをカスタマイズすることもできます。
 
 ```ts
 import type { PlasmoGetShadowHostId } from "plasmo"
@@ -255,15 +250,15 @@ export const getShadowHostId: PlasmoGetShadowHostId = ({ element }) =>
   element.getAttribute("data-custom-id") + `-pollax-iv`
 ```
 
-### Custom Renderer
+### カスタムレンダラー
 
-Developers may export a `render` function to override the default renderer. You might need this ability to:
+開発者は、デフォルトのレンダラーをオーバーライドするために`render`関数をエクスポートできます。この機能が必要になる場合があります。
 
-- Provide a custom `Inline container` or `Overlay container`
-- Customize the mounting logic
-- Provide a custom `MutationObserver`
+- カスタム`Inline container`または`Overlay container`を提供する
+- マウントロジックをカスタマイズする
+- カスタム`MutationObserver`を提供する
 
-For example, to use an existing element as a custom container:
+たとえば、既存の要素をカスタムコンテナとして使用するには、次のようにします。
 
 ```tsx
 import type { PlasmoRender } from "plasmo"
@@ -272,7 +267,7 @@ import { CustomContainer } from "~components/custom-container"
 
 const EngageOverlay = () => <span>ENGAGE</span>
 
-// This function overrides the default `createRootContainer`
+// この関数は、デフォルトの`createRootContainer`をオーバーライドします
 export const getRootContainer = () =>
   new Promise((resolve) => {
     const checkInterval = setInterval(() => {
@@ -285,12 +280,12 @@ export const getRootContainer = () =>
   })
 
 export const render: PlasmoRender = async ({
-  anchor, // the observed anchor, OR document.body.
-  createRootContainer // This creates the default root container
+  anchor, // 観察されたアンカー、またはdocument.body。
+  createRootContainer // これはデフォルトのルートコンテナを作成します
 }) => {
   const rootContainer = await createRootContainer()
 
-  const root = createRoot(rootContainer) // Any root
+  const root = createRoot(rootContainer) // 任意のルート
   root.render(
     <CustomContainer>
       <EngageOverlay />
@@ -299,7 +294,7 @@ export const render: PlasmoRender = async ({
 }
 ```
 
-How to dynamically create a custom container:
+カスタムコンテナを動的に作成する方法：
 ```tsx
 import type { PlasmoRender } from "plasmo"
 
@@ -307,7 +302,7 @@ import { CustomContainer } from "~components/custom-container"
 
 const EngageOverlay = () => <span>ENGAGE</span>
 
-// This function overrides the default `createRootContainer`
+// この関数は、デフォルトの`createRootContainer`をオーバーライドします
 export const getRootContainer = ({ anchor, mountState }) =>
   new Promise((resolve) => {
     const checkInterval = setInterval(() => {
@@ -324,12 +319,12 @@ export const getRootContainer = ({ anchor, mountState }) =>
   })
 
 export const render: PlasmoRender = async ({
-  anchor, // the observed anchor, OR document.body.
-  createRootContainer // This creates the default root container
+  anchor, // 観察されたアンカー、またはdocument.body。
+  createRootContainer // これはデフォルトのルートコンテナを作成します
 }) => {
   const rootContainer = await createRootContainer(anchor)
 
-  const root = createRoot(rootContainer) // Any root
+  const root = createRoot(rootContainer) // 任意のルート
   root.render(
     <CustomContainer>
       <EngageOverlay />
@@ -339,7 +334,7 @@ export const render: PlasmoRender = async ({
 ```
 
 
-To utilize the built-in `Inline Container` or `Overlay Container`:
+組み込みの`Inline Container`または`Overlay Container`を利用するには、次のようにします。
 
 ```tsx
 import type { PlasmoRender } from "plasmo"
@@ -348,17 +343,17 @@ const AnchorOverlay = ({ anchor }) => <span>{anchor.innerText}</span>
 
 export const render: PlasmoRender = async (
   {
-    anchor, // the observed anchor, OR document.body.
-    createRootContainer // This creates the default root container
+    anchor, // 観察されたアンカー、またはdocument.body。
+    createRootContainer // これはデフォルトのルートコンテナを作成します
   },
   _,
   OverlayCSUIContainer
 ) => {
   const rootContainer = await createRootContainer()
 
-  const root = createRoot(rootContainer) // Any root
+  const root = createRoot(rootContainer) // 任意のルート
   root.render(
-    // You must pass down an anchor to mount the default container. Here we pass the default one
+    // デフォルトのコンテナをマウントするには、アンカーを渡す必要があります。ここではデフォルトのアンカーを渡します
     <OverlayCSUIContainer anchor={anchor}>
       <AnchorOverlay anchor={anchor} />
     </OverlayCSUIContainer>
@@ -366,4 +361,4 @@ export const render: PlasmoRender = async (
 }
 ```
 
-If you need to customize the MutationObserver, do not export an anchor-getter function. Otherwise, the built-in MutationObserver will still be spawned.
+`MutationObserver`をカスタマイズする必要がある場合は、アンカーゲッター関数をエクスポートしないでください。それ以外の場合は、組み込みの`MutationObserver`が引き続き生成されます。

@@ -1,38 +1,38 @@
 ---
-description: The Plasmo messaging API is a powerful tool for sending real-time messages between different parts of your extension.
+description: Plasmo メッセージング API は、拡張機能の異なる部分間でリアルタイムメッセージを送信するための強力なツールです。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
 import { ShieldBanners } from "~components/shield-banners"
 
-# Messaging API
+# メッセージング API
 
 <ShieldBanners packageName="@plasmohq/messaging" />
 
-Plasmo's Messaging API makes communication between different parts of your extension easy. Add a file to your `messages` directory, and Plasmo will handle all the rest. Plasmo Messaging is a declarative, type-safe, functional, promise-based API for sending, relaying, and receiving messages between your extension components.
+Plasmo のメッセージング API を使用すると、拡張機能の異なる部分間の通信が容易になります。`messages` ディレクトリにファイルを追加するだけで、Plasmo が残りの処理をすべて行います。Plasmo メッセージングは、宣言型で、型安全、関数型、Promise ベースの API で、拡張機能コンポーネント間でメッセージの送受信、中継を行います。
 
-## Installation
+## インストール
 
-### 1. Install dependency
+### 1. 依存関係のインストール
 
-The `@plasmohq/messaging` library is kept in a separate repository. You will first have to install it with your package manager.
+`@plasmohq/messaging` ライブラリは、別のリポジトリに保持されています。まず、パッケージマネージャーを使用してインストールする必要があります。
 
 ```
 pnpm install @plasmohq/messaging
 ```
 
-### 2. Create background folder & file
+### 2. background フォルダとファイルの作成
 
-The `@plasmohq/messaging` library requires the background service worker to live inside a `background/index.ts` folder, and all message handlers to live inside `background/*` folders.
+`@plasmohq/messaging` ライブラリでは、バックグラウンドサービスワーカーが `background/index.ts` フォルダ内に存在し、すべてのメッセージハンドラーが `background/*` フォルダ内に存在する必要があります。
 
-If you already have a `background.ts` or `background.js` file, you will have to create a `background` folder and move your script to `background/index.ts` or `background/index.js`.
+既に `background.ts` または `background.js` ファイルがある場合は、`background` フォルダを作成し、スクリプトを `background/index.ts` または `background/index.js` に移動する必要があります。
 
-If you don't already have a `background` folder, create a `background` folder and create a new, empty `background/index.ts` or `background/index.js` file.
+`background` フォルダがまだない場合は、`background` フォルダを作成し、新しい空の `background/index.ts` または `background/index.js` ファイルを作成します。
 
-You will now be able to create new handlers inside the `background/` subfolder. For example, to create a `messages` handler with the name `ping`, you would create a `background/messages/ping.ts`. See the rest of the documentation to learn about the different types of handlers available to you, and how to configure them. 
+これで、`background/` サブフォルダ内に新しいハンドラーを作成できるようになります。例えば、`ping` という名前の `messages` ハンドラーを作成するには、`background/messages/ping.ts` を作成します。利用可能なさまざまなタイプのハンドラーとその設定方法については、ドキュメントの残りの部分を参照してください。
 
-At this point, your folder structure might look like this.
+この時点で、フォルダ構造は次のようになる可能性があります。
 
 ```bash filename="New Folder Structure"
 .
@@ -42,45 +42,45 @@ At this point, your folder structure might look like this.
 │       └── ping.ts
 ```
 
-### 3. Generate static types
+### 3. 静的型の生成
 
-On compilation, Plasmo will generate static types for all of your message handlers. This will happen automatically if you have the dev server running; it will also happen automatically each time you build. The `sendToBackground` and `relayMessage` functions both take a `name` field as part of their params object; this `name` field will be statically typed with the names of all of your message handlers.
+コンパイル時に、Plasmo はすべてのメッセージハンドラーの静的型を生成します。開発サーバーが実行されている場合は自動的に実行されます。ビルドするたびに自動的に実行されます。`sendToBackground` および `relayMessage` 関数は、どちらもパラメーターオブジェクトの一部として `name` フィールドを受け取ります。この `name` フィールドは、すべてのメッセージハンドラーの名前で静的に型付けされます。
 
 <Callout emoji="⚠️">
 
-**NOTE: Initial Type Error** 
+**注意: 最初の型エラー**
 
-If you're receiving a type error such as `"name" is never`, this is because Plasmo needs to compile your handler types. To resolve:
+`"name" is never` のような型エラーが発生する場合は、Plasmo がハンドラー型をコンパイルする必要があるためです。解決するには：
 
-1. Run the dev server
-2. Restart the TypeScript server in your editor
+1. 開発サーバーを実行する
+2. エディターで TypeScript サーバーを再起動する
 
 </Callout>
 
-### 4. That's all
+### 4. 以上です
 
-You have now successfully installed Plasmo's messaging library.
+これで、Plasmo のメッセージングライブラリのインストールが完了しました。
 
 
 ## TL;DR
 
-| Messaging API                 | From         | To           | One-time | Long-lived |
+| メッセージング API                 | 送信元         | 送信先           | 一時的なもの | 永続的なもの |
 | :---------------------------- | :----------- | :----------- | :------- | :--------- |
-| [Message Flow](#message-flow) | Ext-Pages/CS | BGSW         | Yes      | No         |
-| [Relay Flow](#relay-flow)     | Website      | CS/BGSW      | Yes      | No         |
-| [Ports](#ports)               | Ext-Pages/CS | BGSW         | No       | Yes        |
-| Ports                         | BGSW         | Ext-Pages/CS | No       | Yes        |
-| Ports + Relay                 | BGSW         | WebPage      | Yes      | Yes        |
+| [メッセージフロー](#message-flow) | 拡張機能ページ/コンテンツスクリプト | バックグラウンドサービスワーカー | はい      | いいえ         |
+| [リレーフロー](#relay-flow)     | ウェブサイト      | コンテンツスクリプト/バックグラウンドサービスワーカー      | はい      | いいえ         |
+| [ポート](#ports)               | 拡張機能ページ/コンテンツスクリプト | バックグラウンドサービスワーカー         | いいえ       | はい        |
+| ポート                         | バックグラウンドサービスワーカー         | 拡張機能ページ/コンテンツスクリプト | いいえ       | はい        |
+| ポート + リレー                 | バックグラウンドサービスワーカー         | ウェブページ      | はい      | はい        |
 
-## Examples
+## 例
 
 - [with-messaging](https://github.com/PlasmoHQ/examples/tree/main/with-messaging)
 
-## Message Flow
+## メッセージフロー
 
-Use the Message Flow to initiate one-time messages between extension pages, tab pages or content scripts with the background service worker. This flow is useful to offload heavy computation to the background service worker or to bypass CORS.
+メッセージフローを使用して、拡張機能ページ、タブページ、またはコンテンツスクリプトとバックグラウンドサービスワーカー間で一度限りのメッセージを開始します。このフローは、重い計算をバックグラウンドサービスワーカーにオフロードしたり、CORS を回避したりする場合に役立ちます。
 
-The background service worker is a message hub with REST-style API handlers. To create a message handler, create a ts module in the `background/messages` directory. The file name should be the message name, and the default export should be the handler function:
+バックグラウンドサービスワーカーは、REST スタイルの API ハンドラーを持つメッセージハブです。メッセージハンドラーを作成するには、`background/messages` ディレクトリに ts モジュールを作成します。ファイル名はメッセージ名にする必要があり、デフォルトのエクスポートはハンドラー関数にする必要があります。
 
 ```ts filename="background/messages/ping.ts"
 import type { PlasmoMessaging } from "@plasmohq/messaging"
@@ -96,7 +96,7 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
 export default handler
 ```
 
-Extension pages, content scripts, or tab pages can send messages to these handlers using the `@plasmohq/messaging` library. Since Plasmo Framework orchestrates your handlers behind the scenes, the message names are typed and will enable IntelliSense in your editor:
+拡張機能ページ、コンテンツスクリプト、またはタブページは、`@plasmohq/messaging` ライブラリを使用してこれらのハンドラーにメッセージを送信できます。Plasmo フレームワークが舞台裏でハンドラーをオーケストレーションするため、メッセージ名は型付けされ、エディターで IntelliSense が有効になります。
 
 ```tsx filename="popup.tsx"
 import { sendToBackground } from "@plasmohq/messaging"
@@ -112,7 +112,7 @@ const resp = await sendToBackground({
 console.log(resp)
 ```
 
-To send a message from a content script thats in the main world you'll have to include your extension's id in the request. Your extension's id can be found in chrome's extension manager window once you've built and added it to your browser.
+メインワールドにあるコンテンツスクリプトからメッセージを送信するには、リクエストに拡張機能のIDを含める必要があります。拡張機能のIDは、ビルドしてブラウザに追加した後、Chromeの拡張機能マネージャーウィンドウで見つけることができます。
 
 ```tsx filename="contents/componentInTheMainWorld.tsx"
 import { sendToBackground } from "@plasmohq/messaging"
@@ -135,27 +135,27 @@ console.log(resp)
 ```
 
 
-## Relay Flow
+## リレーフロー
 
 <Callout emoji="⚠️">
 
-**NOTE:** The Relay messaging API is in public alpha preview: expects bugs, incomplete/leaky abstractions, and future API changes. Please report any issues you encounter [to us via this link](/bug).
+**注意:** リレーメッセージングAPIはパブリックアルファプレビュー版です。バグ、不完全/漏洩した抽象化、および将来のAPIの変更を予期してください。遭遇した問題については、[このリンクからお知らせください](/bug)。
 
 </Callout>
 
-The Relay Flow enables communication between a target webpage and a background service worker using a lightweight message handler called a relay. This relay is registered with the `relayMessage` function in a [content script](/framework/content-scripts).
+リレーフローは、リレーと呼ばれる軽量なメッセージハンドラーを使用して、ターゲットウェブページとバックグラウンドサービスワーカー間の通信を可能にします。このリレーは、[コンテンツスクリプト](/framework/content-scripts)の`relayMessage`関数を使用して登録されます。
 
-The `relayMessage` function abstracts the `window.postMessage` mechanism, registering a listener that checks for messages matching the same origin and forwards them to the background service worker. These messages are then processed by the appropriate [message flow handlers](#message-flow) registered under `background/messages`.
+`relayMessage`関数は`window.postMessage`メカニズムを抽象化し、同じオリジンに一致するメッセージを検出してバックグラウンドサービスワーカーに転送するリスナーを登録します。これらのメッセージは、次に`background/messages`の下に登録された適切な[メッセージフローハンドラー](#message-flow)によって処理されます。
 
-The `sendToBackgroundViaRelay` function sends messages through the relay and waits for a response. It generates a unique instance ID for each message to ensure proper handling and response tracking.
+`sendToBackgroundViaRelay`関数は、リレーを介してメッセージを送信し、応答を待ちます。適切な処理と応答の追跡を確保するために、各メッセージに一意のインスタンスIDを生成します。
 
-You may view the implementation of these functions in the [GitHub repository](https://github.com/PlasmoHQ/plasmo/blob/main/api/messaging/src/relay.ts).
+これらの関数の実装は、[GitHubリポジトリ](https://github.com/PlasmoHQ/plasmo/blob/main/api/messaging/src/relay.ts)で確認できます。
 
-This method provides an alternative to the ["externally_connectable"](https://developer.chrome.com/docs/extensions/develop/concepts/messaging#external-webpage) method described in the Chrome extension documentation.
+この方法は、Chrome拡張機能のドキュメントで説明されている["externally_connectable"](https://developer.chrome.com/docs/extensions/develop/concepts/messaging#external-webpage)メソッドの代替手段を提供します。
 
-### Setting Up a Relay
+### リレーの設定
 
-To set up a relay, use the `relayMessage` function in a content script. A content script can have multiple relays. Given the `ping` message handler from the previous example, and the website `www.plasmo.com`:
+リレーを設定するには、コンテンツスクリプトで`relayMessage`関数を使用します。コンテンツスクリプトには複数のリレーを含めることができます。前の例からの`ping`メッセージハンドラーとウェブサイト`www.plasmo.com`を想定すると：
 
 ```ts filename="contents/plasmo.ts"
 import type { PlasmoCSConfig } from "plasmo"
@@ -171,7 +171,7 @@ relayMessage({
 })
 ```
 
-In the code of the target webpage (e.g., `plasmo.com`), you can send messages using the registered relay using `sendToBackgroundViaRelay` as follows:
+ターゲットウェブページ（例：`plasmo.com`）のコードでは、次のように`sendToBackgroundViaRelay`を使用して、登録されたリレーを使用してメッセージを送信できます。
 
 ```tsx filename="pages/index.tsx"
 
@@ -185,7 +185,7 @@ const resp = await sendToBackgroundViaRelay({
 console.log(resp)
 ```
 
-To relay messages from contexts where `chrome.runtime` is unavailable, you can use the `relay` function:
+`chrome.runtime`が利用できないコンテキストからメッセージをリレーするには、`relay`関数を使用できます。
 
 ```tsx filename="sandbox.tsx"
 import { relayMessage } from "@plasmohq/messaging"
@@ -203,19 +203,19 @@ relayMessage(
 )
 ```
 
-## Ports
+## ポート
 
 <Callout emoji="⚠️">
 
-The Port messaging API is in public alpha preview: expects bugs, incomplete/leaky abstractions, and future API changes. Please report any issues you encounter [to us via this link](/bug).
+ポートメッセージングAPIはパブリックアルファプレビュー版です。バグ、不完全/漏洩した抽象化、および将来のAPIの変更を予期してください。遭遇した問題については、[このリンクからお知らせください](/bug)。
 
 </Callout>
 
-The Messaging Ports API is a high-level abstraction over the chrome runtime's [port API](https://developer.chrome.com/docs/extensions/mv3/messaging/#connect) to establish long-lived connections with the background service worker.
+メッセージングポートAPIは、Chromeランタイムの[ポートAPI](https://developer.chrome.com/docs/extensions/mv3/messaging/#connect)を抽象化した高レベルAPIであり、バックグラウンドサービスワーカーとの永続的な接続を確立します。
 
-The current implementation focuses on establishing connections to a port listener in the background service worker:
+現在の実装は、バックグラウンドサービスワーカーのポートリスナーへの接続確立に重点を置いています。
 
-To create a BGSW port handler, create a ts module in the `background/ports` directory. The file name will be the port name, and the default export will be the handler function:
+BGSWポートハンドラーを作成するには、`background/ports`ディレクトリにtsモジュールを作成します。ファイル名はポート名になり、デフォルトのエクスポートはハンドラー関数になります。
 
 ```ts filename="background/ports/mail.ts"
 import type { PlasmoMessaging } from "@plasmohq/messaging"
@@ -231,7 +231,7 @@ const handler: PlasmoMessaging.PortHandler = async (req, res) => {
 export default handler
 ```
 
-In your extension page, get the port using the `getPort` utility under the `@plasmohq/messaging/port`, **OR** use the `usePort` hook, keep in mind that `usePort` currently relies on React hooks so you will need to use it within a React component. This example shows the usage of `getPort` within a Svelte component:
+拡張機能ページで、`@plasmohq/messaging/port`の下にある`getPort`ユーティリティを使用してポートを取得するか、**または**`usePort`フックを使用します。`usePort`は現在Reactフックに依存しているため、Reactコンポーネント内で使用する必要があることに注意してください。この例は、Svelteコンポーネント内で`getPort`の使用を示しています。
 
 ```svelte filename="popup.svelte"
 <script lang="ts">
@@ -266,7 +266,7 @@ In your extension page, get the port using the `getPort` utility under the `@pla
 <div>{output}</div>
 ```
 
-Here's an example of `usePort` in React, the data will always reflect the latest response from the port handler:
+Reactでの`usePort`の例を次に示します。データは常にポートハンドラーからの最新の応答を反映します。
 
 ```tsx filename="tabs/delta.tsx"
 import { usePort } from "@plasmohq/messaging/hook"
@@ -292,9 +292,9 @@ function DeltaTab() {
 export default DeltaTab
 ```
 
-## E2E Type Safety (WIP)
+## E2E 型安全性 (WIP)
 
-End-to-end request/response body type-safety is in progress at [#334](https://github.com/PlasmoHQ/plasmo/issues/334). In the meantime, you can use the provided generic types:
+エンドツーエンドのリクエスト/レスポンスボディの型安全性は、[#334](https://github.com/PlasmoHQ/plasmo/issues/334)で進行中です。それまでは、提供されている汎用型を使用できます。
 
 ```ts filename="background/messages/ping.ts"
 import type { PlasmoMessaging } from "@plasmohq/messaging"

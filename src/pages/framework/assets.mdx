@@ -1,16 +1,16 @@
 ---
-description: Plasmo offers several ways to easily bundle assets into your browser extension.
+description: Plasmoは、ブラウザ拡張機能にアセットを簡単にバンドルするためのいくつかの方法を提供します。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Assets
+# アセット
 
-Extension bundles can include assets such as images, fonts, binary WASM bundles, and other files. Plasmo provides several methods to work with these assets.
+拡張機能バンドルには、画像、フォント、バイナリ WASM バンドル、その他のファイルなどのアセットを含めることができます。Plasmo は、これらのアセットを操作するためのいくつかの方法を提供します。
 
-## Inline Image
+## インライン画像
 
-The easiest way to load images inside your extension is to use the `data-base64` scheme. This will inline the image as base64 encoded data in the built bundle of your extension:
+拡張機能内で画像をロードする最も簡単な方法は、`data-base64` スキームを使用することです。これにより、画像は base64 エンコードされたデータとして、拡張機能のビルドされたバンドルにインラインされます。
 
 ```tsx
 import someCoolImage from "data-base64:~assets/some-cool-image.png"
@@ -21,12 +21,12 @@ import someCoolImage from "data-base64:~assets/some-cool-image.png"
 ```
 
 <Callout emoji="📦">
-  Please see this [note about `~` import resolution](/framework/import#tilde-)
+  `~` インポート解決に関するこの [注記](/framework/import#tilde-) を参照してください。
 </Callout>
 
-## Web Accessible Resources
+## Web アクセス可能なリソース
 
-Plasmo automatically copies any web-accessible resources declared in [the manifest override](/framework/customization/manifest). For example, by specifying the following config in `package.json`:
+Plasmo は、[マニフェストのオーバーライド](/framework/customization/manifest)で宣言された Web アクセス可能なリソースを自動的にコピーします。たとえば、`package.json` に次の設定を指定することで：
 
 ```json
   "manifest": {
@@ -48,16 +48,16 @@ Plasmo automatically copies any web-accessible resources declared in [the manife
   }
 ```
 
-The files below will be copied into the extension bundle and be available to [`chrome.getURL()`](https://developer.chrome.com/docs/extensions/reference/runtime/#method-getURL):
+以下のファイルは拡張機能バンドルにコピーされ、[`chrome.getURL()`](https://developer.chrome.com/docs/extensions/reference/runtime/#method-getURL) から利用可能になります。
 
-- `raw.js` in the root of the project (where package.json is)
-- Any file matching the glob `assets/pic*.png` from the project root
-- `resources/test.json` from the project root
+- プロジェクトのルート（package.json がある場所）にある `raw.js`
+- プロジェクトルートからの glob `assets/pic*.png` に一致する任意のファイル
+- プロジェクトルートからの `resources/test.json`
 
-See [with-web-accessible-resources](https://github.com/PlasmoHQ/examples/tree/main/with-web-accessible-resources)
+[with-web-accessible-resources](https://github.com/PlasmoHQ/examples/tree/main/with-web-accessible-resources) を参照してください
 
-### Loading Asset during runtime
-If you use a package that dynamically loads an asset (e.g. wasm) during runtime and needs a path to the local asset library, note that you need to make your asset folder available using ~assets, e.g.:
+### ランタイム時のアセットの読み込み
+ランタイム時にアセット（例：wasm）を動的に読み込むパッケージを使用し、ローカルアセットライブラリへのパスが必要な場合は、~assets を使用してアセットフォルダを公開する必要があることに注意してください。例：
 ```json
     "web_accessible_resources": [
       {
@@ -67,14 +67,14 @@ If you use a package that dynamically loads an asset (e.g. wasm) during runtime 
       }
     ],
 ```
-While in your js/ts code you need to refer the folder using the absolute path `/`
+JS/TSコードでは、絶対パス `/` を使用してフォルダを参照する必要があります。
 ```js
 wasmPackage.localWASMPath("/assets/wasm/")
 ```
 
-## Assets from `node_modules`
+## `node_modules` からのアセット
 
-Sometimes, a node package exposes static assets files you must include in your bundle as web-accessible resources. To do so, specify those assets in the `web_accessible_resources` field of the manifest override in `package.json`:
+場合によっては、ノードパッケージが、Web アクセス可能なリソースとしてバンドルに含める必要がある静的アセットファイルを公開します。そのためには、`package.json` のマニフェストのオーバーライドの `web_accessible_resources` フィールドにそれらのアセットを指定します。
 
 ```json
   "manifest": {
@@ -92,4 +92,6 @@ Sometimes, a node package exposes static assets files you must include in your b
   }
 ```
 
-See [with-inbox-sdk](https://github.com/PlasmoHQ/examples/tree/main/with-inbox-sdk)
+[with-inbox-sdk](https://github.com/PlasmoHQ/examples/tree/main/with-inbox-sdk) を参照してください
+
+

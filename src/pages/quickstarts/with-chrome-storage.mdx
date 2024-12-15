@@ -1,22 +1,22 @@
 ---
-description: Instead of starting from scratch, you can use the Chrome Storage Quickstart to get a basic extension up and running quickly.
+description: 最初から始める代わりに、Chrome ストレージ クイックスタートを使用して、基本的な拡張機能を迅速に動作させることができます。
 ---
 
-# Quickstart with Chrome Storage
+# Chrome ストレージを使用したクイックスタート
 
-## Intro
+## はじめに
 
-Chrome storage is a powerful mechanism for persisting data in your extension. It's essential in MV3 where persistent background pages, which used to be the place developers stored persistent data, no longer exist.
+Chrome ストレージは、拡張機能でデータを永続的に保存するための強力なメカニズムです。開発者が永続的なデータを保存していた従来の永続的なバックグラウンドページが存在しなくなったMV3 (Manifest V3) では不可欠です。
 
-## Plasmo Storage
+## Plasmo ストレージ
 
-We built a [library](/framework/storage) on top of the `chrome.storage` API that makes it much easier to use, especially if you're writing a React app.
+`chrome.storage` APIの上に、特にReactアプリを作成する場合に、使用をはるかに容易にする[ライブラリ](/framework/storage) を構築しました。
 
-## Storage Hooks
+## ストレージフック
 
-Our library provides React hooks for reading and writing to storage.
+当社のライブラリは、ストレージへの読み書きを行うためのReactフックを提供します。
 
-Here's some example usage:
+いくつかの使用例を以下に示します。
 
 ```tsx filename="popup.tsx"
 import { useStorage } from "@plasmohq/storage/hook"
@@ -72,6 +72,8 @@ function IndexOptions() {
 export default IndexOptions
 ```
 
-## Full Example
+## 完全な例
 
-For the complete example, check out [with-storage](https://github.com/PlasmoHQ/examples/tree/main/with-storage) in the examples GitHub repository.
+完全な例については、examples GitHubリポジトリの[with-storage](https://github.com/PlasmoHQ/examples/tree/main/with-storage)をご覧ください。
+
+

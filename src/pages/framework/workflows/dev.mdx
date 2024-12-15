@@ -1,68 +1,69 @@
 ---
-description: How to build a development version of your browser extension.
+description: ブラウザ拡張機能の開発版をビルドする方法
 ---
 
-# Start the Development Server
+# 開発サーバーの起動
 
-Once you've set up your project, start developing your extension by navigating to your project directory and running:
+プロジェクトの設定が完了したら、プロジェクトディレクトリに移動して以下のコマンドを実行し、拡張機能の開発を開始します。
 
 ```sh
 pnpm dev
-# OR
+# または
 npm run dev
-# OR
+# または
 plasmo dev
 ```
 
-Plasmo will create a dev bundle for your extension and a live-reloading development server, automatically updating your extension bundle on file changes and reloading your browser on source code changes. It also prefixes the extension name with `DEV |` and makes the icon grayscale to distinguish between development and production extension bundles.
+Plasmo は拡張機能の開発用バンドルとライブリロード対応の開発サーバーを作成し、ファイルの変更時に拡張機能バンドルを自動的に更新し、ソースコードの変更時にブラウザをリロードします。また、拡張機能名に `DEV |` をプレフィックスとして追加し、アイコンをグレースケールにすることで、開発用と本番環境の拡張機能バンドルを区別します。
 
-## Loading the extension
+## 拡張機能の読み込み
 
-We plan to automate this in the future, but for the time being, these are the steps you need to take to load your extension in Chrome.
+将来的には自動化を予定していますが、現時点ではChromeに拡張機能を読み込むには以下の手順が必要です。
 
-Head over to `chrome://extensions` and enable Developer Mode.
+`chrome://extensions` にアクセスし、「デベロッパーモード」を有効にします。
 
-![Enable developer mode](@screenshots/developer_mode.png)
+![デベロッパーモードの有効化](@screenshots/developer_mode.png)
 
-Click on "Load Unpacked" and navigate to your extension's `build/chrome-mv3-dev` (or `build/chrome-mv3-prod`) directory.
+「パッケージ化されていない拡張機能を読み込む」をクリックし、拡張機能の `build/chrome-mv3-dev` (または `build/chrome-mv3-prod`) ディレクトリに移動します。
 
-To see your popup, click on the puzzle piece icon on the Chrome toolbar, and click on your extension.
+ポップアップを表示するには、Chrome ツールバーのジグソーパズルアイコンをクリックし、拡張機能をクリックします。
 
-**Pro tip:** Pin your extension to the Chrome toolbar for easy access by clicking the pin button.
+**プロチップ:** ピンボタンをクリックして、Chrome ツールバーに拡張機能をピン留めし、簡単にアクセスできるようにします。
 
-![Pinning popup](@screenshots/popup_example.png)
+![ポップアップのピン留め](@screenshots/popup_example.png)
 
-## With a specific target
+## 特定のターゲットを指定して
 
-When you're building with Plasmo, you're building a Plasmo extension, rather than a Chrome or Firefox extension. This means that you can build a single extension that works across all supported browsers, with minor tweaks. You can direct Plasmo to build an extension for a specific browser and manifest version by using the `--target` flag:
+Plasmo を使用してビルドする際は、Chrome や Firefox の拡張機能ではなく、Plasmo 拡張機能をビルドします。つまり、わずかな調整で、サポートされているすべてのブラウザで動作する単一の拡張機能をビルドできます。`--target` フラグを使用して、特定のブラウザとマニフェストバージョン用の拡張機能を Plasmo にビルドさせることができます。
 
 ```sh
 plasmo dev --target=firefox-mv2
 ```
 
-The final bundle will be available in the `build/firefox-mv2-dev` directory.
+最終的なバンドルは `build/firefox-mv2-dev` ディレクトリで使用できます。
 
-For a list of officially supported targets, [visit this link](./faq#what-are-the-officially-supported-browser-targets).
+正式にサポートされているターゲットのリストについては、[このリンク](./faq#what-are-the-officially-supported-browser-targets) を参照してください。
 
-## Without source maps
 
-By default, Plasmo generates source maps for your extension during development. If you need to disable this, you can use the `--no-source-maps` flag:
+## ソースマップなしで
+
+デフォルトでは、Plasmo は開発中に拡張機能のソースマップを生成します。これを無効にする必要がある場合は、`--no-source-maps` フラグを使用できます。
 
 ```sh
 plasmo dev --no-source-maps
 ```
 
-This is useful when you have dependencies that don't play well with source maps.
+これは、ソースマップと互換性のない依存関係がある場合に役立ちます。
 
-## With a specific hostname and port
+## 特定のホスト名とポートを使用して
 
-The development server will, by default, bind to `localhost` and port `1012`. You can change these with `--serve-host` and `--serve-port`:
+開発サーバーは、デフォルトで `localhost` とポート `1012` にバインドされます。`--serve-host` と `--serve-port` を使用してこれらを変更できます。
 
 ```sh
 plasmo dev --serve-host=localhost --serve-port=1012
 ```
 
-Similarly, the hot module reload websocket will, by default, bind to `localhost` and port `1815`, with the build reporter binding to the HMR socket + 1 (1816 by default). You can change these with `--hmr-host` and `--hmr-port`:
+同様に、ホットモジュールリロードの Websocket は、デフォルトで `localhost` とポート `1815` にバインドされ、ビルドレポーターは HMR ソケット + 1（デフォルトでは 1816）にバインドされます。`--hmr-host` と `--hmr-port` を使用してこれらを変更できます。
 
 ```sh
 plasmo dev --hmr-host=localhost --hmr-port=1815

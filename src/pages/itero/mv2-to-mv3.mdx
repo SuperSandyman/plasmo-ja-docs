@@ -1,39 +1,37 @@
 ---
-description: Ease the pain of transitioning between Mv2 and Mv3 with Itero's Migration Toolkits.
+description: Iteroの移行ツールキットで、MV2からMV3への移行の負担を軽減します。
 ---
 
-# Manifest Version 2 to 3 Converter
+# Manifest バージョン2から3へのコンバーター
 
-Converting your browser extension from Manifest V2 to Manifest V3 is a big task. With Itero's MV2-MV3 Converter, you can convert your extension to Manifest V3 with a single click. You can then use the TestBed to test your extension and make sure it works as expected.
+ブラウザ拡張機能をManifest V2からManifest V3に変換することは、大きな作業です。IteroのMV2-MV3コンバーターを使用すると、ワンクリックで拡張機能をManifest V3に変換できます。その後、TestBed（テストベッド）を使用して拡張機能をテストし、期待通りに動作することを確認できます。
 
-Expand your extension on the Itero dashboard and click on MV2 to MV3.
+Iteroダッシュボードで拡張機能を展開し、「MV2からMV3へ」をクリックします。
 
 ![](@screenshots/example-mv2-extension.png)
 
-You'll see an entire page dedicated to converting your extension.
+拡張機能の変換専用のページが表示されます。
 
 import { Callout } from "nextra-theme-docs"
 
 <Callout>
-  Itero Publisher is currently in beta review. If you have feedback, please
-  don't hesitate to let us know!
+  Itero Publisherは現在ベータ版レビュー中です。フィードバックがありましたら、ぜひお知らせください！
 </Callout>
 
-Starter-tier users can only convert their manifest.json file. Pro-tier users can
-also have their code scanned!
+Starter（スターター）ティアのユーザーは、manifest.jsonファイルのみを変換できます。Pro（プロ）ティアのユーザーは、コードのスキャンも実行できます！
 
-If you haven't already, click "Run Code Scanning" to scan your code for any issues. This will help you identify any issues that you might have with your extension.
+まだ実行していない場合は、「コードスキャンを実行」をクリックして、コードに問題がないかスキャンします。これにより、拡張機能に発生する可能性のある問題を特定できます。
 
 ![](@screenshots/mv2-to-mv3-migration.png)
 
-## Manifest Converter
+## Manifestコンバーター
 
-Plasmo will look through your manifest.json file and let you know what you need to change in order to be MV3-ready. You can also click "Download MV3 Manifest" to download a manifest.json file that's ready for MV3.
+Plasmo（プラスモ）は、manifest.jsonファイルを確認し、MV3に対応するために変更が必要な点を知らせます。また、「MV3 Manifestをダウンロード」をクリックして、MV3対応のmanifest.jsonファイルをダウンロードすることもできます。
 
 ![](@screenshots/seven-issues-found.png)
 
-## Code Scanning
+## コードスキャン
 
-Pro users get the added benefit of having their code scanned. This will identify if your extension uses any MV2-only features that are not supported in MV3.
+Proユーザーは、コードスキャンを追加で利用できます。これにより、拡張機能がMV3でサポートされていないMV2専用の機能を使用しているかどうかを特定できます。
 
 ![](@screenshots/58-issues.png)

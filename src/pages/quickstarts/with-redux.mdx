@@ -1,26 +1,26 @@
 ---
-description: Guide on how to use Redux with your manifest version 3 browser extension.
+description: manifest version 3 ブラウザ拡張機能でReduxを使用する方法に関するガイドです。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Quickstart with Redux
+# Reduxを使ったクイックスタート
 
-Easily integrate Redux to provide a simple way to manage state across your browser extension.
+ブラウザ拡張機能全体で状態を管理する簡単な方法を提供するために、Reduxを簡単に統合できます。
 
-We forked [redux-persist](https://github.com/plasmo-foss/redux-persist) which you can utilize along with [redux-persist-webextension-storage](https://www.npmjs.com/package/redux-persist-webextension-storage) to persist your Redux state using `chrome.storage`.
+[redux-persist](https://github.com/plasmo-foss/redux-persist) をフォークしたものを、`chrome.storage` を使用してReduxの状態を永続化するために、[redux-persist-webextension-storage](https://www.npmjs.com/package/redux-persist-webextension-storage) と共に使用できます。
 
 <Callout emoji="⚠️">
 
-Support for Redux is provided by the open-source community at large. If it does not work, we welcome your contribution! For custom integration, we offer a consultation service. Please email `support@plasmo.com` for more detail.
+Reduxのサポートは、大規模なオープンソースコミュニティによって提供されています。機能しない場合は、ご協力いただければ幸いです！カスタム統合については、コンサルティングサービスを提供しています。詳細は`support@plasmo.com`までメールでお問い合わせください。
 
 </Callout>
 
-## Increment Example
+## インクリメントの例
 
-Let's make a basic extension that increments and decrements a counter.
+カウンターを増減する基本的な拡張機能を作成してみましょう。
 
-### Create Your Slice
+### スライスの作成
 
 ```ts filename="counter-slice.ts"
 import { createSlice } from "@reduxjs/toolkit"
@@ -47,7 +47,7 @@ export const { increment, decrement } = counterSlice.actions
 export default counterSlice.reducer
 ```
 
-### Create Your Store
+### ストアの作成
 
 ```ts filename="store.ts"
 import { configureStore } from "@reduxjs/toolkit"
@@ -106,9 +106,9 @@ new Storage().watch({
 })
 ```
 
-The thing to note is the `new Storage().watch()` call. This will automatically resync the store whenever the Redux store changes in `chrome.storage`.
+注目すべき点は、`new Storage().watch()` の呼び出しです。これにより、`chrome.storage` でReduxストアが変更されるたびに、ストアが自動的に再同期されます。
 
-### Using in React
+### Reactでの使用
 
 ```tsx filename="options.tsx"
 import { Provider } from "react-redux"
@@ -131,9 +131,9 @@ function Options() {
 export default Options
 ```
 
-Using the `PersistGate` will ensure the child components don't render until the store is ready.
+`PersistGate` を使用すると、ストアの準備が整うまで子コンポーネントがレンダリングされないようになります。
 
-### Using in a Background Service Worker
+### バックグラウンドサービスワーカーでの使用
 
 ```ts filename="background.ts"
 import { persistor, store } from "~store"
@@ -143,6 +143,6 @@ persistor.subscribe(() => {
 })
 ```
 
-## Full Example
+## 完全な例
 
-See [with-redux](https://github.com/PlasmoHQ/examples/tree/main/with-redux) for a complete example.
+完全な例については、[with-redux](https://github.com/PlasmoHQ/examples/tree/main/with-redux) を参照してください。

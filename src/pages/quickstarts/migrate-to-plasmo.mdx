@@ -1,57 +1,57 @@
 ---
-description: A guide on migrating to Plasmo from any browser extension setup.
+description: Plasmoからのブラウザ拡張機能設定への移行ガイド。
 ---
 
-# Migrate to Plasmo Framework
+# Plasmoフレームワークへの移行
 
-The Plasmo Browser Extension Framework simplifies building browser extensions with its declarative approach. It eliminates boilerplate code and provides a file-based configuration system that is easy to understand, use and [opt out of](#opting-out).
+Plasmoブラウザ拡張機能フレームワークは、宣言的なアプローチによりブラウザ拡張機能の構築を簡素化します。定型コードを排除し、理解、使用、および[オプトアウト](#opting-out)が容易なファイルベースの構成システムを提供します。
 
-In this guide, we will walk you through transitioning from any extension project to Plasmo and highlight some key changes you need to make.
+このガイドでは、任意の拡張機能プロジェクトからPlasmoへの移行手順を説明し、必要な主な変更点を強調します。
 
-## Install Plasmo CLI
+## Plasmo CLIのインストール
 
-The Plasmo framework's main driver is the Plasmo CLI. It is a Node.js package that contains a compiler, a bundler, a development server, and a packager tailor-made for browser extensions:
+PlasmoフレームワークのメインドライバーはPlasmo CLIです。これは、ブラウザ拡張機能用に特化したコンパイラ、バンドラ、開発サーバー、およびパッケージャを含むNode.jsパッケージです。
 
 ```bash
 pnpm install plasmo
 ```
 
-To start the development server, run `plasmo dev`. To build the extension, run `plasmo build`. To package the extension, run `plasmo package`.
+開発サーバーを起動するには、`plasmo dev`を実行します。拡張機能をビルドするには、`plasmo build`を実行します。拡張機能をパッケージ化するには、`plasmo package`を実行します。
 
 ## manifest.json
 
-Plasmo merges `manifest.json` into the `package.json` and abstracts away the most basic properties:
+Plasmoは`manifest.json`を`package.json`にマージし、最も基本的なプロパティを抽象化します。
 
-| Manifest Field              | Abstractions                                                           |
+| Manifestフィールド              | 抽象化                                                           |
 | :-------------------------- | :--------------------------------------------------------------------- |
-| `icons`                     | Auto generated with the `icon.png` in the `assets` directory           |
+| `icons`                     | `assets`ディレクトリの`icon.png`を使用して自動生成されます           |
 | `action`, `browser_actions` | [`popup.tsx`](#popup-options-newtab-pages)                             |
 | `options_ui`                | [`options.tsx`](#popup-options-newtab-pages)                           |
 | `content_scripts`           | [`contents/*.{ts,tsx}`, `content.ts`, `content.tsx`](#content-scripts) |
 | `background`                | [`background.ts`](#background-service-worker)                          |
 | `sandbox`                   | `sandbox.tsx`, [Sandbox Pages](/framework/sandbox-pages)               |
-| `manifest_version`          | set by the `--target` build flag, default to `3`                       |
-| `version`                   | set by the `version` field in `package.json`                           |
-| `name`                      | set by the `displayName` field in `package.json`                       |
-| `description`               | set by the `description` field in `package.json`                       |
-| `author`                    | set by the `author` field in `package.json`                            |
-| `homepage_url`              | set by the `homepage` field in `package.json`                          |
+| `manifest_version`          | `--target`ビルドフラグで設定、デフォルトは`3`                       |
+| `version`                   | `package.json`の`version`フィールドで設定                           |
+| `name`                      | `package.json`の`displayName`フィールドで設定                       |
+| `description`               | `package.json`の`description`フィールドで設定                       |
+| `author`                    | `package.json`の`author`フィールドで設定                            |
+| `homepage_url`              | `package.json`の`homepage`フィールドで設定                          |
 
-Plasmo centralizes common metadata between `package.json` and `manifest.json` and resolves any static file references (such as action, background, content scripts, and so on) automatically.
+Plasmoは`package.json`と`manifest.json`間の共通メタデータを集中化し、静的ファイルへの参照（アクション、バックグラウンド、コンテンツスクリプトなど）を自動的に解決します。
 
-This enables you to focus on the metadata that matters, such as name, description, OAuth, declarative_net_request, and so on.
+これにより、名前、説明、OAuth、declarative_net_requestなど、重要なメタデータに集中できます。
 
-Furthermore, it enables the framework to provide even more powerful features, such as:
+さらに、これにより、フレームワークはさらに強力な機能を提供できます。
 
-- [Using environment variables in the manifest](/framework/env#in-manifest-overrides)
-- [`node_modules` resolving for web-accessible resources](/framework/assets#assets-from-node_modules)
-- [Targeting multiple browsers, manifest versions, and environments (dev, prod, staging, etc...)](/framework/workflows/build#with-a-specific-target)
+- [マニフェストでの環境変数の使用](/framework/env#in-manifest-overrides)
+- [`node_modules`からWebアクセス可能なリソースの解決](/framework/assets#assets-from-node_modules)
+- [複数のブラウザ、マニフェストバージョン、および環境（開発、本番、ステージングなど）のターゲティング](/framework/workflows/build#with-a-specific-target)
 
-## Popup, Options, New tab Pages
+## ポップアップ、オプション、新規タブページ
 
-Plasmo removes the need to manually mount your React/Svelte/Vue components.
+Plasmoは、React/Svelte/Vueコンポーネントを手動でマウントする必要性を排除します。
 
-In a non-Plasmo extension project, to mount a React component, you'd create an `index.html` template and associated JavaScript code:
+Plasmo以外の拡張機能プロジェクトでは、Reactコンポーネントをマウントするために、`index.html`テンプレートと関連するJavaScriptコードを作成します。
 
 ```html filename="popup.html"
 <!DOCTYPE html>
@@ -77,11 +77,11 @@ const root = document.getElementById("root")
 createRoot(root).render(<Popup />)
 ```
 
-If you wanted to add TypeScript, LESS, or SCSS, you would need to use Webpack, Parcel, or ESBuild, with extra plugins and loader setups.
+TypeScript、LESS、またはSCSSを追加する場合は、追加のプラグインとローダー設定を使用してWebpack、Parcel、またはESBuildを使用する必要があります。
 
-With the Plasmo framework, it's much simpler. Add a `popup.tsx` or `options.tsx` file in [the source code directory](/framework/customization/src), exporting a default React component.
+Plasmoフレームワークを使用すると、はるかにシンプルになります。[ソースコードディレクトリ](/framework/customization/src)に`popup.tsx`または`options.tsx`ファイルを追加し、デフォルトのReactコンポーネントをエクスポートします。
 
-Plasmo will take care of the rest:
+Plasmoが残りの処理を行います。
 
 ```tsx filename="popup.tsx"
 import Popup from "./core/popup"
@@ -89,9 +89,9 @@ import Popup from "./core/popup"
 export default Popup
 ```
 
-Plasmo has built-in support for CSS, SCSS, LESS, CSS Modules, and PostCSS plugins.
+PlasmoはCSS、SCSS、LESS、CSS Modules、PostCSSプラグインを組み込みでサポートしています。
 
-If you'd like to, for example, use SCSS, you can simply import the SCSS file in your React component:
+たとえば、SCSSを使用したい場合は、ReactコンポーネントでSCSSファイルをインポートするだけで済みます。
 
 ```tsx filename="popup.tsx"
 import Popup from "./core/popup"
@@ -101,11 +101,11 @@ import "./popup.scss"
 export default Popup
 ```
 
-You can mount a React component this way for the options page, new tab page, [sandbox pages](/framework/sandbox-pages), and any other [custom page](#custom-pages).
+オプションページ、新しいタブページ、[サンドボックスページ](/framework/sandbox-pages)、その他の[カスタムページ](#custom-pages)で、このようにしてReactコンポーネントをマウントできます。
 
-## Custom Pages
+## カスタムページ
 
-In non-Plasmo extension projects, creating custom pages typically requires additional HTML templates and associated JavaScript code:
+Plasmo以外の拡張機能プロジェクトでは、カスタムページを作成するには、通常、追加のHTMLテンプレートと関連するJavaScriptコードが必要です。
 
 ```html filename="tabs/custom.html"
 <!DOCTYPE html>
@@ -131,7 +131,7 @@ const root = document.getElementById("root")
 createRoot(CustomPage).render(<PopupApp />)
 ```
 
-With Plasmo, you can use the built-in tab pages feature to create custom pages easily. Add a **`tabs`** folder in [you source code directory](/framework/customization/src), and add your custom pages there, using `.tsx` files:
+Plasmoでは、組み込みのタブページ機能を使用して、簡単にカスタムページを作成できます。[ソースコードディレクトリ](/framework/customization/src)に**`tabs`**フォルダを追加し、`.tsx`ファイルを使用してカスタムページを追加します。
 
 ```ts filename="tabs/custom.tsx"
 import Hello from "./core/hello"
@@ -139,11 +139,11 @@ import Hello from "./core/hello"
 export default Hello
 ```
 
-The page will be available at `chrome-extension://<extension-id>/tabs/custom.html`.
+このページは`chrome-extension://<extension-id>/tabs/custom.html`で利用できます。
 
-## Content Scripts
+## コンテンツスクリプト
 
-In non-Plasmo extension projects, you'd specify your content scripts in the `manifest.json` file and write them in JavaScript:
+Plasmo以外の拡張機能プロジェクトでは、`manifest.json`ファイルでコンテンツスクリプトを指定し、JavaScriptで記述します。
 
 ```json filename="manifest.json"
 {
@@ -162,9 +162,9 @@ In non-Plasmo extension projects, you'd specify your content scripts in the `man
 console.log("Hello from content script!")
 ```
 
-With Plasmo, your can specify your content script and its respective config in a file called `content.ts`, or inside a directory called `contents` - More on that later!
+Plasmoでは、`content.ts`というファイル、または`contents`というディレクトリ内にコンテンツスクリプトとその構成を指定できます。詳細は後述します！
 
-Here's what the `content.ts` file would look like:
+`content.ts`ファイルは次のようになります。
 
 ```ts filename="content.ts"
 import type { PlasmoCSConfig } from "plasmo"
@@ -178,17 +178,17 @@ export const config: PlasmoCSConfig = {
 console.log("Hello from content script!")
 ```
 
-No more moving back and forth between your `manifest.json` and `content.js` files. An added benefit is that the config is fully typed and thus can provide valuable auto-completion from your IDE.
+`manifest.json`と`content.js`ファイル間を行き来する必要がなくなります。追加の利点として、構成は完全に型付けされているため、IDEから貴重な自動補完を提供できます。
 
-To add multiple content scripts, create a directory called `contents` and repeat the above steps. You can name your scripts whatever you'd like in this directory. They will all get added as content scripts with their own configs.
+複数のコンテンツスクリプトを追加するには、`contents`というディレクトリを作成し、上記の手順を繰り返します。このディレクトリ内のスクリプトには任意の名前を付けることができます。すべてが独自の構成を持つコンテンツスクリプトとして追加されます。
 
-For example, let's say you want to add a content script that changes the background color of the page to green. You can do so by creating a file called `emerald-splash.ts` in the `contents` directory:
+たとえば、ページの背景色を緑色に変更するコンテンツスクリプトを追加したいとします。これを行うには、`contents`ディレクトリに`emerald-splash.ts`というファイルを作成します。
 
 ```ts filename="contents/emerald-splash.ts"
 document.body.style.backgroundColor = "green"
 ```
 
-Since the content script file didn't export a config, Plasmo will use the default config:
+コンテンツスクリプトファイルが構成をエクスポートしていないため、Plasmoはデフォルトの構成を使用します。
 
 ```json
 {
@@ -196,13 +196,13 @@ Since the content script file didn't export a config, Plasmo will use the defaul
 }
 ```
 
-## Content Scripts UI
+## コンテンツスクリプトUI
 
-If you're injecting a React component into a web page, your extension likely has a lot of boilerplate code, creating Shadow DOMs, finding the right element to mount to, MutationObservers, and more.
+ReactコンポーネントをWebページに挿入する場合、拡張機能には、Shadow DOMの作成、マウントする適切な要素の検索、MutationObserversなど、多くの定型コードが含まれている可能性があります。
 
-We've abstracted all of this out so you can focus on building your component and not worry about the rest.
+これらをすべて抽象化して、コンポーネントの構築に集中し、残りの部分については心配する必要がなくなりました。
 
-For example, let's say you want to inject a React component of a simple button into a web page. You can do so by creating a file called `press-me.tsx` in the `contents` directory:
+たとえば、シンプルなボタンのReactコンポーネントをWebページに挿入したいとします。これを行うには、`contents`ディレクトリに`press-me.tsx`というファイルを作成します。
 
 ```tsx filename="contents/press-me.tsx"
 export default function PressMeCSUI() {
@@ -210,9 +210,9 @@ export default function PressMeCSUI() {
 }
 ```
 
-Plasmo will automatically inject this component into the page, and mount it to the root element of the page.
+Plasmoは、このコンポーネントをページに自動的に挿入し、ページのルート要素にマウントします。
 
-What if you want to inject the component into a specific element? You can do so by exporting a getInlineAnchor function from the file:
+特定の要素にコンポーネントを挿入したい場合は、ファイルから`getInlineAnchor`関数をエクスポートできます。
 
 ```tsx filename="contents/press-me.tsx"
 import type { PlasmoGetInlineAnchor } from "plasmo"
@@ -221,11 +221,11 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = async () =>
   document.querySelector("#pricing")
 ```
 
-By returning an Element, Plasmo will mount the component adjacent to that element. You can completely customize the mounting behavior, how the component renders, and more.
+要素を返すことで、Plasmoはその要素の隣にコンポーネントをマウントします。マウント動作、コンポーネントのレンダリング方法などを完全にカスタマイズできます。
 
-This feature is called [Content Scripts UI](/framework/content-scripts-ui). To learn more about its API and how it works, check out the technical documentation on [its lifecycle](/framework/content-scripts-ui/life-cycle).
+この機能は[コンテンツスクリプトUI](/framework/content-scripts-ui)と呼ばれます。そのAPIと動作の詳細については、[ライフサイクル](/framework/content-scripts-ui/life-cycle)に関する技術ドキュメントを参照してください。
 
-You can also specify the component's insert position relative to the element you're mounting it to:
+マウントする要素に対するコンポーネントの挿入位置も指定できます。
 
 ```tsx filename="contents/press-me.tsx"
 import type { PlasmoGetInlineAnchor } from "plasmo"
@@ -236,9 +236,9 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = async () => ({
 })
 ```
 
-## Background Service Worker
+## バックグラウンドサービスワーカー
 
-In non-Plasmo projects, creating a background service worker requires specifying the `background` property in the `manifest.json` file and writing the service worker code in JavaScript:
+Plasmo以外のプロジェクトでは、バックグラウンドサービスワーカーを作成するには、`manifest.json`ファイルで`background`プロパティを指定し、JavaScriptでサービスワーカーコードを記述する必要があります。
 
 ```json filename="manifest.json"
 {
@@ -252,13 +252,13 @@ In non-Plasmo projects, creating a background service worker requires specifying
 console.log("Hello from BGSW!")
 ```
 
-In Plasmo, you specify the background service worker by creating a `background.ts` file:
+Plasmoでは、`background.ts`ファイルを作成することでバックグラウンドサービスワーカーを指定します。
 
 ```ts filename="background.ts"
 console.log("Hello from BGSW!")
 ```
 
-You can import any modules that target the standard service worker runtime into `background.ts`. For example, you can add the `bip39` module:
+標準的なサービスワーカーランタイムをターゲットとするモジュールを`background.ts`にインポートできます。たとえば、`bip39`モジュールを追加できます。
 
 ```ts filename="background.ts"
 import { generateMnemonic } from "bip39"
@@ -269,18 +269,18 @@ console.log(
 console.log(generateMnemonic())
 ```
 
-Plasmo will automatically bundle the `background.ts` file and add it as a background service worker to the `manifest.json` file.
+Plasmoは`background.ts`ファイルを自動的にバンドルし、`manifest.json`ファイルにバックグラウンドサービスワーカーとして追加します。
 
-## Environment Variables
+## 環境変数
 
-If you're currently using environment variables, you can continue to do so in Plasmo.
+現在環境変数を使用している場合は、Plasmoでも引き続き使用できます。
 
-The Plasmo framework supports [environment variables out of the box](/framework/env) with no additional setup required.
+Plasmoフレームワークは、追加の設定なしで[環境変数をすぐに使用できます](/framework/env)。
 
-## Opting Out
+## オプトアウト
 
-The Plasmo framework's abstraction philosophy is to remove the most common configuration and boilerplate code. This enables developers to work under a higher abstraction layer -- their chosen UI library/framework, such as React, Vue, and Svelte. This is the path to creating more powerful and beautiful extensions.
+Plasmoフレームワークの抽象化の哲学は、最も一般的な構成と定型コードを削除することです。これにより、開発者はより高い抽象化レイヤー（React、Vue、Svelteなどの選択したUIライブラリ/フレームワーク）で作業できるようになります。これは、より強力で美しい拡張機能を作成するための道です。
 
-Opting out of Plasmo is as easy as removing the `plasmo` dependency from your `package.json` file and taking your components out onto your custom setups. This is possible because all the glue code generated by Plasmo is injected at the framework compiler and bundler layer, making your feature code extremely portable.
+Plasmoからのオプトアウトは、`package.json`ファイルから`plasmo`依存関係を削除し、コンポーネントをカスタム設定に移動するほど簡単です。これは、Plasmoによって生成されたすべての接着コードがフレームワークコンパイラとバンドラレイヤーで注入されるため、機能コードの移植性が非常に高いためです。
 
-You can also use Plasmo as much or as little as needed. All chrome APIs are available, and you can use them directly in your feature code. For example, instead of using the [messaging API](/framework/messaging), you can use the `chrome.runtime.messaging` API directly. The same goes for content scripts and extension pages.
+必要に応じてPlasmoを自由に使用することもできます。すべてのChrome APIを利用でき、機能コードで直接使用できます。たとえば、[メッセージングAPI](/framework/messaging)を使用する代わりに、`chrome.runtime.messaging` APIを直接使用できます。コンテンツスクリプトと拡張機能ページについても同様です。

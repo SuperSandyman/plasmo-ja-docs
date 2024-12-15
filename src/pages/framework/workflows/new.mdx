@@ -1,71 +1,71 @@
 ---
-description: How to get started using the Plasmo Framework to build your browser extension.
+description: Plasmoフレームワークを使ってブラウザ拡張機能を構築する方法
 ---
 
 import { Bleed, Callout } from "nextra-theme-docs"
 
-# Create a New Extension
+# 新しい拡張機能の作成
 
-To run the interactive initialization wizard, use the following command:
+対話型の初期化ウィザードを実行するには、以下のコマンドを使用します。
 
 ```sh
 pnpm create plasmo
-# OR
+# または
 yarn create plasmo
-# OR
+# または
 npm create plasmo
 ```
 
-To skip the naming prompt, supply a name as a positional argument:
+名前の入力をスキップするには、名前を位置引数として指定します。
 
 ```sh
 pnpm create plasmo "My Awesome Extension"
-# OR
+# または
 yarn create plasmo "My Awesome Extension"
-# OR
+# または
 npm create plasmo "My Awesome Extension"
 ```
 
 <Callout type="info" emoji="⭐">
 
-**NOTE:** you can install the plasmo CLI as a global command with `pnpm i -g plasmo` (switch `pnpm` with your favorite package manager).
+**注記:** `pnpm i -g plasmo` を使用して、plasmo CLI をグローバルコマンドとしてインストールできます（`pnpm` をお好みのパッケージマネージャーに置き換えてください）。
 
 </Callout>
 
-## With src directory
+## src ディレクトリを使用する場合
 
-By default, Plasmo expects all source code to be in the root directory. However, you can follow [this guide](/framework/customization/src) to use the `src` directory as the home for your source code.
+デフォルトでは、Plasmoはすべてのソースコードがルートディレクトリにあることを想定しています。ただし、[このガイド](/framework/customization/src)に従って、`src` ディレクトリをソースコードのホームとして使用できます。
 
-## With specific entry files
+## 特定のエントリファイルを使用する場合
 
-The default project contains just a [popup](/framework/ext-pages#adding-a-popup-page) entry file. However, you can customize this behavior by using the `entry` flag with a comma-separated list of entry files to include in your initial project.
+デフォルトのプロジェクトには、[popup](/framework/ext-pages#adding-a-popup-page) エントリファイルのみが含まれています。ただし、`entry` フラグを使用して、初期プロジェクトに含めるエントリファイルのカンマ区切りのリストを指定することで、この動作をカスタマイズできます。
 
-To use this flag, pick the entry files you would like to see in your project, omit its file extension, and supply it to the `--entry` flag:
+このフラグを使用するには、プロジェクトに含めたいエントリファイルを選択し、ファイル拡張子を省略して、`--entry` フラグに指定します。
 
-There are many entry files to choose from. Check out [this directory](https://github.com/PlasmoHQ/plasmo/tree/main/packages/init/entries) to see all the different entry files available to you.
+利用可能なエントリファイルは多数あります。[このディレクトリ](https://github.com/PlasmoHQ/plasmo/tree/main/packages/init/entries)を確認して、利用可能なすべてのエントリファイルを確認してください。
 
 ```sh
 pnpm create plasmo --entry=options,newtab,contents/inline
-# OR
+# または
 npm create plasmo -- --entry=options,newtab,contents/inline
 ```
 
-The command above will create a project with the [options page](/framework/ext-pages#adding-the-options-ui), a [newtab page](/framework/ext-pages#adding-a-new-tab-page), and an [inline content script UI](/framework/content-scripts-ui).
+上記のコマンドは、[オプションページ](/framework/ext-pages#adding-the-options-ui)、[新しいタブページ](/framework/ext-pages#adding-a-new-tab-page)、および[インラインコンテンツスクリプトUI](/framework/content-scripts-ui)を含むプロジェクトを作成します。
 
 <Callout type="warning" emoji="⚠️">
 
-**NOTE**: `npm` does not pass arguments down to its child command. Thus, you must supply a `--` to escape `npm` before specifying plasmo's parameters and flags.
+**注記**: `npm` は引数を子コマンドに渡しません。そのため、plasmo のパラメーターとフラグを指定する前に `--` を使用して `npm` をエスケープする必要があります。
 
 </Callout>
 
-## With an example template
+## 例となるテンプレートを使用する場合
 
-Even more powerful, Plasmo can create a new project based on one of [our examples](https://github.com/PlasmoHQ/examples/). Pick an example, and use its name as a flag when running the `create plasmo` command:
+さらに強力な機能として、Plasmoは[例](https://github.com/PlasmoHQ/examples/)の1つに基づいて新しいプロジェクトを作成できます。例を選択し、`create plasmo` コマンドを実行する際にその名前をフラグとして使用します。
 
 ```sh
 pnpm create plasmo --with-env
-# OR
+# または
 npm create plasmo -- --with-env
 ```
 
-The above will generate a project using the [with-env](https://github.com/PlasmoHQ/examples/tree/main/with-env) example.
+上記のコマンドは、[with-env](https://github.com/PlasmoHQ/examples/tree/main/with-env) の例を使用してプロジェクトを生成します。

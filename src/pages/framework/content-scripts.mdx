@@ -1,32 +1,29 @@
 ---
-description: How to use Plasmo content scripts to inject custom behavior into web pages
+description: Plasmo コンテンツスクリプトを使用して、ウェブページにカスタム動作を注入する方法
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Content Scripts
+# コンテンツスクリプト
 
-Content scripts run in the context of web pages in an _isolated world_. This allows multiple content scripts from various extensions to coexist without conflicting with each other's execution and to stay isolated from the page's JavaScript.
+コンテンツスクリプトは、_分離されたワールド_内のウェブページのコンテキストで実行されます。これにより、さまざまな拡張機能からの複数のコンテンツスクリプトが互いの実行と競合することなく共存し、ページの JavaScript から分離された状態を維持できます。
 
-A script that ends with `.ts` will not have front-end runtime (react/vue/svelte) bundled with it and won't be treated as a ui script, while a script that ends in `.tsx`, `.vue` or `.svelte`, will be.
+`.ts` で終わるスクリプトには、フロントエンドランタイム (react/vue/svelte) がバンドルされず、UI スクリプトとして扱われません。一方、`.tsx`、`.vue`、または `.svelte` で終わるスクリプトは、UI スクリプトとして扱われます。
 
-### Use cases:
+### 使用例：
 
-- Scraping data from the current web page
-- Selecting, finding, and styling elements from the current web page
-- [Injecting UI elements into the current web page](/framework/content-scripts-ui)
-- [Injecting code into the "main world" context](#injecting-into-the-main-world)
+- 現在のウェブページからデータのスクレイピング
+- 現在のウェブページからの要素の選択、検索、スタイル設定
+- [現在のウェブページへのUI要素の注入](/framework/content-scripts-ui)
+- [「メインワールド」コンテキストへのコードの注入](#injecting-into-the-main-world)
 
-## Adding a single content script
+## 単一のコンテンツスクリプトの追加
 
 <Callout emoji="🚨">
-  Since Plasmo's default Typescript configuration treats all source files as
-  modules, if you don't have any imports or exports in your code, you'll have to
-  add an `export {}` line at the start of your file. (You will see this warning
-  when creating your first content script!)
+  Plasmo のデフォルトの Typescript 構成では、すべてのソースファイルがモジュールとして扱われるため、コードにインポートやエクスポートがない場合は、ファイルの先頭に `export {}` 行を追加する必要があります。(最初のコンテンツスクリプトを作成するときに、この警告が表示されます!)
 </Callout>
 
-Create a `content.ts` file, export an empty object and hack away!
+`content.ts` ファイルを作成し、空のオブジェクトをエクスポートして、自由にコードを記述してください！
 
 ```ts filename="content.ts"
 export {}
@@ -35,21 +32,21 @@ console.log(
 )
 ```
 
-Reload your extension, open a web page, then open its inspector:
+拡張機能を再読み込みし、ウェブページを開いてから、そのインスペクターを開きます。
 
 ![content-script-spock-quote](@screenshots/content-script-console-output.png)
 
-See [with-content-script](https://github.com/PlasmoHQ/examples/tree/main/with-content-script) for a full example.
+完全な例については、[with-content-script](https://github.com/PlasmoHQ/examples/tree/main/with-content-script) を参照してください。
 
-## Adding multiple content scripts
+## 複数のコンテンツスクリプトの追加
 
-Create a `contents` directory for multiple content scripts, and add your content scripts there. Make sure their names describe what they do!
+複数のコンテンツスクリプト用に `contents` ディレクトリを作成し、そこにコンテンツスクリプトを追加します。スクリプトの名前がその機能を表すようにしてください！
 
-See [with-many-content-scripts](https://github.com/PlasmoHQ/examples/tree/main/with-many-content-scripts) for an example.
+例については、[with-many-content-scripts](https://github.com/PlasmoHQ/examples/tree/main/with-many-content-scripts) を参照してください。
 
-## Config
+## 構成 (Config)
 
-Sometimes, you'll want to run a content script on certain pages. You can provide a custom content script configuration by exporting a config object from your content script:
+場合によっては、特定のページでコンテンツスクリプトを実行したいことがあります。コンテンツスクリプトから構成オブジェクトをエクスポートすることで、カスタムコンテンツスクリプト構成を提供できます。
 
 ```ts filename="content.ts"
 import type { PlasmoCSConfig } from "plasmo"
@@ -60,15 +57,15 @@ export const config: PlasmoCSConfig = {
 }
 ```
 
-Working with this configuration object is a breeze thanks to the exported `PlasmoCSConfig` type 🥳.
+エクスポートされた `PlasmoCSConfig` 型のおかげで、この構成オブジェクトの操作は非常に簡単です 🥳。
 
-To learn more about the config and each property, [check out Chrome's official documentation](https://developer.chrome.com/docs/extensions/mv3/content_scripts/#static-declarative).
+構成と各プロパティの詳細については、[Chrome の公式ドキュメント](https://developer.chrome.com/docs/extensions/mv3/content_scripts/#static-declarative) を参照してください。
 
-## Injecting into the main world
+## メインワールドへの注入
 
-To modify the `window` object from your content script, you must inject code into the "main world."
+コンテンツスクリプトから `window` オブジェクトを変更するには、コードを「メインワールド」に注入する必要があります。
 
-Starting from Plasmo `v0.65.0`, Plasmo content script may specify a `world` property within the config:
+Plasmo `v0.65.0` 以降、Plasmo コンテンツスクリプトは構成内に `world` プロパティを指定できます。
 
 ```ts filename="content.ts"
 import type { PlasmoCSConfig } from "plasmo"
@@ -79,9 +76,9 @@ export const config: PlasmoCSConfig = {
 }
 ```
 
-The above script will be injected into the main world.
+上記のスクリプトはメインワールドに注入されます。
 
-To manually inject a main world script, use the `chrome.scripting.executeScript` API. First, manually add the scripting permission in your [package.json's 'manifest.permissions' array](/framework/customization/manifest):
+メインワールドスクリプトを手動で注入するには、`chrome.scripting.executeScript` API を使用します。まず、[package.json の 'manifest.permissions' 配列](/framework/customization/manifest) にスクリプティング権限を手動で追加します。
 
 ```json filename="package.json"
 {
@@ -92,16 +89,16 @@ To manually inject a main world script, use the `chrome.scripting.executeScript`
 }
 ```
 
-Then, inject your content script into the main world by calling `chrome.scripting.executeScript` from your background service worker:
+次に、バックグラウンドサービスワーカーから `chrome.scripting.executeScript` を呼び出すことで、コンテンツスクリプトをメインワールドに注入します。
 
 ```ts filename="background.ts"
 chrome.scripting.executeScript(
   {
     target: {
-      tabId // the tab you want to inject into
+      tabId // 注入先のタブ
     },
-    world: "MAIN", // MAIN to access the window object
-    func: windowChanger // function to inject
+    world: "MAIN", // window オブジェクトにアクセスするための MAIN
+    func: windowChanger // 注入する関数
   },
   () => {
     console.log("Background script got callback after injection")
@@ -109,29 +106,30 @@ chrome.scripting.executeScript(
 )
 ```
 
-For the `func` key, you can pass in a TS function from your project. It will be transpiled into JS when your extension bundles. You may also use the `files` key to inject a file from the root of the built bundle.
+`func` キーには、プロジェクトの TS 関数を渡すことができます。拡張機能がバンドルされるときに、JS にトランスパイルされます。`files` キーを使用して、ビルドされたバンドルのルートからファイルを注入することもできます。
 
 <Callout emoji="🚨">
 
-The scope of the `func` is tightly encapsulated. You will not be able to use variables declared outside its scope or any imported variables directly within the function. You can, however, use variables passed down to the `args` property. Ensure only JSON-serializable values are used.
+`func` のスコープは厳密にカプセル化されています。そのスコープ外で宣言された変数や、直接インポートされた変数は関数内で使用できません。ただし、`args` プロパティに渡された変数を使用できます。JSON でシリアライズ可能な値のみを使用してください。
 
 </Callout>
 
-See [with-main-world](https://github.com/PlasmoHQ/examples/tree/main/with-main-world) for an example.
+例については、[with-main-world](https://github.com/PlasmoHQ/examples/tree/main/with-main-world) を参照してください。
 
-## Fetching external API and CORS
+## 外部APIとCORSの取得
 
-Because content scripts run within the context of a web page, they are subject to the same-origin policy. To mitigate CORS restrictions, you can use the [Plasmo Messaging API](/framework/messaging#message-flow) to proxy the request via your background service worker.
+コンテンツスクリプトはウェブページのコンテキスト内で実行されるため、同一オリジンポリシーの対象となります。CORS 制限を軽減するために、[Plasmo メッセージングAPI](/framework/messaging#message-flow) を使用して、バックグラウンドサービスワーカーを介してリクエストをプロキシできます。
 
-## Importing resources
 
-To import external assets into your content script, you can use the [`url:` scheme](/framework/import#url):
+## リソースのインポート
+
+コンテンツスクリプトに外部アセットをインポートするには、[`url:` スキーム](/framework/import#url) を使用できます。
 
 ```ts
 import myFile from "url:./path/to/my/file/something.js"
 ```
 
-The `url:` scheme will automatically resolve the `something.js` asset and add it to the `web_accessible_resources` declaration in the built bundle. The above `myFile` variable will be a string containing the URL to the asset:
+`url:` スキームは `something.js` アセットを自動的に解決し、ビルドされたバンドルの `web_accessible_resources` 宣言に追加します。上記の `myFile` 変数は、アセットへの URL を含む文字列になります。
 
 ```sh
 > console.log(myFile)
@@ -143,9 +141,10 @@ chrome-extension://<your chrome ext id>/something.eb20bc99.js?1656000646313
 something.eb20bc99.js
 ```
 
-Alternatively, you can use the [`data-base64`](/framework/import#data-base64) or the [`data-text`](/framework/import#data-text) scheme to import and embed the asset directly into your code. For small assets, these schemes should work well.
+あるいは、[`data-base64`](/framework/import#data-base64) または [`data-text`](/framework/import#data-text) スキームを使用して、アセットをコードに直接インポートして埋め込むこともできます。小さなアセットの場合、これらのスキームは適切に機能するはずです。
 
 <Callout emoji="🚨">
-  Please see this [note about `~` import
-  resolution](/framework/import#tilde-)
+  [`~` インポート解決に関するこのメモ](/framework/import#tilde-) を参照してください
 </Callout>
+
+

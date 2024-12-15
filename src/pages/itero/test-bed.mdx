@@ -1,52 +1,52 @@
 ---
-description: Itero TestBed is a staging environment for browser extensions.
+description: Itero TestBedは、ブラウザ拡張機能のためのステージング環境です。
 ---
 
-# Itero TestBed: Your Browser Extension Testing Solution
+# Itero TestBed：ブラウザ拡張機能のテストソリューション
 
-Itero TestBed is a staging environment for browser extensions. With TestBed, you can instantly test your browser extensions without waiting for browser stores to approve your updates or dragging and dropping zip files.
+Itero TestBedは、ブラウザ拡張機能のためのステージング環境です。TestBedを使用すると、ブラウザストアによるアップデート承認を待つことなく、またzipファイルをドラッグアンドドロップする必要もなく、ブラウザ拡張機能をすぐにテストできます。
 
-## The Benefits of Itero TestBed
+## Itero TestBedのメリット
 
-Itero TestBed is a game-changer for browser extension developers. It offers a multitude of benefits such as:
+Itero TestBedは、ブラウザ拡張機能開発者にとって画期的なツールです。次のような多くのメリットを提供します。
 
-- No need to drag and drop zip files to test your extensions
-- No waiting for the browser store to approve your updates
-- Seamless integration with GitHub
-- One-click installation for beta testers
-- Automatic updates pushed out to testers
+- 拡張機能のテストのためにzipファイルをドラッグアンドドロップする必要がない
+- ブラウザストアによるアップデート承認を待つ必要がない
+- GitHubとのシームレスな統合
+- ベータテスター向けワンクリックインストール
+- テスターへの自動アップデート配信
 
-## How to Get Started with Itero TestBed
+## Itero TestBedの始め方
 
-To get started with Itero TestBed, you'll need to create an account on [Itero](https://itero.plasmo.com/). Once you've created your account, follow these simple steps:
+Itero TestBedを使い始めるには、[Itero](https://itero.plasmo.com/)でアカウントを作成する必要があります。アカウントを作成したら、次の簡単な手順に従ってください。
 
-### Prepare Your Extension's Zip Bundle
+### 拡張機能のzipバンドルの準備
 
-If you don't already have a zip file of your extension, don't worry! You can easily generate one using the Plasmo Framework. Just follow these simple commands:
+拡張機能のzipファイルがまだない場合でも心配ありません！Plasmo Frameworkを使用して簡単に生成できます。次の簡単なコマンドに従ってください。
 
 ```bash
 pnpm build
 pnpm package
 ```
 
-For more detailed instructions, check out the [documentation](/framework/workflows/build#generating-a-zip-bundle) on the build pipeline.
+より詳細な手順については、ビルドパイプラインに関する[ドキュメント](/framework/workflows/build#generating-a-zip-bundle)を参照してください。
 
-### Upload Your Browser Extension's Zip File on Itero
+### ブラウザ拡張機能のzipファイルをIteroにアップロード
 
-Take the zip file that you created in the previous step and upload it to Itero. You can do this by going to the [TestBed](https://itero.plasmo.com/) page and clicking the "Upload New Extension" button.
+前の手順で作成したzipファイルをIteroにアップロードします。これを行うには、[TestBed](https://itero.plasmo.com/)ページにアクセスし、「新しい拡張機能をアップロード」ボタンをクリックします。
 
-### Share Your Extension's Link with Your Beta Testers
+### ベータテスターと拡張機能のリンクを共有
 
-Once you've uploaded your extension, share the generated link with your beta testers. They'll need to install Plasmo's software, but after that, they can install your extension with a single click. As you make changes, the updates will automatically be pushed out to them.
+拡張機能をアップロードしたら、生成されたリンクをベータテスターと共有します。テスターはPlasmoのソフトウェアをインストールする必要がありますが、その後はワンクリックで拡張機能をインストールできます。変更を加えると、アップデートが自動的にテスターに配信されます。
 
-To get the Extension's Link, open the drop-down item for your Itero extension, then click Install Page:
+拡張機能のリンクを取得するには、Itero拡張機能のドロップダウンアイテムを開き、「Install Page」をクリックします。
 
 ![Extension Item](https://github.com/PlasmoHQ/docs/assets/6723574/ffcdc068-5d49-4aa8-ab44-1a71562e0bb4)
 
-Share that URL with your tester. If you would like the extension to be accessible to just your team, switch its access to "Private."
+そのURLをテスターと共有します。拡張機能をチーム内でのみアクセス可能にしたい場合は、アクセス権を「プライベート」に切り替えます。
 
-## GitHub Integration
+## GitHubとの統合
 
-If you're using GitHub to manage your code, Itero TestBed can be integrated with it. This allows you to automatically deploy your browser extensions to Itero TestBed when you push to your GitHub repository. Visit the [GitHub Builder page](./builder) page for more information.
+GitHubを使用してコードを管理している場合、Itero TestBedと統合できます。これにより、GitHubリポジトリにプッシュするときに、ブラウザ拡張機能をItero TestBedに自動的にデプロイできます。詳細については、[GitHub Builderページ](./builder)をご覧ください。
 
-Itero TestBed is an excellent solution for browser extension developers who want to streamline their testing process. With seamless integration, one-click installation, and automatic updates, your beta testing process will be more efficient.
+Itero TestBedは、テストプロセスを合理化したいブラウザ拡張機能開発者にとって優れたソリューションです。シームレスな統合、ワンクリックインストール、自動アップデートにより、ベータテストプロセスがより効率的になります。

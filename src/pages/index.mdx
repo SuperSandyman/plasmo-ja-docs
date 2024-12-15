@@ -1,57 +1,53 @@
 ---
-description: Plasmo is the end-to-end platform for browser extension developers - the easiest way to Build, Test and Ship browser extensions.
+description: Plasmoは、ブラウザ拡張機能開発者向けのエンドツーエンドプラットフォームです。ブラウザ拡張機能の構築、テスト、配布を最も簡単に実現します。
 ---
 
 import { ShieldBanners } from "~components/shield-banners"
 
-# Introduction to Plasmo
+# Plasmo入門
 
 <ShieldBanners socialOnly />
 
-Welcome to Plasmo, the all-in-one platform that makes it easy for browser extension developers to create, test, and publish amazing extensions. With Plasmo, you can say goodbye to tedious boilerplate code and hello to a faster, more seamless development experience.
+Plasmoへようこそ。Plasmoは、ブラウザ拡張機能開発者が素晴らしい拡張機能を簡単に作成、テスト、公開できるオールインワン・プラットフォームです。Plasmoを使用すれば、面倒な定型コードに別れを告げ、より迅速でシームレスな開発エクスペリエンスを手に入れることができます。
 
-## はじめに
+## 製品紹介
 
-本サイトは、[Plasmo 公式ドキュメント](https://docs.plasmo.com/)の非公式な日本語翻訳サイトです。AI（Gemini）を使用して翻訳しているため、内容に不正確な箇所がある可能性があります。あらかじめご了承ください。
+当社の主力製品である[Plasmo Framework](#plasmo-framework)は、究極のブラウザ拡張機能SDKです。ブラウザ拡張機能の複雑さを気にせずに、迅速かつ簡単に拡張機能コードを記述できるように設計されています。
 
-## Product Offerings
+拡張機能を構築したら、[Itero TestBed](#itero-testbed)を使用して、現実環境でテストします。この強力なステージング環境では、拡張機能が実際の環境でどのように動作するかを確認し、起動前に必要な変更を加えることができます。レビュープロセスに阻まれることなく、ベータテスターに直接配布できます。
 
-Our flagship product, the [Plasmo Framework](#plasmo-framework), is the ultimate Browser Extension SDK. It's designed to help you write extension code quickly and easily, without worrying about the intricacies of browser extensions.
-
-Once you've built your extension, use [Itero TestBed](#itero-testbed) to test it in a real-world environment. This powerful staging environment lets you see how your extension will perform in the wild, and make any necessary changes before you launch. Ship directly to your beta testers without a review process holding you back.
-
-Finally, when you're ready to go live, our [Plasmo BPP tool](#plasmo-browser-platform-publisher) makes it easy to automate the publishing process. With just a few clicks, you can publish your extension to the world and start gaining users.
+最後に、公開の準備ができたら、[Plasmo BPPツール](#plasmo-browser-platform-publisher)を使用すると、公開プロセスを簡単に自動化できます。数回クリックするだけで、拡張機能を世界中に公開し、ユーザーを獲得し始めることができます。
 
 ### Plasmo Framework
 
-Imagine a world where building browser extensions is easy and fun. Gone are the days of tedious development processes and struggling with complex APIs and configurations.
+ブラウザ拡張機能の構築が簡単で楽しい世界を想像してみてください。面倒な開発プロセスや、複雑なAPIと設定に苦労する時代は終わりました。
 
-With Plasmo, declarative development is a breeze - just write a file, export a component, and Plasmo does the rest, automatically bundling and mounting it for you. Plus, [our active community](https://www.plasmo.com/s/d) of over 400 developers is always there to help out and share their expertise.
+Plasmoを使用すると、宣言的な開発が非常に簡単になります。ファイルを書き込み、コンポーネントをエクスポートするだけで、Plasmoが残りの作業（自動的なバンドルとマウント）を行います。さらに、400名を超える開発者からなる[活発なコミュニティ](https://www.plasmo.com/s/d)が常に支援し、専門知識を共有しています。
 
-Plasmo offers first-class support for Typescript, React, Preact, Svelte, and Vue, making it easy to build complex, beautiful and scalable extensions. And with live-reload and React HMR built-in, you can see your changes instantly, without having to manually refresh your extension.
+Plasmoは、TypeScript、React、Preact、Svelte、Vueをファーストクラスでサポートしているため、複雑で美しく、スケーラブルな拡張機能を簡単に構築できます。ライブリロードとReact HMRが組み込まれているため、拡張機能を手動で更新しなくても、変更を即座に確認できます。
 
-Plasmo also comes with powerful libraries for [storage](/framework/storage) and [messaging](/framework/messaging), as well as built-in support for [.env files](/framework/env). Plus, with Plasmo's "learn once, write everywhere" approach, you can build an extension once and easily [target it to multiple browsers and manifest versions](/framework/workflows/build#with-a-specific-target).
+Plasmoには、[ストレージ](/framework/storage)と[メッセージング](/framework/messaging)のための強力なライブラリに加え、[.envファイル](/framework/env)の組み込みサポートも含まれています。さらに、Plasmoの「一度学習すれば、どこでも記述可能」なアプローチにより、一度拡張機能を構築すれば、簡単に[複数のブラウザとマニフェストバージョンをターゲットに設定できます](/framework/workflows/build#with-a-specific-target)。
 
-To get started: [Click Here](/framework#getting-started)
+開始するには：[ここをクリック](/framework#getting-started)
 
-To migrate: [Click Here](/quickstarts/migrate-to-plasmo)
+移行するには：[ここをクリック](/quickstarts/migrate-to-plasmo)
 
 ### Itero TestBed
 
-Testing browser extensions can be a tedious and time-consuming process. Traditional methods often require waiting for approval from browser stores or having your beta testers manually install updates. Itero TestBed offers a solution to this problem by allowing you to instantly push updates to your beta testers.
+ブラウザ拡張機能のテストは、面倒で時間のかかるプロセスになる可能性があります。従来の方法では、多くの場合、ブラウザストアからの承認を待つ必要があったり、ベータテスターが手動でアップデートをインストールする必要がありました。Itero TestBedは、ベータテスターに瞬時にアップデートをプッシュできることで、この問題に対するソリューションを提供します。
 
-Our SaaS platform also integrates with GitHub and includes automatic versioning. With Itero TestBed, you can streamline the testing process and focus on iterating quickly.
+当社のSaaSプラットフォームはGitHubと統合されており、自動バージョン管理も含まれています。Itero TestBedを使用すると、テストプロセスを合理化し、迅速な反復に集中できます。
 
-Features include:
+機能：
 
-- Instant updates to your beta testers
-- GitHub integration for easy deployment
-- Automatic versioning
+- ベータテスターへのインスタントアップデート
+- 簡単なデプロイのためのGitHub統合
+- 自動バージョン管理
 
-To get started: [Click Here](/itero)
+開始するには：[ここをクリック](/itero)
 
-### Plasmo Browser Platform Publisher
+### Plasmo Browser Platform Publisher (Plasmo BPP)
 
-Open-source GitHub action that makes it easy to publish your browser extension to the Chrome, Firefox Add-ons, and Microsoft Edge Add-ons stores. With Plasmo BPP, you can automate the publishing process and spend more time building your extension.
+Chrome、Firefoxアドオン、Microsoft Edgeアドオンストアにブラウザ拡張機能を簡単に公開できるオープンソースのGitHubアクションです。Plasmo BPPを使用すると、公開プロセスを自動化し、拡張機能の構築により多くの時間を費やすことができます。
 
-To get started: [Click Here](/framework/workflows/submit)
+開始するには：[ここをクリック](/framework/workflows/submit)

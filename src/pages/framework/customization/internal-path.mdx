@@ -1,43 +1,43 @@
 ---
-description: Guide on how to customize the internal working path used within the Plasmo bundler.
+description: Plasmoバンドラ内で使用される内部作業パスのカスタマイズ方法に関するガイドです。
 ---
 
-# Customizing Internal Paths
+# 内部パスのカスタマイズ
 
-Plasmo constructs several paths to be used in the bundling process. These paths are used to locate the source code and the output directory for example. This section describes how to customize some of these paths.
+Plasmoは、バンドル処理で使用されるいくつかのパスを構築します。これらのパスは、ソースコードや出力ディレクトリなどの場所を特定するために使用されます。このセクションでは、これらのパスのいくつかをカスタマイズする方法について説明します。
 
-## Build path
+## ビルドパス
 
-The default bundle build path is `./build`. To change this behavior, either:
+デフォルトのバンドルビルドパスは`./build`です。この動作を変更するには、次のいずれかの方法を使用します。
 
-- Specify the `--build-path` flag:
+- `--build-path`フラグを指定します。
 
 ```sh
 plasmo build --build-path=./dist
 ```
 
-- Or use the `PLASMO_BUILD_PATH` top-level environment variable:
+- または、最上位レベルの環境変数`PLASMO_BUILD_PATH`を使用します。
 
 ```sh
 cross-env PLASMO_BUILD_PATH=dist plasmo build
 ```
 
-This applies to the `dev`, `build` and `package` commands.
+これは`dev`、`build`、`package`コマンドに適用されます。
 
-## Source path
+## ソースパス
 
-The default source path is `./src`. To change this behavior, either:
+デフォルトのソースパスは`./src`です。この動作を変更するには、次のいずれかの方法を使用します。
 
-- Specify the `--src-path` flag:
+- `--src-path`フラグを指定します。
 
 ```sh
 plasmo build --src-path=src/extension
 ```
 
-- Or use the `PLASMO_SRC_PATH` top-level environment variable:
+- または、最上位レベルの環境変数`PLASMO_SRC_PATH`を使用します。
 
 ```sh
 cross-env PLASMO_SRC_PATH=src/extension plasmo build
 ```
 
-This applies to the `dev`, `build` and `package` commands.
+これは`dev`、`build`、`package`コマンドに適用されます。

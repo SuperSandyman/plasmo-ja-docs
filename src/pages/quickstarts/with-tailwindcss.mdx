@@ -1,44 +1,44 @@
 ---
-description: A quick guide on how to use Tailwind CSS in your browser extension.
+description: ブラウザ拡張機能でTailwind CSSを使用する方法に関するクイックガイド。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Quickstart with TailwindCSS
+# Tailwind CSS クイックスタート
 
-Using Tailwind CSS is super easy with Plasmo thanks to the built-in integration with PostCSS. The setup is identical to the [official Tailwind CSS docs guide](https://tailwindcss.com/docs/installation/using-postcss).
+Plasmoを使用すると、PostCSSとの組み込み統合のおかげで、Tailwind CSSを使用するのが非常に簡単になります。設定は、[公式Tailwind CSSドキュメントガイド](https://tailwindcss.com/docs/installation/using-postcss)と同じです。
 
-You can use any PostCSS plugins as well such as Autoprefixer, PurgeCSS, and more. This guide will walk you through the steps to get started with Tailwind CSS.
+Autoprefixer、PurgeCSSなど、他のPostCSSプラグインも使用できます。このガイドでは、Tailwind CSSを使い始めるための手順を説明します。
 
-<Callout emoji="🎉">Easy Tailwind CSS in Chrome Extension!</Callout>
+<Callout emoji="🎉">Chrome拡張機能で簡単にTailwind CSSを使用！</Callout>
 
-## Example
+## 例
 
-- To see a complete example of this quickstart, go to the [with-tailwindcss example](https://github.com/PlasmoHQ/examples/tree/main/with-tailwindcss).
+- このクイックスタートの完全な例を見るには、[with-tailwindcss例](https://github.com/PlasmoHQ/examples/tree/main/with-tailwindcss)を参照してください。
 
-## Create a Plasmo Project with TailwindCSS
+## Tailwind CSS を使用した Plasmo プロジェクトの作成
 
 ```bash
 pnpm create plasmo --with-tailwindcss
 ```
 
-## Manual Installation
+## 手動インストール
 
-If you already have a Plasmo extension project and would like to add TailwindCSS manually, this section is for you!
+既にPlasmo拡張機能プロジェクトがあり、Tailwind CSSを手動で追加したい場合は、このセクションを参照してください！
 
-### Add Dependencies
+### 依存関係の追加
 
 ```bash
 pnpm i -D tailwindcss postcss autoprefixer
 ```
 
-### Generate your tailwind.config.js file
+### `tailwind.config.js`ファイルの生成
 
 ```bash
 npx tailwindcss init
 ```
 
-### Defining Your PostCSS Config
+### PostCSS設定の定義
 
 ```js filename="postcss.config.js"
 /**
@@ -54,11 +54,11 @@ module.exports = {
 
 <Callout emoji="⚠️">
 
-Ensure your file name extension is not `.cjs` but rather .js - the config may otherwise be erroneously parsed as JSON and fail.
+ファイル名の拡張子は`.cjs`ではなく`.js`にしてください。そうでないと、設定が誤ってJSONとして解析され、失敗する可能性があります。
 
 </Callout>
 
-### Setting up Tailwind config
+### Tailwind設定の設定
 
 ```js filename="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */
@@ -70,7 +70,7 @@ module.exports = {
 }
 ```
 
-### Adding Root Styles
+### ルートスタイルの追加
 
 ```css filename="style.css"
 @tailwind base;
@@ -78,11 +78,11 @@ module.exports = {
 @tailwind utilities;
 ```
 
-## Usage
+## 使用方法
 
-### In Extension Pages
+### 拡張機能ページ内
 
-Once you have all the configs in place, start using Tailwind within your React components! Below is an example of how to use Tailwind on the popup page:
+すべての設定が整ったら、Reactコンポーネント内でTailwindを使用し始めましょう！以下は、ポップアップページでTailwindを使用する方法の例です。
 
 ```tsx filename="popup.tsx"
 import { useReducer } from "react"
@@ -108,9 +108,9 @@ function IndexPopup() {
 export default IndexPopup
 ```
 
-### In Content Scripts UI
+### コンテンツスクリプトUI内
 
-To use Tailwind in a [Content Scripts UI](/csui), you will need to import the `style.css` file as text data, and expose it to the CSUI lifecycle via the `getStyle` method to inject the style into the CSUI shadowDOM:
+[コンテンツスクリプトUI](/csui)でTailwindを使用するには、`style.css`ファイルをテキストデータとしてインポートし、`getStyle`メソッドを介してCSUIライフサイクルに公開して、スタイルをCSUIシャドウDOMに注入する必要があります。
 
 ```tsx filename="content.tsx"
 import cssText from "data-text:~style.css"
@@ -142,9 +142,9 @@ export default PlasmoOverlay
 ```
 
 <Callout emoji="ℹ️">
-  Since Tailwind and its' plugins often rely on `:root` to declare CSS variables, be mindful of [Content Scripts UI Styling CSS variables caveat](/framework/content-scripts-ui/styling#css-variables) if using built-in `Root Container`.
+  Tailwindとそのプラグインは多くの場合、CSS変数を宣言するために`:root`に依存するため、組み込みの`Root Container`を使用する場合は、[コンテンツスクリプトUIスタイルのCSS変数の注意点](/framework/content-scripts-ui/styling#css-variables)に注意してください。
 
-  For example, if you plan on using [DaisyUI](https://daisyui.com/), you will need to replace `:root` scope with `:host` before attaching the style to the shadowDOM.
+  例えば、[DaisyUI](https://daisyui.com/)を使用する予定がある場合は、スタイルをシャドウDOMにアタッチする前に、`:root`スコープを`:host`に置き換える必要があります。
 
   ```tsx filename="content.tsx"
   import cssText from "data-text:~style.css"

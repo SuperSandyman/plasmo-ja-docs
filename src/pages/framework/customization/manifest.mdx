@@ -1,12 +1,12 @@
 ---
-description: Plasmo handles most of your manifest for you, but sometimes you'll want to add your own config. This guide will show you how.
+description: Plasmoはほとんどのマニフェストを自動的に処理しますが、独自の設定を追加したい場合もあります。このガイドではその方法を示します。
 ---
 
-# Overriding the Manifest
+# マニフェストの上書き
 
-The Plasmo Framework extends the `package.json` with a `manifest` field to override the generated extension manifest. The primary use case is to enable features that the Plasmo framework does not _yet_ natively support.
+Plasmoフレームワークは、生成された拡張機能のマニフェストを上書きするために、`package.json`に`manifest`フィールドを追加します。主な使用例は、Plasmoフレームワークがまだネイティブにサポートしていない機能を有効にすることです。
 
-For instance, the Plasmo Framework might not understand that you need to have an `activeTab` permission. You'll need to modify your project's `package.json` like so:
+例えば、Plasmoフレームワークが`activeTab`権限が必要であることを認識していない場合があります。その場合、プロジェクトの`package.json`を次のように変更する必要があります。
 
 ```json filename="package.json"
 ...
@@ -17,7 +17,7 @@ For instance, the Plasmo Framework might not understand that you need to have an
 }
 ```
 
-Plasmo will pass over the following fields from the `package.json` to the generated extension manifest:
+Plasmoは`package.json`から以下のフィールドを生成された拡張機能のマニフェストに渡します。
 
 - `packageJson.version` -> `manifest.version`
 - `packageJson.displayName` -> `manifest.name`
@@ -25,9 +25,9 @@ Plasmo will pass over the following fields from the `package.json` to the genera
 - `packageJson.author` -> `manifest.author`
 - `packageJson.homepage` -> `manifest.homepage_url`
 
-## Using environment variables
+## 環境変数の使用
 
-You can use environment variables inside the manifest overrides. For instance in the [with-storage example](https://github.com/PlasmoHQ/examples/blob/main/with-storage/package.json):
+マニフェストの上書き内で環境変数を使用できます。例えば、[with-storageの例](https://github.com/PlasmoHQ/examples/blob/main/with-storage/package.json)では：
 
 ```json filename="package.json"
 "manifest": {
@@ -39,11 +39,11 @@ You can use environment variables inside the manifest overrides. For instance in
 }
 ```
 
-If the environment variable could not be found, the field will be removed completely from the manifest. This enables working with multiple browser targets by specifying [target-specific environment variables](/framework/env#bundle-specific-env).
+環境変数が存在しない場合、そのフィールドはマニフェストから完全に削除されます。これにより、[ターゲット固有の環境変数](/framework/env#bundle-specific-env)を指定することで、複数のブラウザターゲットで動作できます。
 
-## Using locale template string
+## ロケールテンプレート文字列の使用
 
-You can use [locale](/framework/locales) template strings in the manifest overrides:
+マニフェストの上書きで[ロケール](/framework/locales)テンプレート文字列を使用できます。
 
 ```json filename="package.json"
 "manifest": {

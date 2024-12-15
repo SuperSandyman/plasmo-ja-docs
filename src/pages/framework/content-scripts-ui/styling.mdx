@@ -1,21 +1,21 @@
 ---
-description: Plasmo CSUI's built-in Root Container allows extension developers to safely style their components.
+description: Plasmo CSUIの内蔵Root Container（ルートコンテナ）を使用すると、拡張機能開発者はコンポーネントを安全にスタイル設定できます。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Styling Plasmo CSUI
+# Plasmo CSUIのスタイル設定
 
-[Plasmo CSUI's built-in `Root Container`](/framework/content-scripts-ui/life-cycle/#root-container) allows extension developers to safely style their components. It ensures that for the most part:
+[Plasmo CSUIの内蔵`Root Container`](/framework/content-scripts-ui/life-cycle/#root-container)を使用すると、拡張機能開発者はコンポーネントを安全にスタイル設定できます。これにより、ほとんどの場合、以下のことが保証されます。
 
-- The exported style does not leak to the web page
-- The web page's style does not influence the component's styling
+- エクスポートされたスタイルがウェブページに漏れない
+- ウェブページのスタイルがコンポーネントのスタイルに影響を与えない
 
-See [caveats](#caveats) for when it does not work.
+例外については、[注意事項](#caveats)を参照してください。
 
-## Raw CSS Text
+## Raw CSSテキスト
 
-To style your CSUI, export a `getStyle` function:
+CSUIをスタイル設定するには、`getStyle`関数をエクスポートします。
 
 ```ts filename="content.tsx"
 import type { PlasmoGetStyle } from "plasmo"
@@ -31,9 +31,9 @@ export const getStyle: PlasmoGetStyle = () => {
 }
 ```
 
-## Import Stylesheet
+## スタイルシートのインポート
 
-To import CSS/LESS/SASS files, combine the `getStyle` API with the [`data-text` import scheme](/framework/import#data-text):
+CSS/LESS/SASSファイルをインポートするには、`getStyle` APIと[`data-text`インポートスキーム](/framework/import#data-text)を組み合わせて使用します。
 
 ```ts filename="content.tsx"
 import styleText from "data-text:./style.scss"
@@ -48,7 +48,7 @@ export const getStyle: PlasmoGetStyle = () => {
 
 ## CSS-in-JS
 
-The `getStyle` API can also be used to hydrate CSS-in-JS style cache, for example when using [`with emotion`](https://github.com/PlasmoHQ/examples/tree/main/with-emotion):
+`getStyle` APIは、[`with emotion`](https://github.com/PlasmoHQ/examples/tree/main/with-emotion)を使用する場合など、CSS-in-JSスタイルキャッシュをハイドレートするためにも使用できます。
 
 ```ts filename="content.tsx"
 import createCache from "@emotion/cache"
@@ -68,7 +68,7 @@ export const getStyle: PlasmoGetStyle = () => styleElement
 
 ## CSS Modules
 
-To utilize CSS modules, import the stylesheet twice:
+CSS Modulesを使用するには、スタイルシートを2回インポートします。
 
 ```tsx filename="content.tsx"
 import styleText from "data-text:./style.module.css"
@@ -87,12 +87,12 @@ const Overlay = () => <h1 className={style.header}>Captain Log</h1>
 export default Overlay
 ```
 
-## Custom Font
+## カスタムフォント
 
-To use a custom font in your CSUI, you must import the font inside a CSS file and declare it in the `css` property of the [config object](/framework/content-scripts#config). The browser does not recognize Font assets if declared inside a ShadowDOM. You have to load them in the global scope.
+CSUIでカスタムフォントを使用するには、CSSファイル内でフォントをインポートし、[設定オブジェクト](/framework/content-scripts#config)の`css`プロパティで宣言する必要があります。ShadowDOM内で宣言されたフォントアセットは、ブラウザでは認識されません。グローバルスコープでロードする必要があります。
 
-1. Add your font in the `assets` directory (e.g `/assets/Fascinate.woff2`)
-2. Create a `font.css` file next to your content script, importing the font inline using the [`data-base64`](/framework/import#data-base64) scheme:
+1. `assets`ディレクトリにフォントを追加します（例：`/assets/Fascinate.woff2`）
+2. コンテンツスクリプトの隣に`font.css`ファイルを作成し、[`data-base64`](/framework/import#data-base64)スキームを使用してフォントをインラインでインポートします。
 
 ```css filename="font.css"
 @font-face {
@@ -107,7 +107,7 @@ To use a custom font in your CSUI, you must import the font inside a CSS file an
 }
 ```
 
-3. Declare the file in the `css` property of the content script config:
+3. コンテンツスクリプトの設定の`css`プロパティでファイルを宣言します。
 
 ```tsx filename="content.tsx"
 export const config: PlasmoCSConfig = {
@@ -116,7 +116,7 @@ export const config: PlasmoCSConfig = {
 }
 ```
 
-4. Once the browser registers the font, you can reference it inside your CSS style:
+4. ブラウザがフォントを登録したら、CSSスタイル内で参照できます。
 
 ```css filename="style.css"
 .hw-top {
@@ -126,11 +126,11 @@ export const config: PlasmoCSConfig = {
 }
 ```
 
-See [with-content-scripts-ui/contents/plasmo-overlay.tsx](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-overlay.tsx) for a full example.
+完全な例については、[with-content-scripts-ui/contents/plasmo-overlay.tsx](https://github.com/PlasmoHQ/examples/blob/main/with-content-scripts-ui/contents/plasmo-overlay.tsx)を参照してください。
 
-## Styling the Shadow DOM
+## Shadow DOMのスタイル設定
 
-Use the IDs `#plasmo-shadow-container` and `plasmo-inline` to alter the `Root Container` styles in your CSS:
+`#plasmo-shadow-container`と`plasmo-inline`というIDを使用して、CSSで`Root Container`のスタイルを変更します。
 
 ```css filename="style.css"
 #plasmo-shadow-container {
@@ -143,31 +143,31 @@ Use the IDs `#plasmo-shadow-container` and `plasmo-inline` to alter the `Root Co
 ```
 
 <Callout emoji="⚠️">
-  See [Caveats: Root Container Style](#root-container-style) if some styling
-  rules are not being overridden.
+一部のスタイルルールが上書きされない場合は、[注意事項：Root Containerのスタイル](#root-container-style)を参照してください。
 </Callout>
 
-## Inherit the Web Page's Style
+## ウェブページのスタイルを継承する
 
-To inherit the web page's style, override the built-in `Root Container` to mount your component directly into the web page's DOM. [Click here for more details](/framework/content-scripts-ui/life-cycle#custom-root-container).
+ウェブページのスタイルを継承するには、内蔵の`Root Container`をオーバーライドして、コンポーネントをウェブページのDOMに直接マウントします。[詳細はこちら](/framework/content-scripts-ui/life-cycle#custom-root-container)。
 
-## Caveats
 
-There are many situations that the framework's generic style encapsulation cannot handle (yet). Here are some common gotchas:
+## 注意事項
 
-### CSS Variables
+フレームワークの一般的なスタイルカプセル化では処理できない（まだ）状況が多くあります。いくつかの一般的な問題点を以下に示します。
 
-CSS Variables are shared across every frame within the same browser tab. This means that if the webpage declares some CSS variables at the `:root` context, it will be prioritized over yours.
+### CSS変数
 
-To mitigate CSS variable sharing between CSUI and the web page, you can either:
+CSS変数は、同じブラウザタブ内のすべてのフレームで共有されます。つまり、ウェブページが`:root`コンテキストでいくつかのCSS変数を宣言した場合、それらが優先されます。
 
-- Declare a unique prefix namespace for your CSS variables
-- Hoist your CSS variable under a `:host` scope
-- Mount your component inside an iframe, with its own head and body
+CSUIとウェブページの間でのCSS変数の共有を軽減するには、次のいずれかの方法を使用できます。
 
-### Root Container Style
+- CSS変数に一意のプレフィックス名前空間を宣言する
+- `:host`スコープの下にCSS変数をホストする
+- 独自のheadとbodyを持つiframe内にコンポーネントをマウントする
 
-If the host webpage uses a global `*` specifier to style its page, it can potentially override the `Root Container` style. For example:
+### Root Containerのスタイル
+
+ホストウェブページがグローバルな`*`指定子を使用してページのスタイルを設定する場合、`Root Container`のスタイルを上書きする可能性があります。例：
 
 ```css
 * {
@@ -175,9 +175,9 @@ If the host webpage uses a global `*` specifier to style its page, it can potent
 }
 ```
 
-The above code will cause the root container to have block display. In cases like these, overriding the root container style with an inline style will help keep the container consistent.
+上記のコードにより、ルートコンテナはブロック表示になります。このような場合は、インラインスタイルでルートコンテナのスタイルを上書きすると、コンテナの一貫性を維持できます。
 
-There may exist some CSS styling declarations that cannot be overridden to alter the the `Root Container` styles. In those cases, the `!important` flag can be used as a workaround.
+`Root Container`のスタイルを変更するために上書きできないCSSスタイル宣言が存在する場合があります。そのような場合は、`!important`フラグを回避策として使用できます。
 
 ```css filename="style.css"
 #plasmo-shadow-container {

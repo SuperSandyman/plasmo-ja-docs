@@ -1,39 +1,38 @@
 ---
-description: Guide on how to use Google Analytics with a Manifest Version 3 browser extension
+description: Manifest バージョン 3 ブラウザ拡張機能で Google アナリティクスを使用する方法に関するガイド
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Quickstart with Google Analytics
+# Google アナリティクスとのクイックスタート
 
-Since Manifest V3 does not support [remote code execution](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/#remotely-hosted-code), it has been very difficult for developers to integrate Google Analytics into their extension project, especially with the latest [gtag4 version](https://developers.google.com/analytics/devguides/collection/ga4).
+Manifest V3 は [リモートコード実行](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/#remotely-hosted-code) をサポートしていないため、特に最新の [gtag4 バージョン](https://developers.google.com/analytics/devguides/collection/ga4) を使用する場合、開発者が拡張機能プロジェクトに Google アナリティクスを統合することが非常に困難でした。
 
-To overcome this issue, Plasmo [bundles remote code at build time](/framework/remote-code).
+この問題を克服するために、Plasmo は [ビルド時にリモートコードをバンドルします](/framework/remote-code)。
 
-## Obtaining the Tracking/Measurement ID
+## トラッキング/測定 ID の取得
 
-You will first need to create a property to get the Tracking ID. During this process, Google will ask to provide a website URL - we suggest providing a subdomain of your domain. This ensures the data coming in is only from your properties - website/domain/extension.
+まず、トラッキング ID を取得するためにプロパティを作成する必要があります。このプロセス中に、Google はウェブサイトの URL を提供するように求めます。ドメインのサブドメインを提供することをお勧めします。これにより、受信データがウェブサイト/ドメイン/拡張機能のプロパティからのみであることが保証されます。
 
 <Callout emoji="♻️">
-  You can reuse any property you own (for example, the website property you use
-  to market your extension).
+  お持ちのプロパティ（たとえば、拡張機能のマーケティングに使用しているウェブサイトのプロパティ）を再利用できます。
 </Callout>
 
-Then, to get the Measurement ID, visit your Google Analytics dashboard, and navigate to the Tagging Instructions section (Admin -> Setup Assistant -> Tag installation -> Data Streams -> Web):
+次に、測定 ID を取得するには、Google アナリティクス ダッシュボードにアクセスし、「タグ設定手順」セクション（管理 -> 設定アシスタント -> タグのインストール -> データストリーム -> ウェブ）に移動します。
 
-![Measurement ID](@screenshots/gtag-measurement-id.png)
+![測定 ID](@screenshots/gtag-measurement-id.png)
 
-Click the button next to the Measurement ID, which should copy to your clipboard.
+測定 ID の横にあるボタンをクリックすると、クリップボードにコピーされます。
 
-## Env Variable Setup
+## 環境変数の設定
 
-To properly store the Measurement ID, we recommend using [environment variables](/framework/env). Create an `.env.local` file:
+測定 ID を適切に保存するために、[環境変数](/framework/env) を使用することをお勧めします。`.env.local` ファイルを作成します。
 
 ```ini filename=".env.local"
 PLASMO_PUBLIC_GTAG_ID=<paste in your measurement ID>
 ```
 
-To get TypeScript IntelliSense, create an `index.d.ts` file:
+TypeScript IntelliSense を取得するには、`index.d.ts` ファイルを作成します。
 
 ```ts filename="index.d.ts"
 declare namespace NodeJS {
@@ -48,9 +47,9 @@ interface Window {
 }
 ```
 
-## Using Google Analytics in a React component
+## React コンポーネントでの Google アナリティクスの使用
 
-Below is an example of how to implement the google tag tracking script in the popup page:
+以下は、ポップアップページに Google タグ追跡スクリプトを実装する方法の例です。
 
 ```tsx filename="popup.tsx"
 import "https://www.googletagmanager.com/gtag/js?id=$PLASMO_PUBLIC_GTAG_ID"
@@ -94,10 +93,10 @@ function IndexPopup() {
 export default IndexPopup
 ```
 
-The import statement and the code inside the `useEffect` is identical to what Google gives you (see image below). We adapted them into the React lifecycle. We also add the `window` object to make it work with Typescript.
+`import` 文と `useEffect` 内のコードは、Google が提供するものと同一です（下の画像を参照）。それらを React ライフサイクルに適合させました。また、TypeScript で動作させるために `window` オブジェクトを追加しました。
 
-![Measurement ID](@screenshots/gtag-code.png)
+![測定 ID](@screenshots/gtag-code.png)
 
-## Full Example
+## 完全な例
 
-To see a complete example, check out [with-google-analytics](https://github.com/PlasmoHQ/examples/tree/main/with-google-analytics) in our examples repo.
+完全な例を見るには、サンプルリポジトリの [with-google-analytics](https://github.com/PlasmoHQ/examples/tree/main/with-google-analytics) を確認してください。

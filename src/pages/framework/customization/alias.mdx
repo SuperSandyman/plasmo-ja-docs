@@ -1,17 +1,17 @@
 ---
-description: Learn how to use Alias source code imports with your browser extension.
+description: ブラウザ拡張機能でエイリアスソースコードインポートを使用する方法を学びます。
 ---
 
-# Alias Source Code Import
+# エイリアスソースコードインポート
 
-There are two methods to override the import path:
+インポートパスをオーバーライドするには、2つの方法があります。
 
-- Using the `paths` property in `tsconfig.json`
-- Using the `alias` property in `package.json`
+- `tsconfig.json` の `paths` プロパティを使用する
+- `package.json` の `alias` プロパティを使用する
 
-## Alias Local TypeScript Imports
+## ローカルTypeScriptインポートのエイリアス
 
-To alias local imports, use the `paths` mapping in `tsconfig.json`:
+ローカルインポートにエイリアスを付けるには、`tsconfig.json` で `paths` マッピングを使用します。
 
 ```json
 {
@@ -28,7 +28,7 @@ To alias local imports, use the `paths` mapping in `tsconfig.json`:
 }
 ```
 
-You can then use it as follow:
+その後、以下のように使用できます。
 
 ```tsx
 import { Button } from "@Components/button"
@@ -37,11 +37,11 @@ import { Header } from "@Components/header"
 import { Input } from "@Components/input"
 ```
 
-See the example in [bug-244-alias-local-imports](https://github.com/PlasmoHQ/plasmo-test/tree/main/bug/bug-244-alias-local-imports)
+[bug-244-alias-local-imports](https://github.com/PlasmoHQ/plasmo-test/tree/main/bug/bug-244-alias-local-imports) の例を参照してください。
 
-## Alias External TypeScript Modules
+## 外部TypeScriptモジュールのエイリアス
 
-To alias external typescript modules, you may use the `paths` mapping pointing to an external directory in `tsconfig.json`:
+外部TypeScriptモジュールにエイリアスを付けるには、`tsconfig.json` の外部ディレクトリを指す `paths` マッピングを使用できます。
 
 ```json
 {
@@ -57,15 +57,15 @@ To alias external typescript modules, you may use the `paths` mapping pointing t
 }
 ```
 
-The import becomes:
+インポートは次のようになります。
 
 ```tsx
 import { hello } from "coolio/hello"
 ```
 
-## Alias External Imports
+## 外部インポートのエイリアス
 
-You can use the `alias` field to map an import path to a file external to your project:
+`alias` フィールドを使用して、インポートパスをプロジェクトの外部のファイルにマップできます。
 
 ```json
 {
@@ -75,7 +75,7 @@ You can use the `alias` field to map an import path to a file external to your p
 }
 ```
 
-Make sure to also declare that import in a typescript declaration `cool-file.d.ts` file:
+TypeScript宣言ファイル `cool-file.d.ts` でそのインポートも宣言してください。
 
 ```ts
 declare module "some-cool-identifier/hello" {
@@ -83,7 +83,7 @@ declare module "some-cool-identifier/hello" {
 }
 ```
 
-And include that file in your `tsconfig.json`:
+そして、そのファイルを `tsconfig.json` に含めます。
 
 ```json
 {
@@ -92,19 +92,19 @@ And include that file in your `tsconfig.json`:
 }
 ```
 
-Then you can use it in your code:
+その後、コードでそれを使用できます。
 
 ```tsx
 import { hello } from "some-cool-identifier/hello"
 ```
 
-## Alias API-Compatible Modules
+## API互換モジュールのエイリアス
 
-Use the `alias` field in `package.json` to alias API-compatible modules. You can map to a local file or a dependency package.
+`package.json` の `alias` フィールドを使用して、API互換モジュールのエイリアスを付けます。ローカルファイルまたは依存関係パッケージにマップできます。
 
-### Using Preact instead of React
+### Reactの代わりにPreactを使用する
 
-Since Preact's API is compatible with React, you can alias it like so:
+PreactのAPIはReactと互換性があるため、次のようにエイリアスを付けることができます。
 
 ```json
 {

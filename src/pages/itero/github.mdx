@@ -1,53 +1,53 @@
 ---
-description: Streamline your extension development experience with Itero's GitHub integration.
+description: IteroのGitHub統合で拡張機能開発を効率化しましょう。
 ---
 
-# Itero GitHub Integration
+# Itero GitHub統合
 
-Itero integrates with GitHub to watch for changes in your extension repository and automatically builds and pushes your extension to Itero TestBed.
+IteroはGitHubと統合し、拡張機能リポジトリの変更を監視し、拡張機能をItero TestBedに自動的にビルドしてプッシュします。
 
-## Prerequisites
+## 事前条件
 
-- You have uploaded an extension to Itero manually with a zip file
-- You must have an Itero account
-- You must have a GitHub account
+- zipファイルを使用して、拡張機能をIteroに手動でアップロード済みであること
+- Iteroアカウントを持っていること
+- GitHubアカウントを持っていること
 
-## Install the GitHub App
+## GitHubアプリのインストール
 
-1. Visit the settings page of an extension in your Itero dashboard and click "Manage GitHub App."
-2. Press "Install GitHub App"
-3. Select the GitHub account that you want to use for the integration (ensure this account has access to the underlying extension repository)
-4. Press "Install"
+1. Iteroダッシュボードで拡張機能の設定ページにアクセスし、「GitHubアプリの管理」をクリックします。
+2. 「GitHubアプリをインストール」を押します。
+3. 統合に使用するGitHubアカウントを選択します（このアカウントが基になる拡張機能リポジトリへのアクセス権を持っていることを確認してください）。
+4. 「インストール」を押します。
 
-## Link GitHub Repository
+## GitHubリポジトリのリンク
 
-1. Visit the settings page of an extension in your Itero dashboard
-2. Enter the repository name in the form `<owner/repo>`
-3. Press "Link"
+1. Iteroダッシュボードで拡張機能の設定ページにアクセスします。
+2. リポジトリ名を`<owner/repo>`の形式で入力します。
+3. 「リンク」を押します。
 
-If the linked GitHub account has access to the repository, the repository will be linked. If the linked GitHub account does not have access to the repository, the process will error.
+リンクされたGitHubアカウントにリポジトリへのアクセス権がある場合、リポジトリがリンクされます。リンクされたGitHubアカウントにリポジトリへのアクセス権がない場合、プロセスはエラーになります。
 
-Once your repository is linked, an input field will appear that allows you to specify a custom branch to track. Specify the branch name and press "Track branch" if you would like to track a branch other than `main`.
+リポジトリがリンクされると、追跡するカスタムブランチを指定できる入力フィールドが表示されます。`main`以外のブランチを追跡する場合は、ブランチ名を指定して「ブランチの追跡」を押してください。
 
-## Transitioning from Personal to Team
+## 個人からチームへの移行
 
-The Itero GitHub integration is a 1-to-1 binding between an Itero "entity" and a GitHub "entity."
+Itero GitHub統合は、Iteroの「エンティティ」とGitHubの「エンティティ」間の1対1のバインドです。
 
-An entity can be a user or an organization.
+エンティティはユーザーまたは組織です。
 
-If you are switching from the starter tier to a team tier, and you would like to integrate with the new Itero team, you must remove the current GitHub integration from your personal Itero account. To do so:
+スターターティアからチームティアに切り替える場合、新しいIteroチームと統合するには、個人Iteroアカウントから現在のGitHub統合を削除する必要があります。そのためには、以下の手順に従ってください。
 
-1. Open the settings page of an extension in your personal Itero dashboard
-2. Click "Manage GitHub App"
-3. Press "Uninstall Plasmo Itero"
+1. 個人Iteroダッシュボードで拡張機能の設定ページを開きます。
+2. 「GitHubアプリの管理」をクリックします。
+3. 「Plasmo Iteroのアンインストール」を押します。
 
-Then, open the settings page of an extension in your team Itero dashboard and follow the steps outlined in [the Install the GitHub App section](#install-the-github-app).
+次に、チームIteroダッシュボードで拡張機能の設定ページを開き、[GitHubアプリのインストールセクション](#install-the-github-app)に記載されている手順に従います。
 
-## Aligning Itero Email and GitHub Email
+## IteroのメールアドレスとGitHubのメールアドレスの整合
 
-When adding a new user to your Itero team, sometime the new member might have a different email address on GitHub than on Itero. This causes issues with the GitHub integration because we use the email address on each platform to identify the user when they make a git commit.
+Iteroチームに新しいユーザーを追加する場合、新しいメンバーのGitHubのメールアドレスとIteroのメールアドレスが異なる場合があります。これは、gitコミットを行う際に、各プラットフォームのメールアドレスを使用してユーザーを識別するため、GitHub統合に問題を引き起こします。
 
-To fix this, you may update the list of emails associated with your GitHub account. To do so:
+これを修正するには、GitHubアカウントに関連付けられているメールアドレスのリストを更新できます。そのためには、以下の手順に従ってください。
 
-1. Visit https://github.com/settings/emails
-2. Add the email address that you used to signup for Itero
+1. https://github.com/settings/emailsにアクセスします。
+2. Iteroのサインアップに使用したメールアドレスを追加します。

@@ -1,52 +1,51 @@
 ---
-description: How to customize icons in your Plasmo browser extension.
+description: Plasmo ブラウザ拡張機能のアイコンをカスタマイズする方法。
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Extension Icon
+# 拡張機能アイコン
 
-The Plasmo framework automatically generates smaller resolution versions of icons for the built bundle. Thus, all you need to work on is the high-fidelity version!
+Plasmo フレームワークは、ビルドされたバンドルに対して自動的に低解像度のアイコンバージョンを生成します。そのため、あなたが作業する必要があるのは高解像度バージョンのみです！
 
-By default, Plasmo reads the `assets/icon.png` file for the extension icon. Optionally, you can use these names instead of `icon`:
+デフォルトでは、Plasmo は拡張機能アイコンとして `assets/icon.png` ファイルを読み込みます。必要に応じて、`icon` の代わりにこれらの名前を使用できます。
 
 | icon512 | icon-512 | icon-512x512 | icon1024 | icon-1024 | icon-1024x1024 |
 | :------ | :------- | :----------- | -------- | --------- | -------------- |
 
-The alternative names are helpful to clarify the size of the original icon. However, Plasmo will only pick one file.
+これらの代替名は、元のアイコンのサイズを明確にするのに役立ちます。ただし、Plasmo は1つのファイルしか選択しません。
 
 <Callout emoji="👉">
-  Ensure your icon file is inside the `assets` directory and is a PNG file with
-  the `.png` extension.
+  アイコンファイルが `assets` ディレクトリ内にあり、`.png` 拡張子を持つ PNG ファイルであることを確認してください。
 </Callout>
 
-## Development Icon
+## 開発モードアイコン
 
-In [development mode](/framework/workflows/dev), Plasmo converts the icon to grayscale to help distinguish it from the production bundle:
+[開発モード](/framework/workflows/dev)では、Plasmo はアイコンをグレースケールに変換して、本番環境バンドルとの区別を容易にします。
 
-![gray-scaled icon](@screenshots/extension-icon-example.png)
+![グレースケールアイコン](@screenshots/extension-icon-example.png)
 
-### Custom Development Icon
+### カスタム開発モードアイコン
 
-If you don't want the default grayscale behavior, you can place an `icon.development.png` file in the `assets` directory. Plasmo will use this file instead of the `icon.png` file in development mode.
+デフォルトのグレースケール処理を望まない場合は、`assets` ディレクトリに `icon.development.png` ファイルを配置できます。Plasmo は開発モードで `icon.png` ファイルの代わりにこのファイルを使用します。
 
-## Tag Specific Icons
+## タグ固有のアイコン
 
-To use a different icon for a specific [build tag](/framework/workflows/build#with-a-custom-tag), name your icon file as follows:
+特定の[ビルドタグ](/framework/workflows/build#with-a-custom-tag)に対して異なるアイコンを使用するには、アイコンファイル名を次のようにします。
 
 - `icon.<tag>.png`
 - `icon.<tag>.<NODE_ENV>.png`
 
-## Icon Sizes
+## アイコンサイズ
 
-Plasmo generates the following icon sizes (in px):
+Plasmo は次のアイコンサイズ（px単位）を生成します。
 
 | 16x16 | 48x48 | 64x64 | 32x32 | 128x128 |
 | ----- | ----- | ----- | ----- | ------- |
 
-You can override a specific size by placing any of the following files in the `assets` directory:
+`assets` ディレクトリに次のファイルのいずれかを配置することで、特定のサイズを上書きできます。
 
-| Base                     | Env-specific                        |
+| 基本                     | 環境依存                        |
 | :----------------------- | :---------------------------------- |
 | `icon<size>.png`         | `icon<size>.<NODE_ENV>.png`         |
 | `icon-<size>.png`        | `icon-<size>.<NODE_ENV>.png`        |

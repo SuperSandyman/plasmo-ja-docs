@@ -1,22 +1,22 @@
 ---
-description: How to localize your browser extension with Plasmo
+description: Plasmo を使用したブラウザ拡張機能のローカライズ方法
 ---
 
-# Localization and Internationalization
+# ローカライズと国際化
 
-Plasmo has built-in support for localization. These concepts should feel familiar to you if you've ever done this in any other Chrome extension.
+Plasmo はローカライズを内蔵でサポートしています。他の Chrome 拡張機能でこれを行ったことがある場合、これらの概念は馴染みのあるものだと思います。
 
-Plasmo expects your locale files in any of these locations:
+Plasmo は、ロケールファイルを次のいずれかの場所に配置することを想定しています。
 
 - `/locales/{lang}/messages.json`
 - `/assets/_locales/{lang}/messages.json`
 - `/assets/locales/{lang}/messages.json`
 
-You will need to pick one and stick to it!
+いずれか1つを選択して、それに従ってください！
 
-## English Example
+## 英語の例
 
-Create a `locales/en/messages.json` file with a JSON mapping between a unique `key` and a locale object:
+一意の `key` とロケールオブジェクト間の JSON マッピングを含む `locales/en/messages.json` ファイルを作成します。
 
 ```json filename="locales/en/messages.json"
 {
@@ -35,7 +35,7 @@ Create a `locales/en/messages.json` file with a JSON mapping between a unique `k
 }
 ```
 
-By default, Plasmo picks the first locale alphabetically available as default. However, you can specify a `default_locale` in your manifest like so:
+デフォルトでは、Plasmo はアルファベット順で最初に利用可能なロケールをデフォルトとして選択します。ただし、マニフェストで `default_locale` を次のように指定することもできます。
 
 ```json filename="package.json"
 {
@@ -45,7 +45,7 @@ By default, Plasmo picks the first locale alphabetically available as default. H
 }
 ```
 
-Even more powerful, you can use environment variables inside your locale files:
+さらに強力な機能として、ロケールファイル内で環境変数を使用できます。
 
 ```json filename="locales/en/messages.json"
 {
@@ -61,15 +61,15 @@ Even more powerful, you can use environment variables inside your locale files:
 PLASMO_PUBLIC_QUOTE_AUTHOR=Spock
 ```
 
-The locale files are monitored by Plasmo if they existed before the dev server started. Thus, you can change the locales file and see the changes in the browser without restarting the dev server.
+開発サーバーの起動前にロケールファイルが存在していた場合、ロケールファイルは Plasmo によって監視されます。そのため、ロケールファイルを変更して、開発サーバーを再起動せずにブラウザでの変更を確認できます。
 
-## Usage
+## 使用方法
 
-With the locale files in place, you can use the `i18n` API to localize your extension.
+ロケールファイルが配置されたら、`i18n` API を使用して拡張機能をローカライズできます。
 
-### Inside source code modules
+### ソースコードモジュール内
 
-To get the locale string inside your components, use the `i18n` API to get the locale message by its `key`:
+コンポーネント内でロケール文字列を取得するには、`i18n` API を使用して、`key` でロケールメッセージを取得します。
 
 ```tsx filename="popup.tsx"
 import { useState } from "react"
@@ -96,9 +96,9 @@ function IndexPopup() {
 export default IndexPopup
 ```
 
-### Inside package.json and manifest overrides
+### package.json とマニフェストのオーバーライド内
 
-To reference a locale string inside your manifest overrides, wrap the key inside `__MSG_<key>__`:
+マニフェストのオーバーライド内でロケール文字列を参照するには、キーを `__MSG_<key>__` で囲みます。
 
 ```json filename="package.json"
 {
@@ -112,6 +112,6 @@ To reference a locale string inside your manifest overrides, wrap the key inside
 }
 ```
 
-Please refer to the [Chrome i18n documentation](https://developer.chrome.com/extensions/i18n) for more information.
+詳細については、[Chrome の i18n ドキュメント](https://developer.chrome.com/extensions/i18n) を参照してください。
 
-If you'd like to see an example showcasing locale, check out [with-locales-i18n](https://github.com/PlasmoHQ/examples/blob/main/with-locales-i18n) in the [Plasmo examples](https://github.com/PlasmoHQ/examples) repository.
+ロケールの例を確認したい場合は、[Plasmo の例](https://github.com/PlasmoHQ/examples)リポジトリにある[with-locales-i18n](https://github.com/PlasmoHQ/examples/blob/main/with-locales-i18n)をご覧ください。

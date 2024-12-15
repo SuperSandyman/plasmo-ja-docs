@@ -1,48 +1,48 @@
 ---
-description: Guide on how to use Firebase Authentication with a Browser Extension
+description: ブラウザ拡張機能でFirebase認証を使用する方法に関するガイド
 ---
 
 import { Callout } from "nextra-theme-docs"
 
-# Quickstart with Firebase Auth
+# Firebase認証のクイックスタート
 
-Since this is a bit more involved, we wrote [a blog post](https://www.plasmo.com/blog/posts/firebase-chrome-extension) that goes into detail, step by step, on everything you need to do to get Firebase auth working.
+これは少し複雑なため、Firebase認証を動作させるために必要な手順をすべて詳細に説明した[ブログ記事](https://www.plasmo.com/blog/posts/firebase-chrome-extension)を作成しました。
 
-For a quick start breakdown, read on:
+クイックスタートの概要については、以下をお読みください。
 
-## Overview
+## 概要
 
-Auth in browser extensions can be a little bit of an adjustment for a web developer to think about but it's not much more difficult than using Firebase in React or Next.js directly.
+ブラウザ拡張機能での認証は、ウェブ開発者にとって少し調整が必要な場合がありますが、ReactやNext.jsで直接Firebaseを使用するよりもそれほど難しくありません。
 
-We basically want to store our Tokens in Cookies so they can be used by Background Service Workers.
+基本的に、トークンをCookieに保存して、バックグラウンドサービスワーカーで使用できるようにします。
 
-## Setup
+## セットアップ
 
-First, let's install some dependencies. Using Firebase and manipulating cookies in plasmo requires three packages.
+最初に、いくつかの依存関係をインストールしましょう。Firebaseを使用し、PlasmoでCookieを操作するには、3つのパッケージが必要です。
 
-- firebase (clientside firebase SDK)
-- @plasmohq/messaging [See Messaging](https://docs.plasmo.com/framework/messaging)
-- @plasmohq/storage [See Storage](https://docs.plasmo.com/framework/storage)
+- firebase (クライアントサイドFirebase SDK)
+- @plasmohq/messaging [Messagingを参照](https://docs.plasmo.com/framework/messaging)
+- @plasmohq/storage [Storageを参照](https://docs.plasmo.com/framework/storage)
 
 ```sh
 npm install firebase @plasmohq/messaging @plasmohq/storage
 ```
 
-or
+または
 
 ```sh
 yarn add firebase @plasmohq/messaging @plasmohq/storage
 ```
 
-or
+または
 
 ```sh
 pnpm install firebase @plasmohq/messaging @plasmohq/storage
 ```
 
-## Initialize Firebase
+## Firebaseの初期化
 
-First we can create a singleton instance of our firebase clientside app.
+最初に、クライアントサイドFirebaseアプリのシングルトンインスタンスを作成できます。
 
 ```ts
 // src/firebase/firebaseClient.ts
@@ -79,8 +79,8 @@ export const googleAuth = new GoogleAuthProvider()
 export default firebase_app
 ```
 
-<Callout emoji="👀" title="Note">
-**NOTE**: You'll want to populate a .env with your firebase config, this can be found in your [Firebase Console](https://console.firebase.google.com/)
+<Callout emoji="👀" title="注意">
+**注意**: Firebaseの設定を`.env`ファイルに設定する必要があります。これは[Firebaseコンソール](https://console.firebase.google.com/)で見つけることができます。
 
 ```sh
 PLASMO_PUBLIC_FIREBASE_CLIENT_ID=""
@@ -95,9 +95,9 @@ PLASMO_PUBLIC_FIREBASE_MEASUREMENT_ID=""
 
 </Callout>
 
-## Handling Tokens
+## トークンの処理
 
-Now that that's handled, we can create a re-usable hook to provide login and logout methods as well as an easy way to access user info on tabs / popup / options pages
+これで準備ができたので、ログインとログアウトの方法、およびタブ/ポップアップ/オプションページでユーザー情報に簡単にアクセスするための再利用可能なフックを作成できます。
 
 ```tsx
 // src/firebase/useFirebaseUser.tsx
@@ -173,7 +173,7 @@ export default function useFirebaseUser() {
 }
 ```
 
-You'll notice in the above snippet we're calling two background processes, removeAuth and saveAuth. Let's create those now
+上記のコードスニペットでは、`removeAuth`と`saveAuth`という2つのバックグラウンドプロセスを呼び出していることに注目してください。これらを作成しましょう。
 
 ```ts
 // background/messages/saveAuth.ts
@@ -227,12 +227,12 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
 export default handler
 ```
 
-## Example Usage Background SW
+## バックグラウンドSWの使用例
 
-Great, now you're saving your Refresh Token, ID Token and UID in cookies. You can use them in other background workers like this
+素晴らしい、これで更新トークン、IDトークン、UIDをCookieに保存できました。このようにして、他のバックグラウンドワーカーで使用できます。
 
 ```ts
-// Example Background SW to get user data from the current signed in user from the collection /users/{uid}
+// 現在のサインインユーザーからコレクション /users/{uid} のユーザーデータを取得するバックグラウンドSWの例
 
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
@@ -302,7 +302,7 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
 export default handler
 ```
 
-In the above example we're refreshing our token if the response fails and retrying. Here's the utility method for refreshing the firebase token.
+上記の例では、応答が失敗した場合にトークンを更新して再試行しています。Firebaseトークンを更新するためのユーティリティメソッドを次に示します。
 
 ```ts
 type RefreshTokenResponse = {
@@ -348,11 +348,11 @@ export default async function refreshFirebaseToken(
 }
 ```
 
-## Example Usage React hook
+## Reactフックの使用例
 
-You can also use this in a react component (either CSUI or tabs/extension pages)
+これはReactコンポーネント（CSUIまたはタブ/拡張機能ページのいずれか）でも使用できます。
 
-Here's an example login page setup for options.tsx using TailwindCSS.
+TailwindCSSを使用した`options.tsx`のログインページ設定例を次に示します。
 
 ```tsx
 // src/options.tsx
@@ -621,7 +621,7 @@ export default function AuthForm() {
 }
 ```
 
-And a logout method might look like this
+ログアウト方法は次のようになります。
 
 ```tsx
 const logout = async (e: any) => {
