@@ -41,3 +41,6 @@ yarn-error.log*
 /public/**/atom.xml
 /public/**/rss.xml
 /public/**/feed.json
+
+# gcp credentials
+gha-*.json
