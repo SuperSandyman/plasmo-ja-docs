@@ -26,7 +26,7 @@ const theme: DocsThemeConfig = {
   chat: {
     link: "https://www.plasmo.com/s/d" // Plasmo discord server,
   },
-  docsRepositoryBase: "https://github.com/PlasmoHQ/docs/edit/main/", // base URL for the docs repository
+  docsRepositoryBase: "https://github.com/SuperSandyman/plasmo-ja-docs", // base URL for the docs repository
   navigation: {
     next: true,
     prev: true
@@ -47,10 +47,8 @@ const theme: DocsThemeConfig = {
       <a
         className="font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50"
         href={
-          "https://www.plasmo.com"
-        }>{`© ${new Date().getFullYear()} Plasmo Corp. All rights reserved. v${
-        packageJson.version
-      }`}</a>
+          "https://github.com/SuperSandyman/"
+        }>{`© ${new Date().getFullYear()} Sandyman v${packageJson.version}`}</a>
     )
   },
   project: {
@@ -113,8 +111,8 @@ const theme: DocsThemeConfig = {
           name: "theme-color",
           content: "#ffffff"
         },
-        { content: "en", name: "language" },
-        { content: "Plasmo Docs", name: "apple-mobile-web-app-title" }
+        { content: "ja", name: "language" },
+        { content: "Plasmo JA Docs", name: "apple-mobile-web-app-title" }
         // { content: '/ms-icon-144x144.png', name: 'msapplication-TileImage' }
       ],
       description: frontMatter.description || "The Browser Extension Platform",
@@ -130,7 +128,7 @@ const theme: DocsThemeConfig = {
               "https://docs.plasmo.com/images/seo-1200-700.png",
             width: 1200,
             height: 700,
-            alt: "Plasmo Docs"
+            alt: "Plasmo JA Docs"
           }
         ]
       },
