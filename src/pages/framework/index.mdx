@@ -1,5 +1,5 @@
 ---
-description: Plasmo Frameworkを使えば、最新のブラウザ拡張機能を簡単に作成できます。数分で拡張機能を稼働させることができます！
+description: Plasmo Frameworkを使えば、最新のブラウザ拡張機能の開発が驚くほど簡単になります。わずか1分以内で拡張機能を稼働させることができます！
 ---
 
 import { Callout } from "nextra-theme-docs"
@@ -10,34 +10,34 @@ import { ShieldBanners } from "~components/shield-banners"
 
 <ShieldBanners />
 
-[Plasmo](https://www.plasmo.com/) Frameworkは、ハッカーがハッカーのために作った、多機能なブラウザ拡張機能SDKです。設定ファイルやブラウザ拡張機能開発特有の奇妙な点について心配することなく、製品を開発しましょう。
+[Plasmo](https://www.plasmo.com/) Frameworkは、ハッカーによってハッカーのために作られた、多機能なブラウザ拡張機能SDKです。設定ファイルやブラウザ拡張機能開発特有の奇妙な点について心配することなく、製品を開発できます。
 
 <Callout emoji="⭐">
-  [Next.js](https://nextjs.org/) for browser extensions! と同じです！
+  [Next.js](https://nextjs.org/) for browser extensions! と言えるでしょう！
 </Callout>
 
 ![CLI Demo](https://www.plasmo.com/assets/plasmo-cli-demo.gif)
 
 ## 主な機能
 
-- ファーストクラスの[React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)サポート
-- [宣言的開発](https://docs.plasmo.com/framework#where-is-the-manifestjson-file)
+- ファーストクラスの[React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/)サポート
+- [宣言型開発](https://docs.plasmo.com/framework#where-is-the-manifestjson-file)
 - [コンテンツスクリプトUI](https://docs.plasmo.com/csui) (Content Scripts UI)
 - [タブページ](https://docs.plasmo.com/framework/tab-pages) (Tab Pages)
 - ライブリロード + React HMR
 - [`.env*`ファイル](https://docs.plasmo.com/framework/env)
 - [ストレージAPI](https://docs.plasmo.com/framework/storage) (Storage API)
 - [メッセージングAPI](https://docs.plasmo.com/framework/messaging) (Messaging API)
-- [リモートコードバンドリング](https://docs.plasmo.com/framework/remote-code) (Remote code bundling) （例：Google Analytics用）
-- [複数のブラウザとマニフェストペアのターゲティング](https://docs.plasmo.com/framework/workflows/build#with-specific-target) (multiple browser and manifest pairs)
+- [リモートコードバンドリング](https://docs.plasmo.com/framework/remote-code) (Remote code bundling) (例：Google Analytics用)
+- 複数のブラウザとマニフェストペアへの対応 (Targeting [multiple browser and manifest pairs](https://docs.plasmo.com/framework/workflows/build#with-specific-target))
 - [BPPによる自動デプロイ](https://docs.plasmo.com/framework/workflows/submit) (Automated deployment via BPP)
-- [Svelte](https://github.com/PlasmoHQ/with-svelte)と[Vue](https://github.com/PlasmoHQ/with-vue)のオプションサポート
+- [Svelte](https://github.com/PlasmoHQ/examples/tree/main/with-svelte)と[Vue](https://github.com/PlasmoHQ/examples/tree/main/with-vue)のオプションサポート、そして[その他多くのツール](https://github.com/PlasmoHQ/examples)
 
 その他多数！ 🚀
 
 ## システム要件
 
-- Node.js 16.14.x 以降
+- Node.js 16.14.x以降
 - macOS、Windows、またはLinux
 - （強く推奨）[pnpm](https://pnpm.io/)
 
@@ -57,34 +57,34 @@ npm create plasmo
 
 | ファイル名         | 説明                                                                                                                                        |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `popup.tsx`       | このファイルはデフォルトのReactコンポーネントをエクスポートし、ポップアップページにレンダリングされます。_拡張機能のポップアップを操作するにはこれだけです！_     |
-| `assets`          | Plasmoは[自動的に小さなアイコンを生成し](/framework/icon)、"icon.png"ファイルからマニフェストに適用します。              |
-| `package.json`    | 通常のNode.jsプロジェクト記述子で、[必要に応じて"manifest"プロパティを使用してPlasmoをカスタマイズできます](/framework/customization/manifest) |
+| `popup.tsx`       | このファイルはデフォルトのReactコンポーネントをエクスポートし、ポップアップページにレンダリングされます。_拡張機能のポップアップを操作するために必要なのはこれだけです！_     |
+| `assets`          | Plasmoは[自動的に小さなアイコンを生成](/framework/icon)し、"icon.png"ファイルからマニフェストに適用します              |
+| `package.json`    | 通常のNode.jsプロジェクト記述子で、[Plasmoを自分のニーズに合わせてカスタマイズするためのオプションの "manifest" プロパティ](/framework/customization/manifest)があります |
 | `.prettierrc.cjs` | コードスタイルの一貫性のため                                                                                                                       |
-| `.gitignore`      | Git ignoreファイル                                                                                                         |
+| `.gitignore`      | Git ignoreファイル                                                                                                                            |
 | `.github`         | 自動デプロイのためのGitHub Actionsワークフロー                                                                                                  |
 | `README.md`       | 基本的なドキュメント                                                                                                                                |
 | `tsconfig.json`   | TypeScript設定                                                                                                                           |
 
 <Callout emoji="📢">
 
-**注意:** デフォルトでは、すべてのコードはプロジェクトのルートに配置されます。`src`ディレクトリをソースコードの配置場所として使用する場合は、この[ガイド](/framework/customization/src)に従ってください。
+**注意:** デフォルトでは、すべてのコードはプロジェクトのルートに存在します。ソースコードを配置する場所に`src`ディレクトリを使用するには、この[ガイド](/framework/customization/src)に従ってください。
 
 </Callout>
 
 ### 開発サーバー
 
-ライブリロードとHMRには、次のようにして開発サーバーを起動できます。
+ライブリロードとHMRには、以下のコマンドで開発サーバーを起動します。
 
 ```sh
 pnpm dev
 ```
 
-上記のコマンドは、ファイルの変更を監視し、`build/chrome-mv3-dev`に拡張機能のバンドルを再生成し、ブラウザで拡張機能を自動的に再ロードします。
+上記のコマンドは、ファイルの変更を監視し、`build/chrome-mv3-dev`に拡張機能のバンドルを再生成し、ブラウザで拡張機能を自動的に再読み込みします。
 
 ### 本番ビルド
 
-本番ビルドには、次のように実行します。
+本番ビルドには、以下のコマンドを実行します。
 
 ```sh
 pnpm build
@@ -94,19 +94,19 @@ pnpm build
 
 ### Chromeへの拡張機能の読み込み
 
-将来的には自動化される予定ですが、現時点では、Chromeに拡張機能を読み込むために必要な手順は次のとおりです。
+将来的には自動化を予定していますが、現時点では、Chromeに拡張機能を読み込むために必要な手順は以下のとおりです。
 
-`chrome://extensions`にアクセスして、開発者モードを有効にします。
+`chrome://extensions`にアクセスし、「デベロッパーモード」を有効にします。
 
 ![](@screenshots/developer_mode.png)
 
-「読み込み済みでない拡張機能を読み込む」をクリックし、拡張機能の`build/chrome-mv3-dev`（または`build/chrome-mv3-prod`）ディレクトリに移動します。
+「パッケージ化されていない拡張機能を読み込む」をクリックし、拡張機能の`build/chrome-mv3-dev`（または`build/chrome-mv3-prod`）ディレクトリに移動します。
 
-ポップアップを表示するには、Chromeツールバーのジグソーパズルアイコンをクリックし、拡張機能をクリックします。
+ポップアップを表示するには、Chromeツールバーのパズルピースアイコンをクリックし、拡張機能をクリックします。
 
 <Callout>
 
-**プロヒント:** ピンボタンをクリックして、Chromeツールバーに拡張機能をピン留めして、簡単にアクセスできるようにします。
+**プロチップ:** ピンボタンをクリックして、拡張機能をChromeツールバーにピン留めして簡単にアクセスできるようにします。
 
 </Callout>
 
@@ -114,21 +114,21 @@ pnpm build
 
 ## manifest.jsonファイルはどこにありますか？
 
-Plasmoはマニフェストファイルを抽象化します。このフレームワークは、[Next.js](https://nextjs.org/)がファイルシステムとページコンポーネントを使用してページのルーティングとSSGを抽象化するのと同様に、ソースファイルとコードからエクスポートする設定に基づいて、内部的にマニフェストを生成します。
+Plasmoはmanifestファイルを抽象化します。このフレームワークは、[Next.js](https://nextjs.org/)がファイルシステムとページコンポーネントを使用してページルーティングとSSGを抽象化するのと同様に、ソースファイルとコードからエクスポートする設定に基づいて、内部でmanifestを生成します。
 
 さらに、自動パーミッションとニーズベースのパーミッションスキームで抽象化を進め、手動でパーミッションを指定する必要をなくします！（近日公開）
 
 ## 次のステップ
 
-[拡張機能ページセクション](/framework/ext-pages)にアクセスして、Plasmo拡張機能のさまざまなUI要素の詳細を確認し、インスピレーションを得てください。各ワークフローには、フレームワークのシンプルさを示すモジュール式の例が付属しています。[GitHubリポジトリ](https://github.com/PlasmoHQ/examples)で例を参照してください。
+[拡張機能ページセクション](/framework/ext-pages)にアクセスして、Plasmo拡張機能のさまざまなUI要素の詳細とインスピレーションを得てください。各ワークフローには、フレームワークのシンプルさを示すモジュラーな例が付属しています。[GitHubリポジトリ](https://github.com/PlasmoHQ/examples)で例をご覧ください。
 
-Plasmoをニーズに合わせて調整する方法については、[カスタマイズセクション](/framework/customization)を参照してください。
+Plasmoをニーズに合わせて適応させる方法については、[カスタマイズセクション](/framework/customization)をご覧ください。
 
-Plasmoを他のツール（TailwindCSSやFirebaseなど）と統合する方法については、[クイックスタートセクション](/quickstarts)の例の一覧を参照してください。
+Plasmoを他のツール（TailwindCSSやFirebaseなど）と統合する方法については、[クイックスタートセクション](/quickstarts)の例の一覧をご覧ください。
 
 ## コミュニティ
 
-[Discord](https://www.plasmo.com/s/d)でPlasmoコミュニティを見つけましょう。行き詰まってヘルプが必要な場合や、Plasmoやブラウザ拡張機能についてもっとチャットしたい場合は、最適な場所です！
+[Discord](https://www.plasmo.com/s/d)でPlasmoコミュニティを見つけてください。行き詰まって助けが必要な場合や、Plasmoやブラウザ拡張機能についてもっとチャットしたい場合は、ここが最適な場所です！
 
 Plasmo Frameworkのバグを見つけた場合は、[バグレポートフォーム](/bug)を使用して報告してください。
 
@@ -140,6 +140,6 @@ Plasmo Frameworkのバグを見つけた場合は、[バグレポートフォー
 - [ArConnect](https://www.plasmo.com/blog/posts/migrating-chrome-extension-to-plasmo)
 - [MICE](https://github.com/PlasmoHQ/mice)
 - [GitHub上の数百のリポジトリ](https://github.com/PlasmoHQ/plasmo/network/dependents)
-- Chromeウェブストアにもさらに数百あります
+- Chromeウェブストアにも数百以上存在します
 
 

@@ -8,15 +8,15 @@ import { Callout } from "nextra-theme-docs"
 
 Plasmoを使用すると、PostCSSとの組み込み統合のおかげで、Tailwind CSSを使用するのが非常に簡単になります。設定は、[公式Tailwind CSSドキュメントガイド](https://tailwindcss.com/docs/installation/using-postcss)と同じです。
 
-Autoprefixer、PurgeCSSなど、他のPostCSSプラグインも使用できます。このガイドでは、Tailwind CSSを使い始めるための手順を説明します。
+Autoprefixer、PurgeCSSなど、他のPostCSSプラグインも使用できます。このガイドでは、Tailwind CSSを使い始める手順を説明します。
 
-<Callout emoji="🎉">Chrome拡張機能で簡単にTailwind CSSを使用！</Callout>
+<Callout emoji="🎉">Chrome拡張機能で簡単にTailwind CSSを使用しましょう！</Callout>
 
 ## 例
 
-- このクイックスタートの完全な例を見るには、[with-tailwindcss例](https://github.com/PlasmoHQ/examples/tree/main/with-tailwindcss)を参照してください。
+- このクイックスタートの完全な例を見るには、[with-tailwindcssの例](https://github.com/PlasmoHQ/examples/tree/main/with-tailwindcss)を参照してください。
 
-## Tailwind CSS を使用した Plasmo プロジェクトの作成
+## Tailwind CSS を使用したPlasmoプロジェクトの作成
 
 ```bash
 pnpm create plasmo --with-tailwindcss
@@ -24,18 +24,18 @@ pnpm create plasmo --with-tailwindcss
 
 ## 手動インストール
 
-既にPlasmo拡張機能プロジェクトがあり、Tailwind CSSを手動で追加したい場合は、このセクションを参照してください！
+既にPlasmo拡張機能プロジェクトがあり、Tailwind CSS v3を手動で追加したい場合は、このセクションをご覧ください！
 
 ### 依存関係の追加
 
 ```bash
-pnpm i -D tailwindcss postcss autoprefixer
+pnpm i -D tailwindcss@3 postcss autoprefixer
 ```
 
 ### `tailwind.config.js`ファイルの生成
 
 ```bash
-npx tailwindcss init
+npx tailwindcss init -p
 ```
 
 ### PostCSS設定の定義
@@ -54,7 +54,7 @@ module.exports = {
 
 <Callout emoji="⚠️">
 
-ファイル名の拡張子は`.cjs`ではなく`.js`にしてください。そうでないと、設定が誤ってJSONとして解析され、失敗する可能性があります。
+ファイル名の拡張子が`.cjs`ではなく`.js`であることを確認してください。そうでないと、設定が誤ってJSONとして解析され、失敗する可能性があります。
 
 </Callout>
 
@@ -80,7 +80,7 @@ module.exports = {
 
 ## 使用方法
 
-### 拡張機能ページ内
+### 拡張機能ページで
 
 すべての設定が整ったら、Reactコンポーネント内でTailwindを使用し始めましょう！以下は、ポップアップページでTailwindを使用する方法の例です。
 
@@ -108,9 +108,9 @@ function IndexPopup() {
 export default IndexPopup
 ```
 
-### コンテンツスクリプトUI内
+### コンテンツスクリプトUIで
 
-[コンテンツスクリプトUI](/csui)でTailwindを使用するには、`style.css`ファイルをテキストデータとしてインポートし、`getStyle`メソッドを介してCSUIライフサイクルに公開して、スタイルをCSUIシャドウDOMに注入する必要があります。
+[コンテンツスクリプトUI](/csui)でTailwindを使用するには、`style.css`ファイルをテキストデータとしてインポートし、`getStyle`メソッドを使用してCSUIライフサイクルに公開して、スタイルをCSUIのshadowDOMに挿入する必要があります。
 
 ```tsx filename="content.tsx"
 import cssText from "data-text:~style.css"
@@ -142,17 +142,17 @@ export default PlasmoOverlay
 ```
 
 <Callout emoji="ℹ️">
-  Tailwindとそのプラグインは多くの場合、CSS変数を宣言するために`:root`に依存するため、組み込みの`Root Container`を使用する場合は、[コンテンツスクリプトUIスタイルのCSS変数の注意点](/framework/content-scripts-ui/styling#css-variables)に注意してください。
+Tailwindとそのプラグインは多くの場合、CSS変数を宣言するために`:root`に依存しているため、組み込みの`Root Container`を使用する場合は、[コンテンツスクリプトUIスタイリングCSS変数の注意点](/framework/content-scripts-ui/styling#css-variables)に注意してください。
 
-  例えば、[DaisyUI](https://daisyui.com/)を使用する予定がある場合は、スタイルをシャドウDOMにアタッチする前に、`:root`スコープを`:host`に置き換える必要があります。
+例えば、[DaisyUI](https://daisyui.com/)を使用する予定がある場合は、スタイルをshadowDOMに添付する前に、`:root`スコープを`:host`に置き換える必要があります。
 
-  ```tsx filename="content.tsx"
-  import cssText from "data-text:~style.css"
+```tsx filename="content.tsx"
+import cssText from "data-text:~style.css"
 
-  export const getStyle = () => {
-    const style = document.createElement("style")
-    style.textContent = cssText.replaceAll(':root', ':host(plasmo-csui)');
-    return style
-  }
-  ```
+export const getStyle = () => {
+  const style = document.createElement("style")
+  style.textContent = cssText.replaceAll(':root', ':host(plasmo-csui)');
+  return style
+}
+```
 </Callout>
